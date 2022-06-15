@@ -6,7 +6,6 @@ import com.fids.AccessApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -47,13 +46,13 @@ public class HomePageCentraleControl {
     }
 
    public void gestioneInventarioCentrale(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
+        /*FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("InventarioCentrale.fxml"));
         Parent root = loader.load();
         InventarioCentraleControl inventarioCControl = loader.getController();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Inventario Centrale");
         stage.setScene(new Scene(root));
-        stage.show();
+        stage.show();*/
     }
 }

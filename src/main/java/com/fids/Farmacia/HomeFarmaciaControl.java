@@ -2,6 +2,7 @@ package com.fids.Farmacia;
 
 import DBMSB.DBMSBoundary;
 import Entity.Farmacia;
+import Entity.GlobalData;
 import Entity.Utente;
 import com.fids.AccessApplication;
 import javafx.event.ActionEvent;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HomeFarmaciaControl {
+public class HomeFarmaciaControl extends GlobalData{
 
     public Button venditaFarmaciButton;
     public Button modificaContrattoButton;
@@ -42,12 +43,28 @@ public class HomeFarmaciaControl {
         DBMSBoundary dbms = new DBMSBoundary();
         farmacia = dbms.richiediInfoHome(user.getIDSede());
 
-        nomeCognomeLabel.setText( user.getNome() + " " + user.getCognome());
-        numConsegneArrivoLabel.setText(String.valueOf(farmacia.getNumConsegne()));
-        nomeFarmaciaLabel.setText(farmacia.getNomeSede());
-        indirizzoLabel.setText(farmacia.getIndirizzoSede());
-        cittaLabel.setText(farmacia.getCitta());
+        NOMINATIVO = user.getNome() + " " + user.getCognome();
+        NUM_CONSEGNE = String.valueOf(farmacia.getNumConsegne());
+        NOME_FARMACIA = farmacia.getNomeSede();
+        INDIRIZZO_FARMACIA = farmacia.getIndirizzoSede();
+        CITTA_FARMACIA = farmacia.getCitta();
+        ID_FARMACIA = farmacia.getIDFarmacia();
 
+
+        nomeCognomeLabel.setText(NOMINATIVO);
+        numConsegneArrivoLabel.setText(NUM_CONSEGNE);
+        nomeFarmaciaLabel.setText(NOME_FARMACIA);
+        indirizzoLabel.setText(INDIRIZZO_FARMACIA);
+        cittaLabel.setText(CITTA_FARMACIA);
+
+    }
+
+    public void setLabels() {
+        nomeCognomeLabel.setText(NOMINATIVO);
+        numConsegneArrivoLabel.setText(NUM_CONSEGNE);
+        nomeFarmaciaLabel.setText(NOME_FARMACIA);
+        indirizzoLabel.setText(INDIRIZZO_FARMACIA);
+        cittaLabel.setText(CITTA_FARMACIA);
     }
 
 
@@ -56,6 +73,7 @@ public class HomeFarmaciaControl {
         loader.setLocation(AccessApplication.class.getResource("Login/login.fxml"));
         Parent root = loader.load();
         Stage window = (Stage) logoutButton.getScene().getWindow();
+        window.setTitle("Login");
         window.setScene(new Scene(root));
     }
 
@@ -64,7 +82,7 @@ public class HomeFarmaciaControl {
         loader.setLocation(getClass().getResource("InventarioFarmacia.fxml"));
         Parent root = loader.load();
         InventarioFarmaciaControl inventarioFControl = loader.getController();
-        inventarioFControl.setFarmacia(farmacia.getIDFarmacia());
+        inventarioFControl.setFarmacia(ID_FARMACIA);
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Inventario Farmacia");
         stage.setScene(new Scene(root));

@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -83,10 +84,14 @@ public class InventarioFarmaciaControl {
 
     public void homeFarmacia(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(HomeFarmaciaControl.class.getResource("HomeFarmacia.fxml"));
+        loader.setLocation(getClass().getResource("HomeFarmacia.fxml"));
         Parent root = loader.load();
-        Stage window = (Stage) homeFarmaciaButton.getScene().getWindow();
-        window.setScene(new Scene(root));
+        HomeFarmaciaControl homeFControl = loader.getController();
+        homeFControl.setLabels();
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Home Farmacia");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     public void applicaFiltro(ActionEvent event) {
@@ -121,6 +126,7 @@ public class InventarioFarmaciaControl {
         root.setExpanded(true);
         listaFarmaciTable.setRoot(root);
         listaFarmaciTable.setShowRoot(false);
+
 
 
     }
