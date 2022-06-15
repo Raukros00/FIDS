@@ -1,0 +1,13 @@
+.check-box > .box {
+      -fx-background-radius: 3px;
+}
+
+
+.check-box:selected > .box > .mark,
+.check-box:indeterminate  > .box > .mark {
+    /* modify mark color */
+    -fx-background-color:  #2BEA97;
+  
+
+}
+
