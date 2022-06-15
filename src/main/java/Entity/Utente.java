@@ -7,11 +7,13 @@ public class Utente {
     private String password;
     private String nome;
     private String cognome;
+
+    private String dataNascita;
     private String email;
     private int ruolo;
     private int IDSede;
     
-    public Utente(int IDUtente, String username, String password, String nome, String cognome, int ruolo) {
+    public Utente(int IDUtente, String username, String password, String nome, String cognome, String dataNascita, String email, int ruolo) {
         setIDUtente(IDUtente);
         setUsername(username);
         setPassword(password);
@@ -35,6 +37,9 @@ public class Utente {
     
     public void setCognome(String cognome) { this.cognome = cognome; }
     public String getCognome() { return cognome; }
+
+    public void setdataNascita(String dataNascita) { this.dataNascita = dataNascita; }
+    public String getdataNascita() { return dataNascita; }
 
     public void setEmail(String email) { this.email = email; }
     public String getEmail() { return email; }
