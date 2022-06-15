@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
 public class InventarioFarmaciaControl {
@@ -36,6 +37,8 @@ public class InventarioFarmaciaControl {
     @FXML
     private ChoiceBox<String> principioAttivoField;
     @FXML
+    private DatePicker dataDiScadenzaField;
+    @FXML
     private Button filtraButton;
     private int idFarmacia;
     private DBMSBoundary dbms = new DBMSBoundary();
@@ -47,8 +50,8 @@ public class InventarioFarmaciaControl {
         listaFarmaci = dbms.getInventarioFarmacia(idFarmacia);
 
         TreeItem root = new TreeItem(new Farmaco(" ", " ",0,""," "));
-
         TreeItem farmaco;
+
         for(Farmaco f: listaFarmaci) {
 
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
@@ -56,11 +59,11 @@ public class InventarioFarmaciaControl {
 
             principioAttivoField.getItems().add(f.getPrincipioAttivo());
 
-            /*for(Lotto l: f.getListaLotti()){
-                    farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getIDLotto(), l.getDataScadenza())));
+            for(Lotto l: f.getListaLotti()){
+                    farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
             }
             TreeItem empty = new TreeItem(new Farmaco("","",0,"",""));
-            root.getChildren().add(empty);*/
+            root.getChildren().add(empty);
         }
 
         nomeCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getNomeFarmaco()));
@@ -84,9 +87,13 @@ public class InventarioFarmaciaControl {
     }
 
     public void applicaFiltro(ActionEvent event) {
+        String nomeFarmaco = nomeFarmacoField.getText();
+        String principioAttivo = principioAttivoField.getValue();
+        String dataDiScadenza = dataDiScadenzaField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));;
+
+
 
     }
 
 
 }
-//AAAAAA

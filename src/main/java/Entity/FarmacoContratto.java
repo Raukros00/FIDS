@@ -17,13 +17,13 @@ public class FarmacoContratto {
 
     public FarmacoContratto() {}
 
-    public void setIDFarmaco(IDFarmaco) { this.IDFarmaco = IDFarmaco; }
+    public void setIDFarmaco(int IDFarmaco) { this.IDFarmaco = IDFarmaco; }
     public int getIDFarmaco() { return IDFarmaco; }
 
-    public void setIDContratto(IDContratto) { this.IDContratto = IDContratto; }
+    public void setIDContratto(int IDContratto) { this.IDContratto = IDContratto; }
     public int getIDContratto() { return IDContratto; }
 
-    public void setQuantitaRichiesta(quantitaRichiesta) { this.quantitaRichiesta = quantitaRichiesta; }
+    public void setQuantitaRichiesta(int quantitaRichiesta) { this.quantitaRichiesta = quantitaRichiesta; }
     public int getQuantitaRichiesta() { return quantitaRichiesta; }
 
 }

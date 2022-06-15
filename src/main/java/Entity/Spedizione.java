@@ -18,15 +18,15 @@ public class Spedizione {
         setStatoConsegna(statoConsegna);
     }
 
-    public void setIDSpedizione(IDSpedizione) { this.IDSpedizione = IDSpedizione; }
+    public void setIDSpedizione(int IDSpedizione) { this.IDSpedizione = IDSpedizione; }
     public int getIDSpedizione() { return IDSpedizione; }
 
-    public void setDataConsegna(dataConsegna) { this.dataConsegna = dataConsegna; }
+    public void setDataConsegna(String dataConsegna) { this.dataConsegna = dataConsegna; }
     public String getDataConsegna() { return dataConsegna; }
 
-    public void setStatoConsegna(statoConsegna) { this.statoConsegna = statoConsegna; }
+    public void setStatoConsegna(int statoConsegna) { this.statoConsegna = statoConsegna; }
     public int getStatoConsegna() { return statoConsegna; }
 
-    public void setIDSede(IDSede) { this.IDSede = IDSede; }
+    public void setIDSede(int IDSede) { this.IDSede = IDSede; }
     public int getIDSede() {return IDSede;}
 }

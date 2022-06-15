@@ -17,12 +17,12 @@ public class LottoSpedizione {
 
     public LottoSpedizione(){}
 
-    public void setIDLotto(IDLotto) { this.IDLotto = IDLotto; }
+    public void setIDLotto(int IDLotto) { this.IDLotto = IDLotto; }
     public int getIDLotto() { return IDLotto; }
 
-    public void setIDLotto(IDLotto) { this.IDLotto = IDLotto; }
+    public void setIDSpedizione(int IDSpedizione) { this.IDSpedizione = IDSpedizione; }
     public int getIDSpedizione() { return IDSpedizione; }
 
-    public void setQuantita(quantita) { this.quantita = quantita; }
+    public void setQuantita(int quantita) { this.quantita = quantita; }
     public int getQuantita() { return quantita; }
 }
