@@ -56,11 +56,11 @@ public class InventarioFarmaciaControl {
 
             principioAttivoField.getItems().add(f.getPrincipioAttivo());
 
-            for(Lotto l: f.getListaLotti()){
+            /*for(Lotto l: f.getListaLotti()){
                     farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getIDLotto(), l.getDataScadenza())));
             }
             TreeItem empty = new TreeItem(new Farmaco("","",0,"",""));
-            root.getChildren().add(empty);
+            root.getChildren().add(empty);*/
         }
 
         nomeCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getNomeFarmaco()));
