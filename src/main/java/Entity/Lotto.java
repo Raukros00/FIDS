@@ -1,8 +1,8 @@
 package Entity;
 
-public class Lotto extends Farmaco {
+public class Lotto {
 
-    private String IDLotto;
+    private String codiceLotto;
     private String dataScadenza;
     private String dataProduzione;
     private int quantitaLotto;
@@ -10,16 +10,16 @@ public class Lotto extends Farmaco {
 
     public Lotto() {}
 
-    public Lotto(String IDLotto, String dataScadenza, String dataProduzione, int quantitaLotto, int FKFarmaco) {
-        setIDLotto(IDLotto);
+    public Lotto(String codiceLotto, String dataScadenza, String dataProduzione, int quantitaLotto, int FKFarmaco) {
+        setCodiceLotto(codiceLotto);
         setDataScadenza(dataScadenza);
         setDataProduzione(dataProduzione);
         setQuantitaLotto(quantitaLotto);
         setFKFarmaco(FKFarmaco);
     }
 
-    public void setIDLotto(String IDLotto) { this.IDLotto = IDLotto; }
-    public String getIDLotto() { return IDLotto; }
+    public void setCodiceLotto(String codiceLotto) { this.codiceLotto = codiceLotto; }
+    public String getCodiceLotto() { return codiceLotto; }
 
     public void setDataScadenza(String dataScadenza) { this.dataScadenza = dataScadenza; }
     public String getDataScadenza() { return dataScadenza; }

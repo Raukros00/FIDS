@@ -19,6 +19,17 @@ public class Utente {
         setPassword(password);
         setNome(nome);
         setCognome(cognome);
+        setDataNascita(dataNascita);
+        setEmail(email);
+        setRuolo(ruolo);
+    }
+
+    public Utente(int IDUtente, String username, String password, String nome, String cognome, int ruolo) {
+        setIDUtente(IDUtente);
+        setUsername(username);
+        setPassword(password);
+        setNome(nome);
+        setCognome(cognome);
         setRuolo(ruolo);
     }
 
@@ -38,8 +49,8 @@ public class Utente {
     public void setCognome(String cognome) { this.cognome = cognome; }
     public String getCognome() { return cognome; }
 
-    public void setdataNascita(String dataNascita) { this.dataNascita = dataNascita; }
-    public String getdataNascita() { return dataNascita; }
+    public void setDataNascita(String dataNascita) { this.dataNascita = dataNascita; }
+    public String getDataNascita() { return dataNascita; }
 
     public void setEmail(String email) { this.email = email; }
     public String getEmail() { return email; }
