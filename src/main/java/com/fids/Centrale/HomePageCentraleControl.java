@@ -47,14 +47,13 @@ public class HomePageCentraleControl {
         window.setScene(new Scene(root));
     }
 
-    /*public void gestioneInventarioCentrale(ActionEvent event) throws IOException {
+   /* public void gestioneInventarioCentrale(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("InventarioFarmacia.fxml"));
+        loader.setLocation(getClass().getResource("InventarioCentrale.fxml"));
         Parent root = loader.load();
-        InventarioFarmaciaControl inventarioFControl = loader.getController();
-        inventarioFControl.setFarmacia(farmacia.getIDFarmacia());
+        InventarioCentraleControl inventarioCControl = loader.getController();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Inventario Farmacia");
+        stage.setTitle("Inventario Centrale");
         stage.setScene(new Scene(root));
         stage.show();
     }*/
