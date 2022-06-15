@@ -55,6 +55,8 @@ public class InventarioFarmaciaControl {
     public void stampaTabella(LinkedList<Farmaco> listaFarmaci){
         TreeItem root = new TreeItem(new Farmaco(" ", " ","",""," "));
         TreeItem farmaco;
+
+        principioAttivoField.getItems().add("");
         for(Farmaco f: listaFarmaci)
             principioAttivoField.getItems().add(f.getPrincipioAttivo());
         for(Farmaco f: listaFarmaci) {
@@ -62,7 +64,6 @@ public class InventarioFarmaciaControl {
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
             root.getChildren().add(farmaco);
 
-            //principioAttivoField.getItems().add(f.getPrincipioAttivo());
 
             for(Lotto l: f.getListaLotti()){
                 farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
@@ -97,6 +98,7 @@ public class InventarioFarmaciaControl {
     public void applicaFiltro(ActionEvent event) {
         String nomeFarmaco = nomeFarmacoField.getText();
         String principioAttivo = principioAttivoField.getValue();
+        if(principioAttivo==null) principioAttivo="";
         String dataDiScadenza = null;
         if(dataDiScadenzaField.getValue() != null)
              dataDiScadenza = dataDiScadenzaField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -106,11 +108,17 @@ public class InventarioFarmaciaControl {
         for(Farmaco f: listaFarmaci) {
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
 
-            if((nomeFarmaco != null && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase())) && (principioAttivo != null && principioAttivo.equals(f.getPrincipioAttivo()))) {
+            System.err.println(f.getNomeFarmaco().toLowerCase() + " " + nomeFarmaco.toLowerCase() + " " + f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()));
+            //if(((!nomeFarmaco.isEmpty() || !nomeFarmaco.trim().equals("")) && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase())) && ((f.getPrincipioAttivo().equals(principioAttivo))))
+            if(nomeFarmaco.isEmpty() && principioAttivo=="") {
+                root.getChildren().add(farmaco);
+            } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()) && principioAttivo==""){
+                root.getChildren().add(farmaco);
+            } else if (nomeFarmaco.isEmpty() && f.getPrincipioAttivo().equals(principioAttivo)){
+                root.getChildren().add(farmaco);
+            } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()) && f.getPrincipioAttivo().equals(principioAttivo))
                 root.getChildren().add(farmaco);
 
-               // principioAttivoField.getItems().add(f.getPrincipioAttivo());
-            }
 
             for(Lotto l: f.getListaLotti()){
                 if((dataDiScadenza != null && dataDiScadenza.equalsIgnoreCase(l.getDataScadenza())) || dataDiScadenza == null)
@@ -128,7 +136,9 @@ public class InventarioFarmaciaControl {
         listaFarmaciTable.setShowRoot(false);
 
 
-
+        nomeFarmaco=null;
+        principioAttivo=null;
+        dataDiScadenza=null;
     }
 
 
