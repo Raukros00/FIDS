@@ -2,7 +2,7 @@ package Entity;
 
 public class LottoSpedizione {
 
-    private int IDLotto;
+    private String codiceLotto;
 
     private int IDSpedizione;
 
@@ -17,8 +17,8 @@ public class LottoSpedizione {
 
     public LottoSpedizione(){}
 
-    public void setIDLotto(int IDLotto) { this.IDLotto = IDLotto; }
-    public int getIDLotto() { return IDLotto; }
+    public void setCodiceLotto(String codiceLotto) { this.codiceLotto = codiceLotto; }
+    public String getCodiceLotto() { return codiceLotto; }
 
     public void setIDSpedizione(int IDSpedizione) { this.IDSpedizione = IDSpedizione; }
     public int getIDSpedizione() { return IDSpedizione; }

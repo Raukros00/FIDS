@@ -184,7 +184,7 @@ public class DBMSBoundary {
 
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "SELECT * FROM Farmaco, Lotto WHERE Farmaco.IDFarmaco = Lotto.FKFarmaco ORDER BY IDFarmaco";
+            String sql = "SELECT *, DATE_FORMAT(date, '%d/%m/%Y') AS Data_Scadenza FROM Farmaco, Lotto WHERE Farmaco.IDFarmaco = Lotto.FKFarmaco ORDER BY IDFarmaco";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             int IDFarmaco = -1;

@@ -36,7 +36,7 @@
             </Button>
             <Label layoutX="65.0" layoutY="46.0" text="Nome del farmaco" />
             <Label layoutX="281.0" layoutY="46.0" text="Principio attivo" />
-            <Label layoutX="461.0" layoutY="45.0" text="Data di scadenza" />
+            <Label layoutX="461.0" layoutY="46.0" text="Data di scadenza" />
             <ChoiceBox fx:id="principioAttivoField" layoutX="281.0" layoutY="65.0" prefWidth="150.0" style="-fx-background-radius: 8;" />
             <ToolBar prefHeight="13.0" prefWidth="1050.0">
               <items>
