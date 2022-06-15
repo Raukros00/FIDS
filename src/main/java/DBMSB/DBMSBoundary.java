@@ -93,43 +93,54 @@ public class DBMSBoundary {
 
         DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Farmacia_" + idFarmacia + "?user=admin&password=Az-10694@";
         LinkedList<Farmaco> listaFarmaci = new LinkedList<Farmaco>();
-        Farmaco f;
-        Lotto l;
+        Farmaco f = new Farmaco();
+        Lotto l = new Lotto();
         try {
 
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "SELECT * FROM Farmaco";
+            String sql = "SELECT * FROM Farmaco, Lotto WHERE Farmaco.IDFarmaco = Lotto.FKFarmaco ORDER BY IDFarmaco";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
-            ResultSet resultSet2;
+            int IDFarmaco = -1;
+
             while (resultSet.next()) {
 
-                f = new Farmaco();
-                f.setIDFarmaco(resultSet.getInt("IDFarmaco"));
-                f.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
-                f.setPrincipioAttivo(resultSet.getString("principioAttivo"));
-
-                sql = "SELECT * FROM Lotto WHERE FKFarmaco =?";
-                preparedStatement = conn.prepareStatement(sql);
-                preparedStatement.setInt(1, f.getIDFarmaco());
-                resultSet2 = preparedStatement.executeQuery();
-
-
-                while (resultSet2.next()) {
-                    l = new Lotto();
-
-                    l.setCodiceLotto(resultSet2.getString("codiceLotto"));
-                    l.setDataScadenza(resultSet2.getString("dataScadenza"));
-                    l.setDataProduzione(resultSet2.getString("dataProduzione"));
-                    l.setQuantitaLotto(resultSet2.getInt("quantitaLotto"));
-                    f.setQuantitaFarmaco(f.getQuantitaFarmaco() + l.getQuantitaLotto());
-                    f.inserisciLotto(l);
+                if(resultSet.getInt("IDFarmaco") != IDFarmaco && IDFarmaco != -1) {
+                    listaFarmaci.add(f);
+                    f = new Farmaco();
+                    System.err.println(listaFarmaci.getFirst().getNomeFarmaco());
                 }
 
-                listaFarmaci.add(f);
+                if(resultSet.getInt("IDFarmaco") != IDFarmaco) {
 
+                    f.setIDFarmaco(resultSet.getInt("IDFarmaco"));
+                    f.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
+                    f.setPrincipioAttivo(resultSet.getString("principioAttivo"));
+
+                    IDFarmaco = resultSet.getInt("IDFarmaco");
+                    l = new Lotto();
+                    l.setCodiceLotto(resultSet.getString("codiceLotto"));
+                    l.setDataScadenza(resultSet.getString("dataScadenza"));
+                    l.setDataProduzione(resultSet.getString("dataProduzione"));
+                    l.setQuantitaLotto(String.valueOf(resultSet.getInt("quantitaLotto")));
+                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(l.getQuantitaLotto())));
+                    f.inserisciLotto(l);
+
+                }
+
+                else {
+                    l = new Lotto();
+                    l.setCodiceLotto(resultSet.getString("codiceLotto"));
+                    l.setDataScadenza(resultSet.getString("dataScadenza"));
+                    l.setDataProduzione(resultSet.getString("dataProduzione"));
+                    l.setQuantitaLotto(resultSet.getString("quantitaLotto"));
+                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(l.getQuantitaLotto())));
+                    f.inserisciLotto(l);
+
+                }
             }
+            listaFarmaci.add(f);
 
         } catch (Exception e) {
             e.printStackTrace();
