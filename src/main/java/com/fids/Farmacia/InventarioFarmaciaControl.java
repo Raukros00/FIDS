@@ -32,7 +32,11 @@ public class InventarioFarmaciaControl {
     @FXML
     private Button homeFarmaciaButton;
     @FXML
+    private TextField nomeFarmacoField;
+    @FXML
     private ChoiceBox<String> principioAttivoField;
+    @FXML
+    private Button filtraButton;
     private int idFarmacia;
     private DBMSBoundary dbms = new DBMSBoundary();
 
@@ -54,7 +58,7 @@ public class InventarioFarmaciaControl {
 
             for(Lotto l: f.getListaLotti()){
                     farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getIDLotto(), l.getDataScadenza())));
-;            }
+            }
             TreeItem empty = new TreeItem(new Farmaco("","",0,"",""));
             root.getChildren().add(empty);
         }
@@ -79,5 +83,10 @@ public class InventarioFarmaciaControl {
         window.setScene(new Scene(root));
     }
 
+    public void applicaFiltro(ActionEvent event) {
+
+    }
+
 
 }
+//AAAAAA
