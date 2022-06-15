@@ -40,7 +40,7 @@
             <ChoiceBox fx:id="principioAttivoField" layoutX="281.0" layoutY="65.0" prefWidth="150.0" style="-fx-background-radius: 8;" />
             <ToolBar prefHeight="13.0" prefWidth="1050.0">
                <items>
-                  <Button fx:id="homeFarmaciaButton" mnemonicParsing="false" onAction="#homeFarmacia" style="-fx-background-color: #206777;" text="Indietro" textFill="WHITE" />
+                  <Button fx:id="homePageCentraleButton" mnemonicParsing="false" onAction="#homeFarmacia" style="-fx-background-color: #206777;" text="Indietro" textFill="WHITE" />
                </items>
             </ToolBar>
          </children>

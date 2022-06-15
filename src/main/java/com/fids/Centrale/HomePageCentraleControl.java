@@ -3,7 +3,6 @@ package com.fids.Centrale;
 import DBMSB.DBMSBoundary;
 import Entity.Utente;
 import com.fids.AccessApplication;
-import com.fids.Farmacia.InventarioFarmaciaControl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,7 +46,7 @@ public class HomePageCentraleControl {
         window.setScene(new Scene(root));
     }
 
-   /* public void gestioneInventarioCentrale(ActionEvent event) throws IOException {
+   public void gestioneInventarioCentrale(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("InventarioCentrale.fxml"));
         Parent root = loader.load();
@@ -56,5 +55,5 @@ public class HomePageCentraleControl {
         stage.setTitle("Inventario Centrale");
         stage.setScene(new Scene(root));
         stage.show();
-    }*/
+    }
 }
