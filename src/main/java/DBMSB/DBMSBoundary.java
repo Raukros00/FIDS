@@ -119,7 +119,7 @@ public class DBMSBoundary {
                 while (resultSet2.next()) {
                     l = new Lotto();
 
-                    l.setIDLotto(resultSet2.getString("codiceLotto"));
+                    l.setCodiceLotto(resultSet2.getString("codiceLotto"));
                     l.setDataScadenza(resultSet2.getString("dataScadenza"));
                     l.setDataProduzione(resultSet2.getString("dataProduzione"));
                     l.setQuantitaLotto(resultSet2.getInt("quantitaLotto"));

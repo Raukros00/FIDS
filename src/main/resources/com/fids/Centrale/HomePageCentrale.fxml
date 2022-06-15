@@ -23,28 +23,34 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="inventarioCentraleButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Gestione Inventario" textFill="WHITE" GridPane.rowIndex="1">
+                <Button fx:id="inventarioCentraleButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Gestione Inventario" textFill="WHITE" GridPane.rowIndex="1">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
-                <Button fx:id="sediEContrattiButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Gestione Sedi &#10;e Contratti" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="2">
+                <Button fx:id="sediEContrattiButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Gestione Sedi &#10;e Contratti" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="2">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
-                <Button fx:id="segnalazioniButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Segnalazioni" textFill="WHITE">
+                <Button fx:id="segnalazioniButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Segnalazioni" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
-                <Button fx:id="spedizioniButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Visualizza Spedizioni" textFill="WHITE" GridPane.rowIndex="3">
+                <Button fx:id="spedizioniButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Visualizza Spedizioni" textFill="WHITE" GridPane.rowIndex="3">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
+            <Button fx:id="registraUtenteButton" layoutX="10.0" layoutY="219.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Registra Utente" textFill="WHITE" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
             </children>
             <BorderPane.margin>
                 <Insets />
@@ -88,7 +94,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button fx:id="modificaPasswordButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="181.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Modifica &#10;Credenziali" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1">
+                        <Button fx:id="modificaPasswordButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="181.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Modifica &#10;Credenziali" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1">
                             <font>
                                 <Font name="System Bold" size="15.0" />
                             </font>
@@ -96,7 +102,7 @@
                                 <Insets top="2.0" />
                             </GridPane.margin>
                         </Button>
-                        <Button fx:id="logoutButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="181.0" style="-fx-background-radius: 16; -fx-background-color: #206777;" text="Esci&#10;" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="2">
+                        <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="48.0" prefWidth="181.0" style="-fx-background-radius: 16; -fx-background-color: #206777; -fx-cursor: hand;" text="Esci&#10;" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="2">
                             <font>
                                 <Font name="System Bold" size="15.0" />
                             </font>
