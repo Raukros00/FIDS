@@ -2,6 +2,7 @@ package com.fids.Login;
 
 import DBMSB.DBMSBoundary;
 import Entity.Utente;
+import com.fids.Centrale.HomePageCentraleControl;
 import com.fids.Farmacia.HomeFarmaciaControl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,6 +34,9 @@ public class AccessControl {
     private Button accediButton;
     private DBMSBoundary dbms = new DBMSBoundary();
     private Utente user;
+    Stage stage;
+    FXMLLoader loader;
+    Parent root;
 
     @FXML
     public void inserisciCredenziali(ActionEvent event) throws IOException {
@@ -71,19 +75,27 @@ public class AccessControl {
                     switch(user.getRuolo()) {
 
                         case 1:
-                            FXMLLoader loader = new FXMLLoader();
+                            loader = new FXMLLoader();
                             loader.setLocation(HomeFarmaciaControl.class.getResource("HomeFarmacia.fxml"));
-                            Parent root = loader.load();
+                            root = loader.load();
                             HomeFarmaciaControl homeFControl = loader.getController();
                             homeFControl.setUser(user);
-                            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                            stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                             stage.setTitle("Home Farmacia");
                             stage.setScene(new Scene(root));
                             stage.show();
                         break;
 
                         case 2:
-
+                            loader = new FXMLLoader();
+                            loader.setLocation(HomePageCentraleControl.class.getResource("HomePageCentrale.fxml"));
+                            root = loader.load();
+                            HomePageCentraleControl homeCControl = loader.getController();
+                            homeCControl.setUser(user);
+                            stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                            stage.setTitle("HomePage Centrale");
+                            stage.setScene(new Scene(root));
+                            stage.show();
                         break;
 
                         case 3:

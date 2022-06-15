@@ -12,11 +12,11 @@ import java.util.LinkedList;
 public class DBMSBoundary {
     private String DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
 
-    public Utente verificaCredenziali(String username, String password){
+    public Utente verificaCredenziali(String username, String password) {
 
         Utente user = new Utente();
 
-        try{
+        try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
             String sql = "SELECT * FROM Utente WHERE username = ?";
@@ -25,14 +25,14 @@ public class DBMSBoundary {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 sql = "SELECT * FROM Utente WHERE username =? AND password =?";
                 preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, username);
                 preparedStatement.setString(2, password);
                 resultSet = preparedStatement.executeQuery();
 
-                if(resultSet.next()) {
+                if (resultSet.next()) {
 
                     user.setIDUtente(Integer.parseInt(resultSet.getString("IDUtente")));
                     user.setUsername(username);
@@ -44,15 +44,13 @@ public class DBMSBoundary {
                     user.setIDSede(Integer.parseInt(resultSet.getString("FKSede")));
                     return user;
 
-                }
-                else{
+                } else {
                     user.setIDUtente(-1);
                     return user;
                 }
 
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         user.setIDUtente(-2);
@@ -63,7 +61,6 @@ public class DBMSBoundary {
 
         Farmacia farmacia = new Farmacia();
         LocalDate data = LocalDate.now();
-        System.out.println(data + " id: " + idFarmacia);
 
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -85,9 +82,7 @@ public class DBMSBoundary {
                 System.out.println(farmacia.getNomeSede());
                 return farmacia;
             }
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -108,7 +103,7 @@ public class DBMSBoundary {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             ResultSet resultSet2;
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 f = new Farmaco();
                 f.setIDFarmaco(resultSet.getInt("IDFarmaco"));
@@ -121,7 +116,7 @@ public class DBMSBoundary {
                 resultSet2 = preparedStatement.executeQuery();
 
 
-                while(resultSet2.next()) {
+                while (resultSet2.next()) {
                     l = new Lotto();
 
                     l.setIDLotto(resultSet2.getString("codiceLotto"));
@@ -131,15 +126,42 @@ public class DBMSBoundary {
                     f.setQuantitaFarmaco(f.getQuantitaFarmaco() + l.getQuantitaLotto());
                     f.inserisciLotto(l);
                 }
-                
+
                 listaFarmaci.add(f);
 
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return listaFarmaci;
     }
+
+    /*
+    -------------------------------------------------------
+    |                                                     |
+    |                   QUERY CENTRALE                    |
+    |                                                     |
+    -------------------------------------------------------
+    */
+    public String richiediNumSegnalazioni() {
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "SELECT COUNT(IDSegnalazione) AS 'NUM_SEGNALAZIONI' FROM Segnalazione;";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("NUM_SEGNALAZIONI");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
+
+
