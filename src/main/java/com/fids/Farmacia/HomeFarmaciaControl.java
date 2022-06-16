@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HomeFarmaciaControl extends GlobalData{
-
+    @FXML
     public Button venditaFarmaciButton;
     public Button modificaContrattoButton;
     public Button gestioneInventarioButton;
@@ -85,6 +85,18 @@ public class HomeFarmaciaControl extends GlobalData{
         inventarioFControl.setFarmacia(ID_FARMACIA);
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Inventario Farmacia");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public void vendita(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("Vendita.fxml"));
+        Parent root = loader.load();
+        VenditaControl venditaFControl = loader.getController();
+        venditaFControl.setIDFarmacia(ID_FARMACIA);
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Vendita");
         stage.setScene(new Scene(root));
         stage.show();
     }

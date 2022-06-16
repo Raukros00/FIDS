@@ -26,7 +26,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="venditaFarmaciButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Vendita" textFill="WHITE" GridPane.rowIndex="1">
+                <Button fx:id="venditaFarmaciButton" mnemonicParsing="false" onAction="#vendita" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Vendita" textFill="WHITE" GridPane.rowIndex="1">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
@@ -41,7 +41,7 @@
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
-                <Button fx:id="gestioneInventarioButton" onAction="#gestioneInventario" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Gestione Inventario" textFill="WHITE">
+                <Button fx:id="gestioneInventarioButton" mnemonicParsing="false" onAction="#gestioneInventario" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Gestione Inventario" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
@@ -144,7 +144,7 @@
                                 <Insets top="2.0" />
                             </GridPane.margin>
                         </Button>
-                        <Button fx:id="logoutButton" onAction="#logout" mnemonicParsing="false" prefHeight="48.0" prefWidth="181.0" style="-fx-background-radius: 16; -fx-background-color: #206777;" text="Esci&#10;" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="2">
+                        <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="48.0" prefWidth="181.0" style="-fx-background-radius: 16; -fx-background-color: #206777;" text="Esci&#10;" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="2">
                             <font>
                                 <Font name="System Bold" size="15.0" />
                             </font>
