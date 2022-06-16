@@ -98,6 +98,7 @@ public class DBMSBoundary {
         try {
 
             Connection conn = DriverManager.getConnection(DB_URL);
+
             Statement stat = conn.createStatement();
             String sql = "SELECT * FROM Farmaco, Lotto WHERE Farmaco.IDFarmaco = Lotto.FKFarmaco ORDER BY IDFarmaco";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -181,7 +182,6 @@ public class DBMSBoundary {
         Farmaco f = new Farmaco();
         Lotto l = new Lotto();
         try {
-
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
             String sql = "SELECT *, DATE_FORMAT(date, '%d/%m/%Y') AS Data_Scadenza FROM Farmaco, Lotto WHERE Farmaco.IDFarmaco = Lotto.FKFarmaco ORDER BY IDFarmaco";
@@ -235,5 +235,3 @@ public class DBMSBoundary {
     }
 
 }
-
-
