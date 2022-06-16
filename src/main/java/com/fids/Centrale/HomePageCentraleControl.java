@@ -6,6 +6,7 @@ import com.fids.AccessApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,17 +16,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HomePageCentraleControl {
-
-    public Button segnalazioniButton;
-    public Button inventarioCentraleButton;
-    public Button sediEContrattiButton;
-    public Button spedizioniButton;
     @FXML
     public Button logoutButton;
     @FXML
     private Label nomeCognomeLabel;
     @FXML
     private Label numSegnalazioniLabel;
+    @FXML
+    public Button registraUtenteButton;
     private Utente user;
 
     public void setUser(Utente user) {
@@ -46,13 +44,25 @@ public class HomePageCentraleControl {
     }
 
    public void gestioneInventarioCentrale(ActionEvent event) throws IOException {
-        /*FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("InventarioCentrale.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(RegistraUtenteControl.class.getResource("InventarioCentrale.fxml"));
         Parent root = loader.load();
         InventarioCentraleControl inventarioCControl = loader.getController();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Inventario Centrale");
         stage.setScene(new Scene(root));
-        stage.show();*/
+        stage.show();
+    }
+
+    public void registraUtente(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("RegistraUtente.fxml"));
+        Parent root = loader.load();
+        RegistraUtenteControl registraUtenteControl = loader.getController();
+        registraUtenteControl.setFields();
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Registra Utente");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }
