@@ -99,28 +99,23 @@ public class InventarioFarmaciaControl {
         String nomeFarmaco = nomeFarmacoField.getText();
         String principioAttivo = principioAttivoField.getValue();
         if (principioAttivo == null) principioAttivo = "";
-        String dataDiScadenza = null;
-        if (dataDiScadenzaField.getValue() != null)
-            dataDiScadenza = dataDiScadenzaField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String dataDiScadenza = "0000-00-00";
+
         Boolean flag = false;
-        Boolean flag1 = false;
 
         TreeItem root = new TreeItem(new Farmaco(" ", " ", "", "", " "));
         TreeItem farmaco;
 
         for (Farmaco f : listaFarmaci) {
-            System.err.println("CIao");
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
 
-            System.err.println(f.getNomeFarmaco().toLowerCase() + " " + nomeFarmaco.toLowerCase() + " " + f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()));
-            //if(((!nomeFarmaco.isEmpty() || !nomeFarmaco.trim().equals("")) && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase())) && ((f.getPrincipioAttivo().equals(principioAttivo))))
-            if (nomeFarmaco.isEmpty() && principioAttivo == "") {
+            if (nomeFarmaco == null && principioAttivo == "") {
                 root.getChildren().add(farmaco);
-            } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()) && principioAttivo == "") {
+            } else if (nomeFarmaco != null && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()) && principioAttivo == "") {
                 root.getChildren().add(farmaco);
-            } else if (nomeFarmaco.isEmpty() && f.getPrincipioAttivo().equals(principioAttivo)) {
+            } else if (nomeFarmaco == null && f.getPrincipioAttivo().equals(principioAttivo)) {
                 root.getChildren().add(farmaco);
-            } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()) && f.getPrincipioAttivo().equals(principioAttivo))
+            } else if (nomeFarmaco != null && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()) && f.getPrincipioAttivo().equals(principioAttivo))
                 root.getChildren().add(farmaco);
 
             if(dataDiScadenza != null && !flag) {
@@ -128,11 +123,17 @@ public class InventarioFarmaciaControl {
                 flag = true;
             }
 
-            for (Lotto l : f.getListaLotti()) {
 
-                if ((dataDiScadenza != null && dataDiScadenza.equalsIgnoreCase(l.getDataScadenza())) || dataDiScadenza == null) {
-                    System.err.println("SONO DENTRO!!!");
-                    root.getChildren().add(farmaco);
+            for (Lotto l : f.getListaLotti()) {
+                if (dataDiScadenzaField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) != null)
+                    dataDiScadenza = dataDiScadenzaField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+
+                if (((dataDiScadenza != null && dataDiScadenza.equalsIgnoreCase(l.getDataScadenza()))) || dataDiScadenza == null) {
+
+                    if(dataDiScadenza != null)
+                        root.getChildren().add(farmaco);
+
                     farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
                 }
 
@@ -152,5 +153,9 @@ public class InventarioFarmaciaControl {
                 dataDiScadenza = null;
             }
         }
+    }
+
+    public void resetTable(ActionEvent event) {
+        stampaTabella(listaFarmaci);
     }
 }
