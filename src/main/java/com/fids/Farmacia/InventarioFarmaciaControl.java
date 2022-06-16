@@ -103,11 +103,13 @@ public class InventarioFarmaciaControl {
         if (dataDiScadenzaField.getValue() != null)
             dataDiScadenza = dataDiScadenzaField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         Boolean flag = false;
+        Boolean flag1 = false;
 
         TreeItem root = new TreeItem(new Farmaco(" ", " ", "", "", " "));
         TreeItem farmaco;
 
         for (Farmaco f : listaFarmaci) {
+            System.err.println("CIao");
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
 
             System.err.println(f.getNomeFarmaco().toLowerCase() + " " + nomeFarmaco.toLowerCase() + " " + f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()));
@@ -127,7 +129,9 @@ public class InventarioFarmaciaControl {
             }
 
             for (Lotto l : f.getListaLotti()) {
+
                 if ((dataDiScadenza != null && dataDiScadenza.equalsIgnoreCase(l.getDataScadenza())) || dataDiScadenza == null) {
+                    System.err.println("SONO DENTRO!!!");
                     root.getChildren().add(farmaco);
                     farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
                 }
