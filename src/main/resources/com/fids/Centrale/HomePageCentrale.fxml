@@ -46,7 +46,7 @@
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
-            <Button fx:id="registraUtenteButton" layoutX="10.0" layoutY="219.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Registra Utente" textFill="WHITE" GridPane.rowIndex="4">
+            <Button fx:id="registraUtenteButton" layoutX="10.0" layoutY="219.0" mnemonicParsing="false" onAction="#registraUtente" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Registra Utente" textFill="WHITE" GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
