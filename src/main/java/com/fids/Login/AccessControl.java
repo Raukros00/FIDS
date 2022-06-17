@@ -58,7 +58,7 @@ public class AccessControl {
 
             if(password.isEmpty()){
                 passwordLabel.setText("La password è obbligatoria!");
-                passwordLabel.setTextFill(Color.color(1, 0, 0));;
+                passwordLabel.setTextFill(Color.color(1, 0, 0));
             }
             else {
 

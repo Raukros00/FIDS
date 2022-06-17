@@ -25,18 +25,28 @@
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.2000732421875" minWidth="10.0" percentWidth="16.5" prefWidth="244.2000732421875" />
                     </columnConstraints>
                     <rowConstraints>
+                      <RowConstraints />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="641.0" text="L'username verrà generato automaticamente come &quot;Nome.Cognome&quot; e la password sarà &quot;0000&quot;." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="641.0" text="L'username verrà generato automaticamente come &quot;Nome.Cognome&quot; e la password sarà &quot;0000&quot;." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <Button fx:id="confermaRegistraButton" alignment="CENTER" mnemonicParsing="false" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Registra Utente" textAlignment="CENTER" textFill="WHITE">
+                              <Button fx:id="confermaRegistraButton" alignment="CENTER" mnemonicParsing="false" onAction="#registraUtente" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Registra Utente" textAlignment="CENTER" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="20.0" />
                                  </font>
                               </Button>
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="28.0" prefWidth="694.0" GridPane.columnIndex="1">
+                           <children>
+                              <Label fx:id="erroreLabel">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </VBox>
                      </children>
@@ -104,17 +114,17 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="ruoloField" onMouseClicked="#ruoloFarmacista" prefHeight="26.0" prefWidth="223.0" />
+                        <ChoiceBox fx:id="ruoloField" onAction="#ruoloFarmacista" prefHeight="26.0" prefWidth="223.0" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <children>
-                        <Label text="Sede" visible="false">
+                        <Label fx:id="sedeLabel" text="Sede" visible="false">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="sedeField" prefHeight="26.0" prefWidth="235.0" />
+                        <ChoiceBox fx:id="sedeField" prefHeight="26.0" prefWidth="235.0" visible="false" />
                      </children>
                   </VBox>
                </children>

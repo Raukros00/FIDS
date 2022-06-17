@@ -8,10 +8,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 
 public class RegistraUtenteControl {
     @FXML
@@ -26,6 +28,10 @@ public class RegistraUtenteControl {
     public ChoiceBox<String> ruoloField;
     @FXML
     public ChoiceBox<String> sedeField;
+    @FXML
+    public Label sedeLabel;
+    @FXML
+    public Label erroreLabel;
     @FXML
     private Button confermaRegistraButton;
     private DBMSBoundary dbms = new DBMSBoundary();
@@ -50,20 +56,46 @@ public class RegistraUtenteControl {
 
     public void ruoloFarmacista(ActionEvent event) throws IOException {
         if(ruoloField.getValue()=="Farmacista"){
-            System.err.println(ruoloField.getValue());
+            sedeField.setVisible(true);
+            sedeLabel.setVisible(true);
         }
         else{
-            System.err.println("Suca");
+            sedeField.setVisible(false);
+            sedeLabel.setVisible(false);
         }
     }
-    /*public void registraUtente(ActionEvent event){
+    public void registraUtente(ActionEvent event) throws IOException{
         String nome = nomeField.getText();
         String cognome = cognomeField.getText();
         String email = emailField.getText();
-        String dataNascita = dataNascitaField.getValue();
+        String dataNascita=null;
+        if(dataNascitaField.getValue()!=null) {
+            dataNascita = dataNascitaField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));//dataNascitaField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }
         String ruolo = ruoloField.getValue();
         String sede = sedeField.getValue();
-    }*/
+
+
+        if(nome.trim().isEmpty() || cognome.trim().isEmpty() || email.trim().isEmpty() || dataNascita==null || ruolo==null || (ruolo=="Farmacista" && sede==null)){
+            erroreLabel.setText("Tutti i campi sono obbligatori!");
+            erroreLabel.setTextFill(Color.color(1, 0, 0));
+        } else{
+            System.err.println("nome:"+nome+nome.trim().isEmpty()+"\ncognome:"+cognome+cognome.trim().isEmpty()+"\nemail:"+email+email.trim().isEmpty()+"\ndataNascita:"+dataNascita+dataNascita.trim().isEmpty()+"\nruolo:"+ruolo+"\nsede:"+sede);
+            try{
+                //utenti.first();
+                while(utenti.next()){
+                    System.err.println(utenti.getString("email"));
+                    if(utenti.getString("email").equals(email)){
+                        erroreLabel.setText("L'utente inserito è già stato registrato!");
+                        erroreLabel.setTextFill(Color.color(1, 0, 0));
+                        break;
+                    }
+                }
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 }
