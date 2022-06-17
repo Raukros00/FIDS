@@ -261,8 +261,8 @@ public class DBMSBoundary {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
-                if(email.toLowerCase().equals(resultSet.getString("email"))) {
-                    System.err.println(email + " " + resultSet.getString("email"));
+                System.err.println(resultSet.getString("email"));
+                if(email.equalsIgnoreCase(resultSet.getString("email"))) {
                     return true;
                 }
             }
@@ -287,7 +287,8 @@ public class DBMSBoundary {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return usernames;
+        System.err.println("Ora return");
+        return(usernames);
     }
     public void insertUtente(String nome, String cognome, String dataNascita, String email, String username, String ruolo, String IDsede){
         DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
