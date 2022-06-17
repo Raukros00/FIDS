@@ -35,13 +35,9 @@ public class RegistraUtenteControl {
     ResultSet utenti= dbms.getUtenti();
 
     public void setFields(){
-        String idSede="-1";
         try{
             while(utenti.next()) {
-                if (!utenti.getString("IDSede").equals(idSede)) {
-                    sedeField.getItems().add(utenti.getString("nomeSede"));
-                    idSede = utenti.getString("IDSede");
-                }
+                sedeField.getItems().add(utenti.getString("nomeSede"));
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -49,7 +45,6 @@ public class RegistraUtenteControl {
         ruoloField.getItems().add("Farmacista");
         ruoloField.getItems().add("Impiegato");
         ruoloField.getItems().add("Corriere");
-        System.out.println(utentiMap);
     }
 
     public void ruoloFarmacista(ActionEvent event) throws IOException {
@@ -73,18 +68,14 @@ public class RegistraUtenteControl {
         String ruolo = ruoloField.getValue();
         String sede = sedeField.getValue();
         String IDSede = String.valueOf(sedeField.getSelectionModel().getSelectedIndex()+1);
-        System.err.println("1");
         if(nome.trim().isEmpty() || cognome.trim().isEmpty() || email.trim().isEmpty() || dataNascita==null || ruolo==null || (ruolo=="Farmacista" && sede==null)){
             erroreLabel.setText("Tutti i campi sono obbligatori!");
             erroreLabel.setTextFill(Color.color(1, 0, 0));
         } else{
-            System.err.println("2");
             if(dbms.verificaEmail(email)) {
                 erroreLabel.setText("L'utente inserito è già stato registrato!");
                 erroreLabel.setTextFill(Color.color(1, 0, 0));
-                System.err.println("Utente già inserito");
             }else{
-                System.err.println("3");
                 ArrayList<String> usernames = dbms.getUsernames();
                 String username=nome+"."+cognome;
                 int count=0;
@@ -95,12 +86,10 @@ public class RegistraUtenteControl {
                 }
                 if(count!=0)
                     username=username+String.valueOf(count);
-                System.err.println(username);
                 dbms.insertUtente(nome, cognome, dataNascita, email, username, ruolo, IDSede);
-                erroreLabel.setText("Aggiunto!");
+                erroreLabel.setText("Aggiunto! Ho bisogno di una boundary");
                 erroreLabel.setTextFill(Color.color(1, 0, 0));
             }
         }
     }
-
 }

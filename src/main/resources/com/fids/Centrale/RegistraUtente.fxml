@@ -30,7 +30,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="641.0" text="L'username verrà generato automaticamente come &quot;Nome.Cognome&quot; e la password sarà &quot;0000&quot;." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="641.0" text="L'username verrà generato automaticamente come &quot;nome.cognome&quot; e la password sarà &quot;0000&quot;." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
                               <Button fx:id="confermaRegistraButton" alignment="CENTER" mnemonicParsing="false" onAction="#registraUtente" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Registra Utente" textAlignment="CENTER" textFill="WHITE">

@@ -36,7 +36,7 @@
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
-                <Button fx:id="segnalazioniButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Segnalazioni" textFill="WHITE">
+                <Button fx:id="segnalazioniButton" mnemonicParsing="false" onAction="#segnalazioni" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Segnalazioni" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
