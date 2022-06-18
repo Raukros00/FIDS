@@ -7,6 +7,8 @@ import Entity.Utente;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class DBMSBoundary {
@@ -239,7 +241,7 @@ public class DBMSBoundary {
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "select IDSede, nomeSede, email from Sede S left join Utente U on S.IDSede = U.FKSede Union select IDSede, nomeSede, email from Sede S right join Utente U on S.IDSede = U.FKSede;";
+            String sql = "select IDSede, nomeSede from Sede;";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -248,6 +250,88 @@ public class DBMSBoundary {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean verificaEmail(String email){
+        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "select email from Utente";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                System.err.println(resultSet.getString("email"));
+                if(email.equalsIgnoreCase(resultSet.getString("email"))) {
+                    return true;
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public ArrayList getUsernames(){
+        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        ArrayList<String> usernames = new ArrayList<String>();
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "select username from Utente";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                usernames.add(resultSet.getString("username"));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.err.println("Ora return");
+        return(usernames);
+    }
+    public void insertUtente(String nome, String cognome, String dataNascita, String email, String username, String ruolo, String IDsede){
+        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        int ruoloVero=0;
+        if(ruolo=="Farmacista"){
+            ruoloVero=1;
+        } else if (ruolo=="Impiegato") {
+            ruoloVero=2;
+        } else if (ruolo=="Corriere") {
+            ruoloVero=3;
+        }
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            if(ruoloVero==1) {
+                String sql = "INSERT INTO Utente(nome, cognome, dataNascita, email, username, password, ruolo, FKSede) VALUES( ? , ? , ? , ? , ? ,\"0000\",\"1\", ? );";
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setString(1, nome);
+                preparedStatement.setString(2, cognome);
+                preparedStatement.setString(3, dataNascita);
+                preparedStatement.setString(4, email);
+                preparedStatement.setString(5, username);
+                preparedStatement.setString(6, IDsede);
+                int row = preparedStatement.executeUpdate();
+                // rows affected
+                System.out.println(row);
+            }else{
+                String sql = "INSERT INTO Utente(nome, cognome, dataNascita, email, username, password, ruolo, FKSede) VALUES( ? , ? , ? , ? , ? , \"0000\", ? , null);";
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setString(1, nome);
+                preparedStatement.setString(2, cognome);
+                preparedStatement.setString(3, dataNascita);
+                preparedStatement.setString(4, email);
+                preparedStatement.setString(5, username);
+                preparedStatement.setString(6, String.valueOf(ruoloVero));
+                int row = preparedStatement.executeUpdate();
+                // rows affected
+                System.out.println(row);
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

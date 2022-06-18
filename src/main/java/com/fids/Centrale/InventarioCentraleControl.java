@@ -18,6 +18,7 @@ import java.util.LinkedList;
 
 public class InventarioCentraleControl {
 
+    private String sommaquantita = "";
     @FXML
     private TreeTableView<Farmaco> listaFarmaciTable;
     @FXML

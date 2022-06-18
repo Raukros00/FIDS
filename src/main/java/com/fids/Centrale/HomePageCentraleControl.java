@@ -24,6 +24,8 @@ public class HomePageCentraleControl {
     private Label numSegnalazioniLabel;
     @FXML
     public Button registraUtenteButton;
+    @FXML
+    public Button segnalazioniButton;
     private Utente user;
 
     public void setUser(Utente user) {
@@ -62,6 +64,16 @@ public class HomePageCentraleControl {
         registraUtenteControl.setFields();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Registra Utente");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public void segnalazioni(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("Segnalazioni.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Segnalazioni");
         stage.setScene(new Scene(root));
         stage.show();
     }
