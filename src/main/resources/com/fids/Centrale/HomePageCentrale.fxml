@@ -26,7 +26,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="inventarioCentraleButton" mnemonicParsing="false" onAction="#gestioneInventarioCentrale" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Gestione Inventario" textFill="WHITE" GridPane.rowIndex="1">
+                <Button fx:id="inventarioCentraleButton" mnemonicParsing="false" onAction="#gestioneInventarioCentrale" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Gestione Inventario" textFill="WHITE" GridPane.rowIndex="1" >
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>

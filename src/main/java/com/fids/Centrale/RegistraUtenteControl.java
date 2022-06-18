@@ -35,7 +35,6 @@ public class RegistraUtenteControl {
     public Label erroreLabel;
     @FXML
     private Button confermaRegistraButton;
-    HashMap<String, String> utentiMap = new HashMap<String, String>();
     private DBMSBoundary dbms = new DBMSBoundary();
     ResultSet utenti= dbms.getUtenti();
 

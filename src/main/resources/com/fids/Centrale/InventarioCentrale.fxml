@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.InventarioFarmaciaControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.InventarioCentraleControl">
    <center>
       <TreeTableView fx:id="listaFarmaciTable" prefHeight="476.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
          <columns>
@@ -40,7 +40,7 @@
             <ChoiceBox fx:id="principioAttivoField" layoutX="281.0" layoutY="65.0" prefWidth="150.0" style="-fx-background-radius: 8;" />
             <ToolBar prefHeight="13.0" prefWidth="1050.0">
                <items>
-                  <Button fx:id="homePageCentraleButton" mnemonicParsing="false" onAction="#homeFarmacia" style="-fx-background-color: #206777;" text="Indietro" textFill="WHITE" />
+                  <Button fx:id="indietroButton" mnemonicParsing="false" onAction="#indietro" style="-fx-background-color: #206777;" text="Indietro" textFill="WHITE" />
                </items>
             </ToolBar>
          </children>

@@ -3,6 +3,7 @@ package com.fids.Centrale;
 import DBMSB.DBMSBoundary;
 import Entity.Utente;
 import com.fids.AccessApplication;
+import com.fids.Farmacia.InventarioFarmaciaControl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +27,8 @@ public class HomePageCentraleControl {
     public Button registraUtenteButton;
     @FXML
     public Button segnalazioniButton;
+    @FXML
+    public Button inventarioCentraleButton;
     private Utente user;
 
     public void setUser(Utente user) {
@@ -46,14 +49,15 @@ public class HomePageCentraleControl {
     }
 
    public void gestioneInventarioCentrale(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(RegistraUtenteControl.class.getResource("InventarioCentrale.fxml"));
-        Parent root = loader.load();
-        InventarioCentraleControl inventarioCControl = loader.getController();
-        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Inventario Centrale");
-        stage.setScene(new Scene(root));
-        stage.show();
+       FXMLLoader loader = new FXMLLoader();
+       loader.setLocation(getClass().getResource("InventarioCentrale.fxml"));
+       Parent root = loader.load();
+       InventarioCentraleControl inventarioCControl = loader.getController();
+       inventarioCControl.stampaTabella();
+       Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+       stage.setTitle("Inventario Centrale");
+       stage.setScene(new Scene(root));
+       stage.show();
     }
 
     public void registraUtente(ActionEvent event) throws IOException {
