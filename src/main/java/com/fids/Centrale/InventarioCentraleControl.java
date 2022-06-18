@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -32,7 +33,7 @@ public class InventarioCentraleControl {
     @FXML
     private TreeTableColumn<Farmaco, String> scadenzaCol;
     @FXML
-    private Button homePageCentraleButton;
+    private Button indietroButton;
     @FXML
     private TextField nomeFarmacoField;
     @FXML
@@ -43,24 +44,27 @@ public class InventarioCentraleControl {
     private Button filtraButton;
     private DBMSBoundary dbms = new DBMSBoundary();
 
-    LinkedList<Farmaco> listaFarmaci = new LinkedList<>();
 
-    public void stampaTabella(LinkedList<Farmaco> listaFarmaci){
-        TreeItem root = new TreeItem(new Farmaco(" ", " ","",""," "));
+
+    public void stampaTabella() {
+        LinkedList<Farmaco> listaFarmaci = dbms.getInventarioCentrale();
+        System.err.println(listaFarmaci);
+        TreeItem root = new TreeItem(new Farmaco(" ", " ", "", "", " "));
         TreeItem farmaco;
-        for(Farmaco f: listaFarmaci)
+
+        principioAttivoField.getItems().add("");
+        for (Farmaco f : listaFarmaci)
             principioAttivoField.getItems().add(f.getPrincipioAttivo());
-        for(Farmaco f: listaFarmaci) {
+        for (Farmaco f : listaFarmaci) {
 
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
             root.getChildren().add(farmaco);
 
-            //principioAttivoField.getItems().add(f.getPrincipioAttivo());
 
-            for(Lotto l: f.getListaLotti()){
+            for (Lotto l : f.getListaLotti()) {
                 farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
             }
-            TreeItem empty = new TreeItem(new Farmaco("","","","",""));
+            TreeItem empty = new TreeItem(new Farmaco("", "", "", "", ""));
             root.getChildren().add(empty);
         }
 
@@ -75,15 +79,17 @@ public class InventarioCentraleControl {
         listaFarmaciTable.setShowRoot(false);
     }
 
-    public void homePageCentrale(ActionEvent event) throws IOException {
+    public void indietro(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(HomePageCentraleControl.class.getResource("HomePageCentrale.fxml"));
+        loader.setLocation(getClass().getResource("HomePageCentrale.fxml"));
         Parent root = loader.load();
-        Stage window = (Stage) homePageCentraleButton.getScene().getWindow();
-        window.setScene(new Scene(root));
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("HomePage Centrale");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
-    public void applicaFiltro(ActionEvent event) {
+    public void applicaFiltro(ActionEvent event) {/*
         String nomeFarmaco = nomeFarmacoField.getText();
         String principioAttivo = principioAttivoField.getValue();
         String dataDiScadenza = null;
@@ -116,7 +122,7 @@ public class InventarioCentraleControl {
         listaFarmaciTable.setRoot(root);
         listaFarmaciTable.setShowRoot(false);
 
-
+*/
     }
 
 

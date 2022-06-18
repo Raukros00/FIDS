@@ -186,7 +186,7 @@ public class DBMSBoundary {
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "SELECT *, DATE_FORMAT(date, '%d/%m/%Y') AS Data_Scadenza FROM Farmaco, Lotto WHERE Farmaco.IDFarmaco = Lotto.FKFarmaco ORDER BY IDFarmaco";
+            String sql = "SELECT *, DATE_FORMAT(dataScadenza, '%d/%m/%Y') AS Data_Scadenza FROM Farmaco, Lotto WHERE Farmaco.IDFarmaco = Lotto.FKFarmaco ORDER BY IDFarmaco";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             int IDFarmaco = -1;
@@ -214,9 +214,7 @@ public class DBMSBoundary {
                     f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(l.getQuantitaLotto())));
                     f.inserisciLotto(l);
 
-                }
-
-                else {
+                } else {
                     l = new Lotto();
                     l.setCodiceLotto(resultSet.getString("codiceLotto"));
                     l.setDataScadenza(resultSet.getString("dataScadenza"));
