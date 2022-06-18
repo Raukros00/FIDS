@@ -50,15 +50,17 @@ public class InventarioFarmaciaControl {
         this.idFarmacia = idFarmacia;
         listaFarmaci = dbms.getInventarioFarmacia(idFarmacia);
         stampaTabella(listaFarmaci);
+
+        principioAttivoField.getItems().add("");
+        for(Farmaco f: listaFarmaci)
+            principioAttivoField.getItems().add(f.getPrincipioAttivo());
     }
 
     public void stampaTabella(LinkedList<Farmaco> listaFarmaci){
         TreeItem root = new TreeItem(new Farmaco(" ", " ","",""," "));
         TreeItem farmaco;
 
-        principioAttivoField.getItems().add("");
-        for(Farmaco f: listaFarmaci)
-            principioAttivoField.getItems().add(f.getPrincipioAttivo());
+
         for(Farmaco f: listaFarmaci) {
 
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));

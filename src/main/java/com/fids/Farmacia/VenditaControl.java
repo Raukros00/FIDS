@@ -5,6 +5,7 @@ import Entity.Farmaco;
 import Entity.GlobalData;
 import Entity.Lotto;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -88,11 +89,16 @@ public class VenditaControl extends GlobalData {
                 }
 
                 setGraphic(deleteButton);
-                deleteButton.setOnAction(
-                        event -> getTableView().getItems().remove(f)
+                deleteButton.setOnAction(event -> {
+                    getTableView().getItems().remove(f);
+                    venditaFarmaci.remove(f);
+                    venditaTable.setItems(FXCollections.observableArrayList(venditaFarmaci));
+                });
 
-                );
-                venditaFarmaci.remove(f);
+
+
+
+
             }
         });
 
@@ -114,11 +120,9 @@ public class VenditaControl extends GlobalData {
                 if(l.getCodiceLotto().equalsIgnoreCase(codLotto)){
                     findLotto = true;
                     if(Integer.valueOf(l.getQuantitaLotto()) >= quantita) {
-                        temp = new Farmaco(f.getNomeFarmaco(), codLotto, quantita);
-                        addFarmaco(temp);
+                        venditaFarmaci.add(new Farmaco(f.getNomeFarmaco(), codLotto, quantita));
                         System.err.println(this.venditaFarmaci.size());
-                        //venditaTable.setItems(FXCollections.observableArrayList(venditaFarmaci));
-                        venditaTable.getItems().add(temp);
+                        venditaTable.setItems(FXCollections.observableArrayList(venditaFarmaci));
                         errorLabel.setText("");
                     }
                     else
@@ -158,12 +162,4 @@ public class VenditaControl extends GlobalData {
         stage.setScene(new Scene(root));
         stage.show();
     }
-
-    @FXML
-    public void initialize() {
-
-
-
-    }
-
 }
