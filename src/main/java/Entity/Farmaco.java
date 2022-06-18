@@ -9,6 +9,7 @@ public class Farmaco {
     private String lottoS;
     private String dataScadenza;
     private String quantitaFarmaco;
+    private int quantitaFarmacoInt;
     private LinkedList<Lotto> listaLotti = new LinkedList<Lotto>();
     private Lotto lotto;
 
@@ -23,9 +24,16 @@ public class Farmaco {
     public Farmaco(String nomeFarmaco, String principioAttivo, String quantitaFarmaco ,String lottoS, String dataScadenza) {
         setNomeFarmaco(nomeFarmaco);
         setPrincipioAttivo(principioAttivo);
-        setLotto(lottoS);
+        setLottoS(lottoS);
         setQuantitaFarmaco(quantitaFarmaco);
         setDataScadenza(dataScadenza);
+    }
+
+    public Farmaco(String nomeFarmaco, String lottoS, int quantitaFarmacoInt) {
+        setNomeFarmaco(nomeFarmaco);
+        setLottoS(lottoS);
+        setQuantitaFarmacoInt(quantitaFarmacoInt);
+
     }
 
 
@@ -38,8 +46,8 @@ public class Farmaco {
     public void setQuantitaFarmaco(String quantitaFarmaco) { this.quantitaFarmaco = quantitaFarmaco; }
     public String getQuantitaFarmaco() { return quantitaFarmaco; }
 
-    public void setLotto(String lottoS) { this.lottoS = lottoS; }
-    public String getLotto() { return lottoS;}
+    public void setLottoS(String lottoS) { this.lottoS = lottoS; }
+    public String getLottoS() { return lottoS;}
 
     public void setDataScadenza(String dataScadenza) { this.dataScadenza = dataScadenza; }
     public String getDataScadenza() { return dataScadenza; }
@@ -48,5 +56,8 @@ public class Farmaco {
     }
 
     public LinkedList<Lotto> getListaLotti() { return listaLotti; }
+
+    public void setQuantitaFarmacoInt(int quantitaFarmacoInt){ this.quantitaFarmacoInt = quantitaFarmacoInt; }
+    public int getQuantitaFarmacoInt() { return quantitaFarmacoInt; }
 
 }

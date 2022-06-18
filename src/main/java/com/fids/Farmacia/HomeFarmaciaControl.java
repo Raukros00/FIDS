@@ -82,7 +82,7 @@ public class HomeFarmaciaControl extends GlobalData{
         loader.setLocation(getClass().getResource("InventarioFarmacia.fxml"));
         Parent root = loader.load();
         InventarioFarmaciaControl inventarioFControl = loader.getController();
-        inventarioFControl.setFarmacia(ID_FARMACIA);
+        inventarioFControl.setDatiInventario(ID_FARMACIA);
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Inventario Farmacia");
         stage.setScene(new Scene(root));
@@ -94,7 +94,7 @@ public class HomeFarmaciaControl extends GlobalData{
         loader.setLocation(getClass().getResource("Vendita.fxml"));
         Parent root = loader.load();
         VenditaControl venditaFControl = loader.getController();
-        venditaFControl.setIDFarmacia(ID_FARMACIA);
+        venditaFControl.setDatiVendita(ID_FARMACIA);
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Vendita");
         stage.setScene(new Scene(root));
