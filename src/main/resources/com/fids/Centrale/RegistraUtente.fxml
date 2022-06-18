@@ -130,6 +130,9 @@
                </children>
             </GridPane>
          </center>
+         <top>
+            <Button fx:id="homePageCentraleButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#homePageCentrale" text="Indietro" BorderPane.alignment="CENTER" />
+         </top>
       </BorderPane>
    </center>
 </BorderPane>
