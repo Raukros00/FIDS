@@ -3,6 +3,7 @@ package com.fids.Centrale;
 import DBMSB.DBMSBoundary;
 import Entity.Farmaco;
 import Entity.Lotto;
+import com.fids.PopUp.PopUpControl;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -154,5 +155,17 @@ public class InventarioCentraleControl {
 */
     }
 
-
+    public void modificaProduzione(ActionEvent event) {/*
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(ModificaProduzione.class.getResource("ModificaProduzione.fxml"));
+        Parent root = loader.load();
+        ModificaProduzione modificaProduzione = loader.getController();
+        modificaProduzione.setPopUp("Modifica Produzione");
+        modificaProduzione.setProduzione()
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Avviso");
+        stage.setScene(scene);
+        stage.show();*/
+    }
 }

@@ -1,6 +1,7 @@
 package com.fids.Centrale;
 
 import DBMSB.DBMSBoundary;
+import com.fids.PopUp.PopUpControl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -77,8 +78,16 @@ public class RegistraUtenteControl {
             erroreLabel.setTextFill(Color.color(1, 0, 0));
         } else{
             if(dbms.verificaEmail(email)) {
-                erroreLabel.setText("L'utente inserito è già stato registrato!");
-                erroreLabel.setTextFill(Color.color(1, 0, 0));
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+                Parent root = loader.load();
+                PopUpControl popControl = loader.getController();
+                popControl.setPopUp("L'utente è gia stato registrato!");
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setTitle("Avviso");
+                stage.setScene(scene);
+                stage.show();
             }else{
                 ArrayList<String> usernames = dbms.getUsernames();
                 String username=nome+"."+cognome;
@@ -91,8 +100,17 @@ public class RegistraUtenteControl {
                 if(count!=0)
                     username=username+String.valueOf(count);
                 dbms.insertUtente(nome, cognome, dataNascita, email, username, ruolo, IDSede);
-                erroreLabel.setText("Aggiunto! Ho bisogno di una boundary");
-                erroreLabel.setTextFill(Color.color(1, 0, 0));
+
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
+                Parent root = loader.load();
+                PopUpControl popControl = loader.getController();
+                popControl.setPopUp(nome+ " "+ cognome+ "è stato inserito con username\n"+ username);
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setTitle("Avviso");
+                stage.setScene(scene);
+                stage.show();
             }
         }
     }
