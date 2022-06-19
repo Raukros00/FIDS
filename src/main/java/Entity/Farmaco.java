@@ -33,7 +33,6 @@ public class Farmaco {
         setNomeFarmaco(nomeFarmaco);
         setLottoS(lottoS);
         setQuantitaFarmacoInt(quantitaFarmacoInt);
-
     }
 
 

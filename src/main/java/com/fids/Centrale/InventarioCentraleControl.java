@@ -3,6 +3,7 @@ package com.fids.Centrale;
 import DBMSB.DBMSBoundary;
 import Entity.Farmaco;
 import Entity.Lotto;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -48,11 +49,11 @@ public class InventarioCentraleControl {
     @FXML
     private Button filtraButton;
     private DBMSBoundary dbms = new DBMSBoundary();
+    LinkedList<Farmaco> listaFarmaci = new LinkedList<>();
 
 
     public void stampaTabella() {
         LinkedList<Farmaco> listaFarmaci = dbms.getInventarioCentrale();
-        //System.err.println(listaFarmaci);
         TreeItem root = new TreeItem(new Farmaco(" ", " ", "", "", " "));
         TreeItem farmaco;
 
@@ -64,38 +65,35 @@ public class InventarioCentraleControl {
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
             root.getChildren().add(farmaco);
 
-            Callback<TreeTableColumn<Farmaco, Farmaco>, TreeTableCell<Farmaco, Farmaco>> cellFactory
-                    = //
-                    new Callback<TreeTableColumn<Farmaco, Farmaco>, TreeTableCell<Farmaco, Farmaco>>() {
+            Callback<TreeTableColumn<Farmaco, Farmaco>, TreeTableCell<Farmaco, Farmaco>> cellFactory = new Callback<>() {
+                @Override
+                public TreeTableCell call(final TreeTableColumn<Farmaco, Farmaco> param) {
+                    final TreeTableCell<Farmaco, Farmaco> cell = new TreeTableCell<>() {
+
+                        final Button modificaButton = new Button("Modifica Produzione");
+
                         @Override
-                        public TreeTableCell call(final TreeTableColumn<Farmaco, Farmaco> param) {
-                            final TreeTableCell<Farmaco, Farmaco> cell = new TreeTableCell<Farmaco, Farmaco>() {
+                        public void updateItem(Farmaco item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (empty) {
+                                setGraphic(null);
+                                setText(null);
+                            } else {
+                                modificaButton.setOnAction(event -> {
 
-                                final Button btn = new Button("Just Do it");
-
-                                @Override
-                                public void updateItem(Farmaco item, boolean empty) {
-                                    super.updateItem(item, empty);
-                                    if (empty) {
-                                        setGraphic(null);
-                                        setText(null);
-                                    } else {
-                                        btn.setOnAction(event -> {
-                                            System.err.println("Ciao");
-                                        });
-                                        setGraphic(btn);
-                                        setText(null);
-                                    }
-                                }
-                            };
-                            return cell;
+                                });
+                                setGraphic(modificaButton);
+                                setText(null);
+                            }
                         }
                     };
+                    return cell;
+                }
+            };
             modificaCol.setCellFactory(cellFactory);
 
             for (Lotto l : f.getListaLotti()) {
                 farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
-
             }
         }
 
@@ -104,8 +102,6 @@ public class InventarioCentraleControl {
         quantitaCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty((String.valueOf(param.getValue().getValue().getQuantitaFarmaco()))));
         lottoCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getLottoS()));
         scadenzaCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getDataScadenza()));
-
-
 
         root.setExpanded(true);
         listaFarmaciTable.setRoot(root);
