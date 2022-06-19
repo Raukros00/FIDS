@@ -331,30 +331,5 @@ public class DBMSBoundary {
             e.printStackTrace();
         }
     }
-/*
-    -------------------------------------------------------
-    |                                                     |
-    |                   QUERY CORRIERE                    |
-    |                                                     |
-    -------------------------------------------------------
-    */
-
-    public String richiediNumSpedizioni() {
-        try {
-            Connection conn = DriverManager.getConnection(DB_URL);
-            Statement stat = conn.createStatement();
-            String sql = "SELECT COUNT(IDSpedizione) AS 'NUM_SPEDIZIONI' FROM Spedizione;";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getString("NUM_SPEDIZIONI");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
 }

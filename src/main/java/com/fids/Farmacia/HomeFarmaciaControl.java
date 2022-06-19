@@ -100,5 +100,17 @@ public class HomeFarmaciaControl extends GlobalData{
         stage.setScene(new Scene(root));
         stage.show();
     }
+
+    /*public void modificaCredenziali(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ModificaPassword.fxml"));
+        Parent root = loader.load();
+        ModificaPasswordControl modificaPasswordControl = loader.getController();
+        modificaPasswordControl.setPassword(PASSWORD);
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Modifica Password");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }*/
 }
 
