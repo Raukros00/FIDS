@@ -7,6 +7,7 @@ public class GlobalData {
 
     public static int ID_FARMACIA;
     public static int ID_UTENTE;
+    public static String PASSWORD;
 
     /*FARMACIA*/
 

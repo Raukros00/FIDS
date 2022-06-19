@@ -356,5 +356,51 @@ public class DBMSBoundary {
             e.printStackTrace();
         }
     }
+    public ResultSet getPassword(){
+        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        try{
+
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /*
+    -------------------------------------------------------
+    |                                                     |
+    |                   QUERY CORRIERE                    |
+    |                                                     |
+    -------------------------------------------------------
+    */
+    public String richiediNumSpedizioni() {
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "SELECT COUNT(IDSpedizione) AS 'NUM_SPEDIZIONI' FROM Spedizione;";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("NUM_SPEDIZIONI");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+
+
 
 }

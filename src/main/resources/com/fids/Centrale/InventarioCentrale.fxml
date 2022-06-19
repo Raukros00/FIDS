@@ -20,7 +20,8 @@
             <TreeTableColumn fx:id="principioCol" prefWidth="175.0" text="Principio Attivo" />
             <TreeTableColumn fx:id="quantitaCol" prefWidth="102.0" text="Quantità" />
             <TreeTableColumn fx:id="lottoCol" prefWidth="147.0" text="Lotto" />
-            <TreeTableColumn fx:id="scadenzaCol" minWidth="0.0" prefWidth="335.0" text="Data di Scadenza" />
+            <TreeTableColumn fx:id="scadenzaCol" minWidth="0.0" prefWidth="138.4000244140625" text="Data di Scadenza" />
+            <TreeTableColumn fx:id="modificaCol" maxWidth="210.4000244140625" prefWidth="195.199951171875" text="Modifica" />
          </columns>
       </TreeTableView>
    </center>

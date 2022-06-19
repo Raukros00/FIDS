@@ -3,6 +3,7 @@ package com.fids.Login;
 import DBMSB.DBMSBoundary;
 import Entity.Utente;
 import com.fids.Centrale.HomePageCentraleControl;
+import com.fids.Corriere.HomePageCorriereControl;
 import com.fids.Farmacia.HomeFarmaciaControl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -99,6 +100,15 @@ public class AccessControl {
                         break;
 
                         case 3:
+                            loader = new FXMLLoader();
+                            loader.setLocation(getClass().getResource("HomePageCorriere.fxml"));
+                            root = loader.load();
+                            HomePageCorriereControl homeCoControl = loader.getController();
+                            homeCoControl.setUser(user);
+                            stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                            stage.setTitle("HomePage Corriere");
+                            stage.setScene(new Scene(root));
+                            stage.show();
 
                         break;
                     }

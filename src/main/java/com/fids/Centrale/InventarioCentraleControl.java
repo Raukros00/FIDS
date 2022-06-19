@@ -4,6 +4,7 @@ import DBMSB.DBMSBoundary;
 import Entity.Farmaco;
 import Entity.Lotto;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -33,6 +36,8 @@ public class InventarioCentraleControl {
     @FXML
     private TreeTableColumn<Farmaco, String> scadenzaCol;
     @FXML
+    private TreeTableColumn<Farmaco, Farmaco> modificaCol;
+    @FXML
     private Button indietroButton;
     @FXML
     private TextField nomeFarmacoField;
@@ -45,10 +50,9 @@ public class InventarioCentraleControl {
     private DBMSBoundary dbms = new DBMSBoundary();
 
 
-
     public void stampaTabella() {
         LinkedList<Farmaco> listaFarmaci = dbms.getInventarioCentrale();
-        System.err.println(listaFarmaci);
+        //System.err.println(listaFarmaci);
         TreeItem root = new TreeItem(new Farmaco(" ", " ", "", "", " "));
         TreeItem farmaco;
 
@@ -60,12 +64,39 @@ public class InventarioCentraleControl {
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
             root.getChildren().add(farmaco);
 
+            Callback<TreeTableColumn<Farmaco, Farmaco>, TreeTableCell<Farmaco, Farmaco>> cellFactory
+                    = //
+                    new Callback<TreeTableColumn<Farmaco, Farmaco>, TreeTableCell<Farmaco, Farmaco>>() {
+                        @Override
+                        public TreeTableCell call(final TreeTableColumn<Farmaco, Farmaco> param) {
+                            final TreeTableCell<Farmaco, Farmaco> cell = new TreeTableCell<Farmaco, Farmaco>() {
+
+                                final Button btn = new Button("Just Do it");
+
+                                @Override
+                                public void updateItem(Farmaco item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setGraphic(null);
+                                        setText(null);
+                                    } else {
+                                        btn.setOnAction(event -> {
+                                            System.err.println("Ciao");
+                                        });
+                                        setGraphic(btn);
+                                        setText(null);
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+                    };
+            modificaCol.setCellFactory(cellFactory);
 
             for (Lotto l : f.getListaLotti()) {
                 farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
+
             }
-            TreeItem empty = new TreeItem(new Farmaco("", "", "", "", ""));
-            root.getChildren().add(empty);
         }
 
         nomeCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getNomeFarmaco()));
@@ -73,6 +104,8 @@ public class InventarioCentraleControl {
         quantitaCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty((String.valueOf(param.getValue().getValue().getQuantitaFarmaco()))));
         lottoCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getLottoS()));
         scadenzaCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getDataScadenza()));
+
+
 
         root.setExpanded(true);
         listaFarmaciTable.setRoot(root);
@@ -83,7 +116,7 @@ public class InventarioCentraleControl {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("HomePageCentrale.fxml"));
         Parent root = loader.load();
-        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("HomePage Centrale");
         stage.setScene(new Scene(root));
         stage.show();
