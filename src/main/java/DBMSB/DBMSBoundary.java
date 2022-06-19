@@ -8,7 +8,6 @@ import Entity.Utente;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 public class DBMSBoundary {
@@ -150,6 +149,32 @@ public class DBMSBoundary {
         }
 
         return listaFarmaci;
+    }
+
+    public void updateInventario(LinkedList<Farmaco> venditaFarmaci, LinkedList<Farmaco> listaFarmaci, int idFarmacia) {
+        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Farmacia_" + idFarmacia + "?user=admin&password=Az-10694@";
+
+        try {
+
+            for(Farmaco f: venditaFarmaci){
+                for(Farmaco lf: listaFarmaci){
+                    for(Lotto ll : lf.getListaLotti()){
+                        if(ll.getCodiceLotto().equalsIgnoreCase(f.getLottoS())){
+                                f.setQuantitaFarmacoInt(Integer.parseInt(ll.getQuantitaLotto()) - f.getQuantitaFarmacoInt());
+                                Connection conn = DriverManager.getConnection(DB_URL);
+                                Statement stat = conn.createStatement();
+                                String sql = "UPDATE Lotto SET quantitaLotto =? WHERE codiceLotto =?";
+                                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                                preparedStatement.setInt(1, f.getQuantitaFarmacoInt());
+                                preparedStatement.setString(2, f.getLottoS());
+                                int row = preparedStatement.executeUpdate();
+                        }
+                    }
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /*

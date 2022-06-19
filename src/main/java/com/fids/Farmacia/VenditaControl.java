@@ -4,6 +4,7 @@ import DBMSB.DBMSBoundary;
 import Entity.Farmaco;
 import Entity.GlobalData;
 import Entity.Lotto;
+import com.fids.PopUp.PopUpControl;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -67,8 +68,9 @@ public class VenditaControl extends GlobalData {
                                 newF.setQuantitaFarmacoInt(event.getNewValue());
                                 errorLabel.setText("");
                             }
-                            else
+                            else {
                                 errorLabel.setText("La nuova quantità è superiore a quella disponibile!");
+                            }
                         }
                     }
                 }
@@ -119,6 +121,14 @@ public class VenditaControl extends GlobalData {
 
                 if(l.getCodiceLotto().equalsIgnoreCase(codLotto)){
                     findLotto = true;
+
+                    for(Farmaco vf : venditaFarmaci) {
+                        if (vf.getLottoS().equalsIgnoreCase(codLotto)) {
+                            errorLabel.setText("Il lotto è già presente, se necessario modifica la quantità!");
+                            return;
+                        }
+                    }
+
                     if(Integer.valueOf(l.getQuantitaLotto()) >= quantita) {
                         venditaFarmaci.add(new Farmaco(f.getNomeFarmaco(), codLotto, quantita));
                         System.err.println(this.venditaFarmaci.size());
@@ -133,21 +143,42 @@ public class VenditaControl extends GlobalData {
 
         if(!findLotto)
             errorLabel.setText("Il codice lotto non esiste!");
-
-
-
-
-
     }
 
-    public void addFarmaco(Farmaco tmp){
-        this.venditaFarmaci.add(tmp);
-    }
+    public void vendita(ActionEvent actionEvent) throws IOException {
+        if(venditaFarmaci.size() > 0) {
+            dbms.updateInventario(venditaFarmaci, listaFarmaci, IDFarmacia);
+            venditaFarmaci.clear();
+            venditaTable.setItems(FXCollections.observableArrayList(venditaFarmaci));
 
-    public void vendita(ActionEvent actionEvent) {
-        System.err.println(this.venditaFarmaci.size());
-        for(Farmaco f : venditaFarmaci){
-            System.out.println(f.getNomeFarmaco() + " : "  + f.getLottoS() + " : " + f.getQuantitaFarmacoInt());
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
+            Parent root = loader.load();
+            PopUpControl popControl = loader.getController();
+            popControl.setPopUp("Vendita avvenuta!");
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Avviso");
+            stage.setScene(scene);
+            stage.show();
+
+            codLottoField.setText("");
+            valoriQuantita.setValue(1);
+            quantitaLottoField.setValueFactory(valoriQuantita);
+
+
+        }
+        else {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+            Parent root = loader.load();
+            PopUpControl popControl = loader.getController();
+            popControl.setPopUp("Non hai inserito farmaci!");
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Avviso");
+            stage.setScene(scene);
+            stage.show();
         }
     }
 
