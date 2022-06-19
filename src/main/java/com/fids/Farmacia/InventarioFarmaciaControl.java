@@ -69,8 +69,6 @@ public class InventarioFarmaciaControl {
             for (Lotto l : f.getListaLotti()) {
                 farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
             }
-            TreeItem empty = new TreeItem(new Farmaco("", "", "", "", ""));
-            root.getChildren().add(empty);
         }
 
         nomeCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getNomeFarmaco()));
@@ -109,8 +107,6 @@ public class InventarioFarmaciaControl {
         for(Farmaco f: listaFarmaci) {
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
 
-            System.err.println(f.getNomeFarmaco().toLowerCase() + " " + nomeFarmaco.toLowerCase() + " " + f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()));
-            //if(((!nomeFarmaco.isEmpty() || !nomeFarmaco.trim().equals("")) && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase())) && ((f.getPrincipioAttivo().equals(principioAttivo))))
             if(nomeFarmaco.isEmpty() && principioAttivo=="") {
                 root.getChildren().add(farmaco);
             } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()) && principioAttivo==""){
@@ -135,11 +131,6 @@ public class InventarioFarmaciaControl {
         root.setExpanded(true);
         listaFarmaciTable.setRoot(root);
         listaFarmaciTable.setShowRoot(false);
-
-
-        nomeFarmaco=null;
-        principioAttivo=null;
-        dataDiScadenza=null;
             }
 
     public void resetTable(ActionEvent event) {
