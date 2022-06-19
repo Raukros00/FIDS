@@ -131,7 +131,7 @@ public class InventarioFarmaciaControl {
         root.setExpanded(true);
         listaFarmaciTable.setRoot(root);
         listaFarmaciTable.setShowRoot(false);
-            }
+    }
 
 
     public void resetTable(ActionEvent event) {

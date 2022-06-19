@@ -16,12 +16,12 @@
    <center>
       <TreeTableView fx:id="listaFarmaciTable" prefHeight="476.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
          <columns>
-            <TreeTableColumn fx:id="nomeCol" prefWidth="290.0" text="Nome del Farmaco" />
-            <TreeTableColumn fx:id="principioCol" prefWidth="175.0" text="Principio Attivo" />
-            <TreeTableColumn fx:id="quantitaCol" prefWidth="102.0" text="Quantità" />
-            <TreeTableColumn fx:id="lottoCol" prefWidth="147.0" text="Lotto" />
-            <TreeTableColumn fx:id="scadenzaCol" minWidth="0.0" prefWidth="138.4000244140625" text="Data di Scadenza" />
-            <TreeTableColumn fx:id="modificaCol" maxWidth="210.4000244140625" prefWidth="195.199951171875" text="Modifica" />
+            <TreeTableColumn fx:id="nomeCol" prefWidth="514.4000091552734" text="Nome del Farmaco" />
+            <TreeTableColumn fx:id="principioCol" prefWidth="135.20001220703125" text="Principio Attivo" />
+            <TreeTableColumn fx:id="quantitaCol" prefWidth="60.00006103515625" text="Quantità" />
+            <TreeTableColumn fx:id="lottoCol" prefWidth="79.20001220703125" text="Lotto" />
+            <TreeTableColumn fx:id="scadenzaCol" minWidth="0.0" prefWidth="102.4000244140625" text="Data di Scadenza" />
+            <TreeTableColumn fx:id="modificaCol" maxWidth="210.4000244140625" prefWidth="162.4000244140625" text="Modifica" />
          </columns>
       </TreeTableView>
    </center>

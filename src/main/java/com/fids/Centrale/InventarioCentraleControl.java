@@ -81,9 +81,12 @@ public class InventarioCentraleControl {
                                 setText(null);
                             } else {
                                 modificaButton.setOnAction(event -> {
-
+                                    System.err.println(getTreeTableRow().getItem().getNomeFarmaco());
                                 });
-                                setGraphic(modificaButton);
+                                if(getTreeTableRow().getItem().getNomeFarmaco() != " ")
+                                    setGraphic(modificaButton);
+                                else
+                                    setGraphic(null);
                                 setText(null);
                             }
                         }
