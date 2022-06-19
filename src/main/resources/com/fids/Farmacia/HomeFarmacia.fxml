@@ -202,6 +202,11 @@
                                 <Font size="18.0" />
                             </font>
                         </Text>
+                  <Label fx:id="time" alignment="TOP_LEFT" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Label>
                     </children>
                     <opaqueInsets>
                         <Insets />

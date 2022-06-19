@@ -4,6 +4,11 @@ import Entity.Farmacia;
 import Entity.Farmaco;
 import Entity.Lotto;
 import Entity.Utente;
+import com.fids.PopUp.PopUpControl;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -12,6 +17,23 @@ import java.util.LinkedList;
 
 public class DBMSBoundary {
     private String DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+
+    private void cadutaConnessione(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+            Parent root = loader.load();
+            PopUpControl popControl = loader.getController();
+            popControl.setPopUp("Connessione scaduta!");
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Avviso");
+            stage.setScene(scene);
+            stage.show();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public Utente verificaCredenziali(String username, String password) {
 
@@ -53,6 +75,7 @@ public class DBMSBoundary {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            cadutaConnessione();
         }
         user.setIDUtente(-2);
         return user;
@@ -85,6 +108,7 @@ public class DBMSBoundary {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            cadutaConnessione();
         }
 
         return null;
@@ -146,6 +170,7 @@ public class DBMSBoundary {
 
         } catch (Exception e) {
             e.printStackTrace();
+            cadutaConnessione();
         }
 
         return listaFarmaci;
@@ -174,6 +199,7 @@ public class DBMSBoundary {
             }
         } catch (Exception e){
             e.printStackTrace();
+            cadutaConnessione();
         }
     }
 
@@ -197,6 +223,7 @@ public class DBMSBoundary {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            cadutaConnessione();
         }
 
         return null;
@@ -254,6 +281,7 @@ public class DBMSBoundary {
 
         } catch (Exception e) {
             e.printStackTrace();
+            cadutaConnessione();
         }
 
         return listaFarmaci;
@@ -271,6 +299,7 @@ public class DBMSBoundary {
             return resultSet;
         } catch (Exception e) {
             e.printStackTrace();
+            cadutaConnessione();
         }
         return null;
     }
@@ -291,6 +320,7 @@ public class DBMSBoundary {
             }
         }catch (Exception e) {
             e.printStackTrace();
+            cadutaConnessione();
         }
         return false;
     }
@@ -309,8 +339,8 @@ public class DBMSBoundary {
             }
         }catch (Exception e) {
             e.printStackTrace();
+            cadutaConnessione();
         }
-        System.err.println("Ora return");
         return(usernames);
     }
     public void insertUtente(String nome, String cognome, String dataNascita, String email, String username, String ruolo, String IDsede){
@@ -354,6 +384,7 @@ public class DBMSBoundary {
 
         }catch (Exception e) {
             e.printStackTrace();
+            cadutaConnessione();
         }
     }
     public ResultSet getPassword(){
@@ -370,6 +401,7 @@ public class DBMSBoundary {
 
         } catch (Exception e) {
             e.printStackTrace();
+            cadutaConnessione();
         }
         return null;
     }
@@ -394,6 +426,7 @@ public class DBMSBoundary {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            cadutaConnessione();
         }
 
         return null;

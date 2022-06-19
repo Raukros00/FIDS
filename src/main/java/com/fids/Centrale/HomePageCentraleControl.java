@@ -4,7 +4,11 @@ import DBMSB.DBMSBoundary;
 import Entity.Utente;
 import com.fids.AccessApplication;
 import com.fids.Farmacia.InventarioFarmaciaControl;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,8 +17,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 public class HomePageCentraleControl {
     @FXML
@@ -24,12 +30,18 @@ public class HomePageCentraleControl {
     @FXML
     private Label numSegnalazioniLabel;
     @FXML
+    private Label time;
+    @FXML
     public Button registraUtenteButton;
     @FXML
     public Button segnalazioniButton;
     @FXML
     public Button inventarioCentraleButton;
     private Utente user;
+    private Calendar cal;
+    private int minute;
+    private int hour;
+    private String am_pm;
 
     public void setUser(Utente user) {
         this.user = user;
@@ -37,6 +49,7 @@ public class HomePageCentraleControl {
 
         nomeCognomeLabel.setText( user.getNome() + " " + user.getCognome());
         numSegnalazioniLabel.setText(dbms.richiediNumSegnalazioni());
+        startClock();
     }
 
 
@@ -80,5 +93,24 @@ public class HomePageCentraleControl {
         stage.setTitle("Segnalazioni");
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    private void startClock() {
+        Timeline clock = new Timeline(new KeyFrame(Duration.millis(1000 - Calendar.getInstance().get(Calendar.MILLISECOND)), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                cal = Calendar.getInstance();
+                minute = cal.get(Calendar.MINUTE);
+                hour = cal.get(Calendar.HOUR);
+                am_pm = (cal.get(Calendar.AM_PM) == 0) ? "AM" : "PM";
+                if(am_pm=="PM")
+                    hour=hour+12;
+                time.setText(String.format("%02d : %02d", hour, minute));
+
+            }
+        }), new KeyFrame(Duration.seconds(60)));
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
     }
 }
