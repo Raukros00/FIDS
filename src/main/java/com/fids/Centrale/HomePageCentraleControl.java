@@ -125,6 +125,7 @@ public class HomePageCentraleControl extends GlobalData {
                 dt = sdf.format(c.getTime());
                 dateLabel.setText(dt);
 
+
             }
         }), new KeyFrame(Duration.seconds(3)));
         clock.setCycleCount(Animation.INDEFINITE);
