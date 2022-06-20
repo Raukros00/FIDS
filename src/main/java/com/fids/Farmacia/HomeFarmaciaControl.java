@@ -114,6 +114,18 @@ public class HomeFarmaciaControl extends GlobalData{
         stage.show();
     }
 
+    public void listaOrdini(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ListaSpedizioniFarmacia.fxml"));
+        Parent root = loader.load();
+        ListaSpedizioniControl listaSpedizioniFControl = loader.getController();
+        listaSpedizioniFControl.setDatiOrdini(ID_FARMACIA);
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Lista Ordini");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
     /*public void modificaCredenziali(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("ModificaPassword.fxml"));

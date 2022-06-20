@@ -1,9 +1,6 @@
 package DBMSB;
 
-import Entity.Farmacia;
-import Entity.Farmaco;
-import Entity.Lotto;
-import Entity.Utente;
+import Entity.*;
 import com.fids.PopUp.PopUpControl;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -203,6 +200,36 @@ public class DBMSBoundary {
         }
     }
 
+    public LinkedList<Spedizione> getListaSpedizioni(int idFarmacia) {
+
+        LinkedList<Spedizione> listaSpedizioni = new LinkedList<>();
+
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "SELECT * FROM Spedizione WHERE FKFarmacia = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, idFarmacia);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Spedizione s;
+
+            while (resultSet.next()) {
+                s = new Spedizione();
+                s.setIDSpedizione(resultSet.getInt("IDSpedizione"));
+                s.setDataConsegna(resultSet.getString("dataConsegna"));
+                s.setStatoConsegna(resultSet.getInt("statoSpedizione"));
+
+                listaSpedizioni.add(s);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+
+        return listaSpedizioni;
+
+    }
     /*
     -------------------------------------------------------
     |                                                     |

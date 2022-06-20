@@ -105,7 +105,7 @@ public class RegistraUtenteControl {
                 loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
                 Parent root = loader.load();
                 PopUpControl popControl = loader.getController();
-                popControl.setPopUp(nome+ " "+ cognome+ "è stato inserito con username\n"+ username);
+                popControl.setPopUp(nome+ " "+ cognome+ " è stato inserito\nusername: "+ username);
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
                 stage.setTitle("Avviso");

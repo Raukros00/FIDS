@@ -5,6 +5,9 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -12,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.RegistraUtenteControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.RegistraUtenteControl">
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <bottom>
@@ -30,10 +33,9 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="641.0" text="L'username verrà generato automaticamente come &quot;nome.cognome&quot; e la password sarà &quot;0000&quot;." textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <Button fx:id="confermaRegistraButton" alignment="CENTER" mnemonicParsing="false" onAction="#registraUtente" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Registra Utente" textAlignment="CENTER" textFill="WHITE">
+                              <Button fx:id="confermaRegistraButton" alignment="CENTER" mnemonicParsing="false" onAction="#registraUtente" prefHeight="44.0" prefWidth="466.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Registra Utente" textAlignment="CENTER" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="20.0" />
                                  </font>
@@ -52,6 +54,9 @@
                      </children>
                   </GridPane>
                </top>
+               <center>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="88.0" prefWidth="578.0" text="L'username verrà generato automaticamente&#10;come &quot;nome.cognome&quot; e la password sarà &quot;0000&quot;." textAlignment="CENTER" BorderPane.alignment="CENTER" />
+               </center>
             </BorderPane>
          </bottom>
          <center>
@@ -74,7 +79,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="nomeField" prefHeight="26.0" prefWidth="216.0" />
+                        <TextField fx:id="nomeField" prefHeight="26.0" prefWidth="216.0" style="-fx-background-radius: 8;" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
@@ -84,7 +89,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="cognomeField" />
+                        <TextField fx:id="cognomeField" style="-fx-background-radius: 8;" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
@@ -94,7 +99,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="emailField" />
+                        <TextField fx:id="emailField" style="-fx-background-radius: 8;" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -104,7 +109,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="dataNascitaField" prefHeight="26.0" prefWidth="222.0" />
+                        <DatePicker fx:id="dataNascitaField" prefHeight="26.0" prefWidth="222.0" style="-fx-background-radius: 8;" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
@@ -114,7 +119,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="ruoloField" onAction="#ruoloFarmacista" prefHeight="26.0" prefWidth="223.0" />
+                        <ChoiceBox fx:id="ruoloField" onAction="#ruoloFarmacista" prefHeight="26.0" prefWidth="223.0" style="-fx-background-radius: 8;" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
@@ -124,15 +129,34 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="sedeField" prefHeight="26.0" prefWidth="235.0" visible="false" />
+                        <ChoiceBox fx:id="sedeField" prefHeight="26.0" prefWidth="235.0" style="-fx-background-radius: 8;" visible="false" />
                      </children>
                   </VBox>
                </children>
             </GridPane>
          </center>
-         <top>
-            <Button fx:id="homePageCentraleButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#homePageCentrale" text="Indietro" BorderPane.alignment="CENTER" />
-         </top>
       </BorderPane>
    </center>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+            <Button fx:id="homePageCentraleButton" mnemonicParsing="false" onAction="#homePageCentrale" style="-fx-background-color: #206777;" text="Indietro" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+        </items>
+      </ToolBar>
+   </top>
+   <right>
+      <BorderPane prefHeight="576.0" prefWidth="472.0" BorderPane.alignment="CENTER">
+         <center>
+            <ImageView fitHeight="475.0" fitWidth="460.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@registra.png" />
+               </image>
+            </ImageView>
+         </center>
+      </BorderPane>
+   </right>
 </BorderPane>

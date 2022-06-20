@@ -3,16 +3,12 @@ package Entity;
 public class Spedizione {
 
     private int IDSpedizione;
-
     private String dataConsegna;
-
     private int statoConsegna; //può assumere i valori 1,2,3. 1:confermata  2:consegnata  3:caricata
-
     private int IDSede;
 
-
+    public Spedizione() {}
     public Spedizione(int IDSpedizione, String dataConsegna, int statoConsegna){
-
         setIDSpedizione(IDSpedizione);
         setDataConsegna(dataConsegna);
         setStatoConsegna(statoConsegna);
