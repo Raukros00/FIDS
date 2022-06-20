@@ -55,7 +55,7 @@ public class InventarioCentraleControl {
 
     public void stampaTabella() {
         LinkedList<Farmaco> listaFarmaci = dbms.getInventarioCentrale();
-        TreeItem root = new TreeItem(new Farmaco(" ", " ", " ", "", " "," "," "));
+        TreeItem root = new TreeItem(new Farmaco(" ", " ", " ", "", " "));
         TreeItem farmaco;
 
         principioAttivoField.getItems().add("");
@@ -63,7 +63,7 @@ public class InventarioCentraleControl {
             principioAttivoField.getItems().add(f.getPrincipioAttivo());
         for (Farmaco f : listaFarmaci) {
 
-            farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " ", " "," "));
+            farmaco = new TreeItem(new Farmaco(f.getIDFarmaco(), f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " ", f.getPeriodicitaProduzione(),f.getQuantitaProduzione()));
             root.getChildren().add(farmaco);
 
 
@@ -91,7 +91,7 @@ public class InventarioCentraleControl {
                                         modificaProduzioneControl.setPresets(f);
                                         Scene scene = new Scene(root);
                                         Stage stage = new Stage();
-                                        stage.setTitle("Offset");
+                                        stage.setTitle("Modifica Produzione");
                                         stage.setScene(scene);
                                         stage.show();
                                     }catch(Exception e) {
@@ -117,6 +117,7 @@ public class InventarioCentraleControl {
         }
         TreeItem last = new TreeItem(new Farmaco(" ", "", "", "", ""));
         root.getChildren().add(last);
+
 
         nomeCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getNomeFarmaco()));
         principioCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getPrincipioAttivo()));
@@ -173,18 +174,5 @@ public class InventarioCentraleControl {
         listaFarmaciTable.setShowRoot(false);
 
 */
-    }
-
-    public void modificaProduzione(ActionEvent event) {/*
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ModificaProduzione.fxml"));
-        Parent root = loader.load();
-        ModificaProduzioneControl modificaProduzioneControl = loader.getController();
-        modificaProduzioneControl.setPresets();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setTitle("Offset");
-        stage.setScene(scene);
-        stage.show();*/
     }
 }
