@@ -1,9 +1,14 @@
 package Entity;
 
+import java.util.Date;
 import java.util.LinkedList;
 
 
 public class GlobalData {
+    public static int HOUR;
+    public static int OFFSETHOUR;
+    public static int OFFSETDAY;
+    public static Date DATA;
 
     public static int ID_FARMACIA;
     public static int ID_UTENTE;

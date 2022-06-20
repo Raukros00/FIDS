@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -60,11 +61,11 @@
     <left>
         <BorderPane prefHeight="531.0" prefWidth="420.0" BorderPane.alignment="CENTER">
             <top>
-                <GridPane prefHeight="179.0" prefWidth="263.0" BorderPane.alignment="CENTER">
+                <GridPane prefHeight="179.0" prefWidth="414.0" BorderPane.alignment="CENTER">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="35.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="35.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="35.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="35.99998779296875" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="208.80001220703124" minWidth="10.0" prefWidth="208.80001220703124" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="531.0" minHeight="10.0" prefHeight="191.0" vgrow="SOMETIMES" />
@@ -78,11 +79,20 @@
                                 <Insets left="30.0" />
                             </GridPane.margin>
                         </ImageView>
-                  <Label fx:id="time" alignment="TOP_LEFT" contentDisplay="TOP" GridPane.columnIndex="2">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
-                  </Label>
+                  <VBox fx:id="VBoxOffset" alignment="CENTER_LEFT" prefHeight="179.0" prefWidth="268.0" GridPane.columnIndex="2">
+                     <children>
+                        <Label fx:id="dateLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#offset" prefHeight="32.0" prefWidth="212.0" text="00/00/0000">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="time" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="214.0" text="00 : 00">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                     </children>
                     <BorderPane.margin>
                         <Insets />

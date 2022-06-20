@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.PopUp.OffsetControl">
+   <children>
+      <Button fx:id="impostaOffsetButton" layoutX="527.0" layoutY="247.0" mnemonicParsing="false" onAction="#impostaOffset" text="Imposta Offset" />
+      <Label layoutX="75.0" layoutY="112.0" text="Offset ora">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="426.0" layoutY="112.0" text="Offset giorni">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Spinner fx:id="offsetOraField" layoutX="75.0" layoutY="145.0" />
+      <Spinner fx:id="offsetGiorniField" layoutX="426.0" layoutY="145.0" />
+   </children>
+</Pane>

@@ -6,14 +6,14 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.ModificaProduzioneControl">
    <children>
       <Label layoutX="64.0" layoutY="43.0" text="Farmaco:" />
       <TextField fx:id="periodicitaProduzioneField" layoutX="64.0" layoutY="111.0" />
       <TextField fx:id="quantitaProduzioneField" layoutX="64.0" layoutY="219.0" />
       <Label layoutX="64.0" layoutY="87.0" text="Periodicità Produzione (in giorni)" />
       <Label layoutX="64.0" layoutY="192.0" text="Quantità di produzione" />
-      <Button fx:id="modificaButton" layoutX="508.0" layoutY="337.0" mnemonicParsing="false" onAction="#modificaProduzione" text="Modifica" />
+      <Button fx:id="modificaButton" layoutX="508.0" layoutY="337.0" mnemonicParsing="false" text="Modifica" />
       <Label fx:id="farmacoLabel" layoutX="124.0" layoutY="43.0" text="Label" />
    </children>
 </Pane>

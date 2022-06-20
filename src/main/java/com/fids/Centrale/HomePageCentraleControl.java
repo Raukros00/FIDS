@@ -1,8 +1,10 @@
 package com.fids.Centrale;
 
 import DBMSB.DBMSBoundary;
+import Entity.GlobalData;
 import Entity.Utente;
 import com.fids.AccessApplication;
+import com.fids.PopUp.OffsetControl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,13 +17,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 
-public class HomePageCentraleControl {
+public class HomePageCentraleControl extends GlobalData {
     @FXML
     public Button logoutButton;
     @FXML
@@ -31,11 +38,15 @@ public class HomePageCentraleControl {
     @FXML
     private Label time;
     @FXML
+    private Label dateLabel;
+    @FXML
     public Button registraUtenteButton;
     @FXML
     public Button segnalazioniButton;
     @FXML
     public Button inventarioCentraleButton;
+    @FXML
+    private VBox VBoxOffset;
     private Utente user;
     private Calendar cal;
     private int minute;
@@ -100,18 +111,37 @@ public class HomePageCentraleControl {
         Timeline clock = new Timeline(new KeyFrame(Duration.millis(1000 - Calendar.getInstance().get(Calendar.MILLISECOND)), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
                 cal = Calendar.getInstance();
                 minute = cal.get(Calendar.MINUTE);
-                hour = cal.get(Calendar.HOUR);
-                am_pm = (cal.get(Calendar.AM_PM) == 0) ? "AM" : "PM";
-                if(am_pm=="PM")
-                    hour=hour+12;
-                time.setText(String.format("%02d : %02d", hour, minute));
+                if(cal.get(Calendar.HOUR_OF_DAY)+OFFSETHOUR>=24){
+                    OFFSETDAY+=(cal.get(Calendar.HOUR_OF_DAY)+OFFSETHOUR)/24;
+                }
+                HOUR = (cal.get(Calendar.HOUR_OF_DAY)+OFFSETHOUR)%24;
+                time.setText(String.format("%02d : %02d", HOUR, minute));
+                String dt = LocalDate.now().toString();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Calendar c = Calendar.getInstance();
+                c.add(Calendar.DATE, OFFSETDAY);
+                dt = sdf.format(c.getTime());
+                dateLabel.setText(dt);
+
 
             }
-        }), new KeyFrame(Duration.seconds(60)));
+        }), new KeyFrame(Duration.seconds(3)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+    }
+
+    public void offset(MouseEvent mouseEvent) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(OffsetControl.class.getResource("Offset.fxml"));
+        Parent root = loader.load();
+        OffsetControl offsetControl = loader.getController();
+        offsetControl.setPresets();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Offset");
+        stage.setScene(scene);
+        stage.show();
     }
 }
