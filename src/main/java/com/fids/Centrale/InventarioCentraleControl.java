@@ -3,10 +3,7 @@ package com.fids.Centrale;
 import DBMSB.DBMSBoundary;
 import Entity.Farmaco;
 import Entity.Lotto;
-import com.fids.PopUp.PopUpControl;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,12 +11,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
 public class InventarioCentraleControl {
@@ -98,10 +93,7 @@ public class InventarioCentraleControl {
                                         e.printStackTrace();
                                     }
                                 });
-                                if(getTreeTableRow().getItem().getNomeFarmaco() != " ")
-                                    setGraphic(modificaButton);
-                                else
-                                    setGraphic(null);
+                                setGraphic(modificaButton);
                                 setText(null);
                             }
                         }

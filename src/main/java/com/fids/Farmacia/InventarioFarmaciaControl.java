@@ -107,6 +107,8 @@ public class InventarioFarmaciaControl {
         for(Farmaco f: listaFarmaci) {
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
 
+            System.err.println(f.getNomeFarmaco().toLowerCase() + " " + nomeFarmaco.toLowerCase() + " " + f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()));
+            //if(((!nomeFarmaco.isEmpty() || !nomeFarmaco.trim().equals("")) && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase())) && ((f.getPrincipioAttivo().equals(principioAttivo))))
             if(nomeFarmaco.isEmpty() && principioAttivo=="") {
                 root.getChildren().add(farmaco);
             } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()) && principioAttivo==""){
@@ -131,8 +133,12 @@ public class InventarioFarmaciaControl {
         root.setExpanded(true);
         listaFarmaciTable.setRoot(root);
         listaFarmaciTable.setShowRoot(false);
-    }
 
+
+        nomeFarmaco=null;
+        principioAttivo=null;
+        dataDiScadenza=null;
+            }
 
     public void resetTable(ActionEvent event) {
     stampaTabella(listaFarmaci);

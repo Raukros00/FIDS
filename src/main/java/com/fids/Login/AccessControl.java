@@ -101,7 +101,7 @@ public class AccessControl {
 
                         case 3:
                             loader = new FXMLLoader();
-                            loader.setLocation(getClass().getResource("HomePageCorriere.fxml"));
+                            loader.setLocation(HomePageCorriereControl.class.getResource("HomePageCorriere.fxml"));
                             root = loader.load();
                             HomePageCorriereControl homeCoControl = loader.getController();
                             homeCoControl.setUser(user);

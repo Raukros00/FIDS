@@ -1,9 +1,6 @@
 package DBMSB;
 
-import Entity.Farmacia;
-import Entity.Farmaco;
-import Entity.Lotto;
-import Entity.Utente;
+import Entity.*;
 import com.fids.PopUp.PopUpControl;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -135,7 +132,6 @@ public class DBMSBoundary {
                 if(resultSet.getInt("IDFarmaco") != IDFarmaco && IDFarmaco != -1) {
                     listaFarmaci.add(f);
                     f = new Farmaco();
-                    System.err.println(listaFarmaci.getFirst().getNomeFarmaco());
                 }
 
                 if(resultSet.getInt("IDFarmaco") != IDFarmaco) {
@@ -203,6 +199,66 @@ public class DBMSBoundary {
         }
     }
 
+    public LinkedList<Spedizione> getListaSpedizioni(int idFarmacia) {
+
+        LinkedList<Spedizione> listaSpedizioni = new LinkedList<>();
+
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "SELECT * FROM Spedizione, Lotto_Spedizione WHERE Spedizione.IDSpedizione = Lotto_Spedizione.FKSpedizione AND Spedizione.FKFarmacia=? ORDER BY IDSpedizione";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, idFarmacia);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Spedizione s = new Spedizione();
+            LottoSpedizione ls = new LottoSpedizione();
+            int IDSpedizione = -1;
+
+            while (resultSet.next()) {
+
+                if(resultSet.getInt("IDSpedizione") != IDSpedizione && IDSpedizione != -1 ){
+                    listaSpedizioni.add(s);
+                    s = new Spedizione();
+                }
+
+                if(resultSet.getInt("IDSpedizione") != IDSpedizione){
+
+                    s.setIDSpedizione(resultSet.getInt("IDSpedizione"));
+                    s.setDataConsegna(resultSet.getString("dataConsegna"));
+                    s.setStatoConsegna(resultSet.getInt("statoSpedizione"));
+
+                    IDSpedizione = resultSet.getInt("IDSpedizione");
+
+                    ls = new LottoSpedizione();
+                    ls.setIDSpedizione(IDSpedizione);
+                    ls.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
+                    ls.setCodiceLotto(resultSet.getString("FKLotto"));
+                    ls.setQuantita(resultSet.getInt("quantita"));
+                    s.addLotto(ls);
+                }
+
+                else{
+
+                    ls = new LottoSpedizione();
+                    ls.setIDSpedizione(IDSpedizione);
+                    ls.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
+                    ls.setCodiceLotto(resultSet.getString("FKLotto"));
+                    ls.setQuantita(resultSet.getInt("quantita"));
+                    s.addLotto(ls);
+
+                }
+            }
+            listaSpedizioni.add(s);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+
+        return listaSpedizioni;
+
+    }
     /*
     -------------------------------------------------------
     |                                                     |
@@ -238,7 +294,7 @@ public class DBMSBoundary {
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "SELECT *, DATE_FORMAT(dataScadenza, '%d/%m/%Y') AS Data_Scadenza FROM Farmaco, Lotto WHERE Farmaco.IDFarmaco = Lotto.FKFarmaco ORDER BY IDFarmaco";
+            String sql = "SELECT *, DATE_FORMAT(dataScadenza, '%d/%m/%Y') AS Data_Scadenza FROM Farmaco, Lotto WHERE Farmaco.IDFarmaco = Lotto.FKFarmaco ORDER BY nomeFarmaco";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             int IDFarmaco = -1;

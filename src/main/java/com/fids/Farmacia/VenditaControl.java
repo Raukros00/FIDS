@@ -91,16 +91,12 @@ public class VenditaControl extends GlobalData {
                 }
 
                 setGraphic(deleteButton);
+
                 deleteButton.setOnAction(event -> {
                     getTableView().getItems().remove(f);
                     venditaFarmaci.remove(f);
                     venditaTable.setItems(FXCollections.observableArrayList(venditaFarmaci));
                 });
-
-
-
-
-
             }
         });
 
@@ -192,5 +188,8 @@ public class VenditaControl extends GlobalData {
         stage.setTitle("Home Farmacia");
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    public void creaOrdine(ActionEvent actionEvent) {
     }
 }
