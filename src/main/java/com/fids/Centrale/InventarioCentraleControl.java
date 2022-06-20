@@ -55,7 +55,7 @@ public class InventarioCentraleControl {
 
     public void stampaTabella() {
         LinkedList<Farmaco> listaFarmaci = dbms.getInventarioCentrale();
-        TreeItem root = new TreeItem(new Farmaco(" ", " ", "", "", " "));
+        TreeItem root = new TreeItem(new Farmaco(" ", " ", " ", "", " "," "," "));
         TreeItem farmaco;
 
         principioAttivoField.getItems().add("");
@@ -63,8 +63,9 @@ public class InventarioCentraleControl {
             principioAttivoField.getItems().add(f.getPrincipioAttivo());
         for (Farmaco f : listaFarmaci) {
 
-            farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
+            farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " ", " "," "));
             root.getChildren().add(farmaco);
+
 
             Callback<TreeTableColumn<Farmaco, Farmaco>, TreeTableCell<Farmaco, Farmaco>> cellFactory = new Callback<>() {
                 @Override
@@ -81,7 +82,21 @@ public class InventarioCentraleControl {
                                 setText(null);
                             } else {
                                 modificaButton.setOnAction(event -> {
-                                    System.err.println(getTreeTableRow().getItem().getNomeFarmaco());
+                                    try {
+                                        Farmaco f = getTreeTableRow().getItem();
+                                        FXMLLoader loader = new FXMLLoader();
+                                        loader.setLocation(getClass().getResource("ModificaProduzione.fxml"));
+                                        Parent root = loader.load();
+                                        ModificaProduzioneControl modificaProduzioneControl = loader.getController();
+                                        modificaProduzioneControl.setPresets(f);
+                                        Scene scene = new Scene(root);
+                                        Stage stage = new Stage();
+                                        stage.setTitle("Offset");
+                                        stage.setScene(scene);
+                                        stage.show();
+                                    }catch(Exception e) {
+                                        e.printStackTrace();
+                                    }
                                 });
                                 if(getTreeTableRow().getItem().getNomeFarmaco() != " ")
                                     setGraphic(modificaButton);
@@ -100,6 +115,8 @@ public class InventarioCentraleControl {
                 farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
             }
         }
+        TreeItem last = new TreeItem(new Farmaco(" ", "", "", "", ""));
+        root.getChildren().add(last);
 
         nomeCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getNomeFarmaco()));
         principioCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getPrincipioAttivo()));
@@ -160,14 +177,13 @@ public class InventarioCentraleControl {
 
     public void modificaProduzione(ActionEvent event) {/*
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ModificaProduzione.class.getResource("ModificaProduzione.fxml"));
+        loader.setLocation(getClass().getResource("ModificaProduzione.fxml"));
         Parent root = loader.load();
-        ModificaProduzione modificaProduzione = loader.getController();
-        modificaProduzione.setPopUp("Modifica Produzione");
-        modificaProduzione.setProduzione()
+        ModificaProduzioneControl modificaProduzioneControl = loader.getController();
+        modificaProduzioneControl.setPresets();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
-        stage.setTitle("Avviso");
+        stage.setTitle("Offset");
         stage.setScene(scene);
         stage.show();*/
     }

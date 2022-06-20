@@ -256,6 +256,8 @@ public class DBMSBoundary {
                     f.setIDFarmaco(resultSet.getInt("IDFarmaco"));
                     f.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
                     f.setPrincipioAttivo(resultSet.getString("principioAttivo"));
+                    f.setPeriodicitaProduzione(String.valueOf(resultSet.getInt("periodicitaProduzione")));
+                    f.setQuantitaProduzione(String.valueOf(resultSet.getInt("quantitaProduzione")));
 
                     IDFarmaco = resultSet.getInt("IDFarmaco");
                     l = new Lotto();
