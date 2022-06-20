@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -110,7 +111,6 @@ public class HomePageCentraleControl extends GlobalData {
         Timeline clock = new Timeline(new KeyFrame(Duration.millis(1000 - Calendar.getInstance().get(Calendar.MILLISECOND)), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                OFFSETHOUR=24;
                 cal = Calendar.getInstance();
                 minute = cal.get(Calendar.MINUTE);
                 if(cal.get(Calendar.HOUR_OF_DAY)+OFFSETHOUR>=24){
@@ -126,18 +126,21 @@ public class HomePageCentraleControl extends GlobalData {
                 dateLabel.setText(dt);
 
             }
-        }), new KeyFrame(Duration.seconds(60)));
+        }), new KeyFrame(Duration.seconds(3)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
     }
 
-    public void offset(ActionEvent event) throws IOException {
+    public void offset(MouseEvent mouseEvent) throws IOException{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(OffsetControl.class.getResource("Offset.fxml"));
         Parent root = loader.load();
-        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        OffsetControl offsetControl = loader.getController();
+        offsetControl.setPresets();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
         stage.setTitle("Offset");
-        stage.setScene(new Scene(root));
+        stage.setScene(scene);
         stage.show();
     }
 }

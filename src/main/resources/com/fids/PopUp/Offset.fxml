@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.PopUp.OffsetControl">
    <children>
-      <Button fx:id="impostaOffsetButton" layoutX="527.0" layoutY="247.0" mnemonicParsing="false" text="Imposta Offset" />
+      <Button fx:id="impostaOffsetButton" layoutX="527.0" layoutY="247.0" mnemonicParsing="false" onAction="#impostaOffset" text="Imposta Offset" />
       <Label layoutX="75.0" layoutY="112.0" text="Offset ora">
          <font>
             <Font size="16.0" />
