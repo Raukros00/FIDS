@@ -1,8 +1,10 @@
 package com.fids.Farmacia;
 
 import DBMSB.DBMSBoundary;
+import Entity.LottoSpedizione;
 import Entity.Spedizione;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,10 +37,11 @@ public class ListaSpedizioniControl {
     @FXML private TableColumn<Spedizione, Spedizione> visualizzaArcCol;
 
     DBMSBoundary dbms = new DBMSBoundary();
-    LinkedList<Spedizione> listaSpedizioni = new LinkedList<>();
+    LinkedList<Spedizione> listaSpedizioni;
 
     public void setDatiOrdini(int ID_FARMACIA){
         listaSpedizioni = dbms.getListaSpedizioni(ID_FARMACIA);
+        System.out.println("SETDATI " + listaSpedizioni.getFirst().getListaLottiSpedizione().size());
         stampaSpedizioni(listaSpedizioni);
     }
 
@@ -63,7 +66,24 @@ public class ListaSpedizioniControl {
                 setGraphic(visualizzaButton);
 
                 visualizzaButton.setOnAction(event -> {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(VisualizzaOrdineControl.class.getResource("visualizzaSpedizione.fxml"));
+                    Parent root = null;
+                    try {
+                        root = loader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    VisualizzaOrdineControl visualizzaOrdineFControl = loader.getController();
 
+                    LinkedList<LottoSpedizione> fs = f.getListaLottiSpedizione();
+                    System.err.println("Size: " + fs.size());
+                    visualizzaOrdineFControl.setDatiSpedizione(fs);
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setTitle("Visualizza Spedizione");
+                    stage.setScene(scene);
+                    stage.show();
                 });
             }
         });
@@ -115,23 +135,55 @@ public class ListaSpedizioniControl {
                 setGraphic(visualizzaArcButton);
 
                 visualizzaArcButton.setOnAction(event -> {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(VisualizzaOrdineControl.class.getResource("visualizzaSpedizione.fxml"));
+                    Parent root = null;
+                    try {
+                        root = loader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    VisualizzaOrdineControl visualizzaOrdineFControl = loader.getController();
 
+                    LinkedList<LottoSpedizione> fs = f.getListaLottiSpedizione();
+                    System.err.println("Size: " + fs.size());
+                    visualizzaOrdineFControl.setDatiSpedizione(fs);
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setTitle("Visualizza Spedizione");
+                    stage.setScene(scene);
+                    stage.show();
                 });
             }
         });
 
-        for(Spedizione s : listaSpedizioni){
-            if(s.getStatoConsegna() == 0){
-                ordiniInArrivoTable.getItems().add(new Spedizione(s.getIDSpedizione(), s.getDataConsegna(), s.getStatoConsegna()));
-            }
-            else{
-                ordiniArchiviatiTable.getItems().add(new Spedizione(s.getIDSpedizione(), s.getDataConsegna(), s.getStatoConsegna()));
-            }
+        LinkedList<Spedizione> inAttesa = new LinkedList<>();
+        LinkedList<Spedizione> listaArchiviati = new LinkedList<>();
+
+        for(Spedizione ls : listaSpedizioni){
+            if(ls.getStatoConsegna() == 0)
+                inAttesa.add(ls);
+            else if(ls.getStatoConsegna() == 1)
+                listaArchiviati.add(ls);
         }
-       // ordiniInArrivoTable.setItems(FXCollections.observableArrayList(listaSpedizioni));
+
+        ordiniInArrivoTable.setItems(FXCollections.observableArrayList(inAttesa));
+        ordiniArchiviatiTable.setItems(FXCollections.observableArrayList(listaArchiviati));
+
+
+
     }
 
-    public void creaOrdine(ActionEvent actionEvent) {
+    public void creaOrdine(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AggiungiOrdineControl.class.getResource("AggiungiOrdine.fxml"));
+        Parent root = loader.load();
+        AggiungiOrdineControl addOrdfControl = loader.getController();
+        addOrdfControl.setDatiOrdine();
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Crea ordine");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     public void homeFarmacia(ActionEvent event) throws IOException {
