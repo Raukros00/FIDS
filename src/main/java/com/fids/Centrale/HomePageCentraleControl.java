@@ -3,7 +3,6 @@ package com.fids.Centrale;
 import DBMSB.DBMSBoundary;
 import Entity.Utente;
 import com.fids.AccessApplication;
-import com.fids.Farmacia.InventarioFarmaciaControl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -50,6 +49,8 @@ public class HomePageCentraleControl {
         nomeCognomeLabel.setText( user.getNome() + " " + user.getCognome());
         numSegnalazioniLabel.setText(dbms.richiediNumSegnalazioni());
         startClock();
+        AggiornaInventarioControl aggiorna= new AggiornaInventarioControl();
+        aggiorna.aggiornaInventario();
     }
 
 

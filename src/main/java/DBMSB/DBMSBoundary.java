@@ -147,7 +147,7 @@ public class DBMSBoundary {
                     l.setDataScadenza(resultSet.getString("dataScadenza"));
                     l.setDataProduzione(resultSet.getString("dataProduzione"));
                     l.setQuantitaLotto(String.valueOf(resultSet.getInt("quantitaLotto")));
-                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(l.getQuantitaLotto())));
+                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(f.getQuantitaFarmaco())));
                     f.inserisciLotto(l);
 
                 }
@@ -158,7 +158,7 @@ public class DBMSBoundary {
                     l.setDataScadenza(resultSet.getString("dataScadenza"));
                     l.setDataProduzione(resultSet.getString("dataProduzione"));
                     l.setQuantitaLotto(resultSet.getString("quantitaLotto"));
-                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(l.getQuantitaLotto())));
+                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(f.getQuantitaFarmaco())));
                     f.inserisciLotto(l);
 
                 }
@@ -290,7 +290,7 @@ public class DBMSBoundary {
                     l.setDataScadenza(resultSet.getString("dataScadenza"));
                     l.setDataProduzione(resultSet.getString("dataProduzione"));
                     l.setQuantitaLotto(String.valueOf(resultSet.getInt("quantitaLotto")));
-                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(l.getQuantitaLotto())));
+                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(f.getQuantitaFarmaco())));
                     f.inserisciLotto(l);
 
                 } else {
@@ -299,7 +299,7 @@ public class DBMSBoundary {
                     l.setDataScadenza(resultSet.getString("dataScadenza"));
                     l.setDataProduzione(resultSet.getString("dataProduzione"));
                     l.setQuantitaLotto(resultSet.getString("quantitaLotto"));
-                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(l.getQuantitaLotto())));
+                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(f.getQuantitaFarmaco())));
                     f.inserisciLotto(l);
 
                 }
