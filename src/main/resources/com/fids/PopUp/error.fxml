@@ -18,13 +18,6 @@
                </font>
             </Label>
          </center>
-         <bottom>
-            <Button fx:id="okayButton" mnemonicParsing="false" onAction="#closePopUp" style="-fx-background-color: #D35E69; -fx-background-radius: 8;" text="Okay" textFill="WHITE" BorderPane.alignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Button>
-         </bottom>
          <top>
             <ImageView fitHeight="86.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
@@ -32,6 +25,13 @@
                </image>
             </ImageView>
          </top>
+         <bottom>
+            <Button fx:id="okayButton" mnemonicParsing="false" onAction="#closePopUp" style="-fx-background-color: #D35E69; -fx-background-radius: 8;" text="Okay" textFill="WHITE" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Button>
+         </bottom>
       </BorderPane>
    </center>
    <bottom>

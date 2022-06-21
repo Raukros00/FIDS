@@ -86,7 +86,7 @@ public class DBMSBoundary {
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "SELECT IDSede, nomeSede, indirizzoSede, citta, IDSpedizione, COUNT(*) AS 'NUM_CONSEGNE' FROM Sede, Spedizione WHERE Sede.IDSede = Spedizione.FKFarmacia AND Sede.IDSede = ? AND Spedizione.dataConsegna=?;";
+            String sql = "SELECT IDSede, nomeSede, indirizzoSede, citta, IDSpedizione, distanza, COUNT(*) AS 'NUM_CONSEGNE' FROM Sede, Spedizione WHERE Sede.IDSede = Spedizione.FKFarmacia AND Sede.IDSede = ? AND Spedizione.dataConsegna=?;";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, idFarmacia);
             preparedStatement.setString(2, String.valueOf(data));
@@ -100,7 +100,7 @@ public class DBMSBoundary {
                 farmacia.setIndirizzoSede(resultSet.getString("indirizzoSede"));
                 farmacia.setCitta(resultSet.getString("citta"));
                 farmacia.setNumConsegne(Integer.parseInt(resultSet.getString("NUM_CONSEGNE")));
-                System.out.println(farmacia.getNomeSede());
+                farmacia.setDistanza(resultSet.getDouble("distanza"));
                 return farmacia;
             }
         } catch (Exception e) {
@@ -259,6 +259,68 @@ public class DBMSBoundary {
         return listaSpedizioni;
 
     }
+
+    public int creaSpedizione(int ID_FARMACIA, Double DISTANZA){
+
+        LocalDate dataConsegna = LocalDate.now();
+
+        if(0 <= DISTANZA && DISTANZA <= 5) dataConsegna.plusDays(3);
+        if(6 <= DISTANZA && DISTANZA <= 8) dataConsegna.plusDays(4);
+        if(9 <= DISTANZA && DISTANZA <= 50) dataConsegna.plusDays(5);
+        if(50 < DISTANZA) dataConsegna.plusDays(7);
+
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "INSERT INTO Spedizione (dataConsegna, FKFarmacia) VALUES (?, ?);";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, String.valueOf(dataConsegna));
+            preparedStatement.setInt(2, ID_FARMACIA);
+            int row = preparedStatement.executeUpdate();
+
+
+            sql = "SELECT MAX(IDSpedizione) AS 'IDSPEDIZIONE' FROM Spedizione";
+            preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()){
+                return resultSet.getInt("IDSPEDIZIONE");
+            }
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    public void inserisciLottiInSpedizione(int idSpedizione, LinkedList<LottoSpedizione> ordine) throws SQLException {
+
+        Connection conn = DriverManager.getConnection(DB_URL);
+        Statement stat = conn.createStatement();
+        String sql;
+
+        for(LottoSpedizione o : ordine){
+
+            sql = "INSERT INTO Lotto_Spedizione (FKLotto, FKSpedizione, quantita, nomeFarmaco) VALUES(?, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, o.getCodiceLotto());
+            preparedStatement.setInt(2, idSpedizione);
+            preparedStatement.setInt(3, o.getQuantita());
+            preparedStatement.setString(4, o.getNomeFarmaco());
+            int row = preparedStatement.executeUpdate();
+
+            sql = "UPDATE Lotto SET quantitaLotto = quantitaLotto - ? WHERE codiceLotto = ?";
+             preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, o.getQuantita());
+            preparedStatement.setString(2, o.getCodiceLotto());
+            row = preparedStatement.executeUpdate();
+        }
+
+    }
+
+
+
     /*
     -------------------------------------------------------
     |                                                     |

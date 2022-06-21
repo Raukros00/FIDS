@@ -56,7 +56,6 @@ public class HomePageCentraleControl extends GlobalData {
     public void setUser(Utente user) {
         this.user = user;
         DBMSBoundary dbms = new DBMSBoundary();
-
         nomeCognomeLabel.setText( user.getNome() + " " + user.getCognome());
         numSegnalazioniLabel.setText(dbms.richiediNumSegnalazioni());
         startClock();

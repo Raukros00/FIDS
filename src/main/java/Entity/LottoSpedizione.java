@@ -15,6 +15,12 @@ public class LottoSpedizione {
         setQuantita(quantita);
     }
 
+    public LottoSpedizione(String nomeFarmaco, String codiceLotto, int quantita){
+        setNomeFarmaco(nomeFarmaco);
+        setCodiceLotto(codiceLotto);
+        setQuantita(quantita);
+    }
+
     public LottoSpedizione(){}
 
     public void setNomeFarmaco(String nomeFarmaco) { this.nomeFarmaco = nomeFarmaco;}

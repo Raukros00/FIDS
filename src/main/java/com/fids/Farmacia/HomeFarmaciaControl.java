@@ -62,7 +62,7 @@ public class HomeFarmaciaControl extends GlobalData{
         INDIRIZZO_FARMACIA = farmacia.getIndirizzoSede();
         CITTA_FARMACIA = farmacia.getCitta();
         ID_FARMACIA = farmacia.getIDFarmacia();
-
+        DISTANZA = farmacia.getDistanza();
 
         nomeCognomeLabel.setText(NOMINATIVO);
         numConsegneArrivoLabel.setText(NUM_CONSEGNE);

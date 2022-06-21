@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="284.0" prefWidth="458.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.FarmacoScadenzaControl">
+   <center>
+      <BorderPane prefHeight="155.0" prefWidth="261.0" BorderPane.alignment="TOP_LEFT">
+         <center>
+            <Label fx:id="alertLabel" text="Errore generico!" textAlignment="CENTER" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </center>
+         <top>
+            <ImageView fitHeight="86.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../PopUp/warning.png" />
+               </image>
+            </ImageView>
+         </top>
+         <bottom>
+            <HBox prefHeight="29.0" prefWidth="458.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="accettaButton" mnemonicParsing="false" style="-fx-background-color: #D35E69; -fx-background-radius: 8;" text="Accetta" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="rimuoviButton" mnemonicParsing="false" style="-fx-background-color: #D35E69; -fx-background-radius: 8;" text="Rimuovi" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="120.0" />
+               </padding>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </center>
+   <bottom>
+      <Pane prefHeight="32.0" prefWidth="356.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <top>
+      <Pane prefHeight="32.0" prefWidth="356.0" BorderPane.alignment="CENTER" />
+   </top>
+</BorderPane>
