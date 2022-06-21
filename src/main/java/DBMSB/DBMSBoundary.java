@@ -407,7 +407,7 @@ public class DBMSBoundary {
         return listaFarmaci;
     }
 
-    public ResultSet getUtenti(){
+    public ResultSet getSedi(){
         DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try {
             Connection conn = DriverManager.getConnection(DB_URL);

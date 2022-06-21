@@ -37,12 +37,12 @@ public class RegistraUtenteControl {
     @FXML
     private Button confermaRegistraButton;
     private DBMSBoundary dbms = new DBMSBoundary();
-    ResultSet utenti= dbms.getUtenti();
+    ResultSet sedi= dbms.getSedi();
 
     public void setFields(){
         try{
-            while(utenti.next()) {
-                sedeField.getItems().add(utenti.getString("nomeSede"));
+            while(sedi.next()) {
+                sedeField.getItems().add(sedi.getString("nomeSede"));
             }
         }catch (Exception e) {
             e.printStackTrace();
