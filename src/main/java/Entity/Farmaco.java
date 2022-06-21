@@ -10,13 +10,14 @@ public class Farmaco {
     private String dataScadenza;
     private String quantitaFarmaco="0";
     private int quantitaFarmacoInt;
-    private String periodicitaProduzione;
-    private String quantitaProduzione;
+    private int periodicitaProduzione;
+    private int quantitaProduzione;
     private LinkedList<Lotto> listaLotti = new LinkedList<Lotto>();
     private Lotto lotto;
 
     public Farmaco() {}
-    public Farmaco(String nomeFarmaco, String principioAttivo, String quantitaFarmaco ,String lottoS, String dataScadenza,String periodicitaProduzione, String quantitaProduzione) {
+    public Farmaco(int IDFarmaco, String nomeFarmaco, String principioAttivo, String quantitaFarmaco ,String lottoS, String dataScadenza,int periodicitaProduzione, int quantitaProduzione) {
+        setIDFarmaco(IDFarmaco);
         setNomeFarmaco(nomeFarmaco);
         setPrincipioAttivo(principioAttivo);
         setQuantitaFarmaco(quantitaFarmaco);
@@ -68,10 +69,10 @@ public class Farmaco {
 
     public LinkedList<Lotto> getListaLotti() {return listaLotti; }
 
-    public void setPeriodicitaProduzione(String periodicitaProduzione) { this.periodicitaProduzione = periodicitaProduzione; }
-    public String getPeriodicitaProduzione(){ return periodicitaProduzione;}
-    public String getQuantitaProduzione(){ return quantitaProduzione; }
-    public void setQuantitaProduzione(String quantitaProduzione) { this.quantitaProduzione = quantitaProduzione; }
+    public void setPeriodicitaProduzione(int periodicitaProduzione) { this.periodicitaProduzione = periodicitaProduzione; }
+    public int getPeriodicitaProduzione(){ return periodicitaProduzione;}
+    public int getQuantitaProduzione(){ return quantitaProduzione; }
+    public void setQuantitaProduzione(int quantitaProduzione) { this.quantitaProduzione = quantitaProduzione; }
     public void setQuantitaFarmacoInt(int quantitaFarmacoInt){ this.quantitaFarmacoInt = quantitaFarmacoInt; }
     public int getQuantitaFarmacoInt() { return quantitaFarmacoInt; }
 

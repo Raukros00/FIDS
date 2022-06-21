@@ -374,8 +374,8 @@ public class DBMSBoundary {
                     f.setIDFarmaco(resultSet.getInt("IDFarmaco"));
                     f.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
                     f.setPrincipioAttivo(resultSet.getString("principioAttivo"));
-                    f.setPeriodicitaProduzione(String.valueOf(resultSet.getInt("periodicitaProduzione")));
-                    f.setQuantitaProduzione(String.valueOf(resultSet.getInt("quantitaProduzione")));
+                    f.setPeriodicitaProduzione(resultSet.getInt("periodicitaProduzione"));
+                    f.setQuantitaProduzione(resultSet.getInt("quantitaProduzione"));
 
                     IDFarmaco = resultSet.getInt("IDFarmaco");
                     l = new Lotto();
@@ -507,6 +507,48 @@ public class DBMSBoundary {
             cadutaConnessione();
         }
     }
+
+    public boolean modificaProduzione(int periodo,int quantita, int id){
+        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        int row;
+        try {
+            System.err.println(periodo+" "+quantita+" "+id);
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "UPDATE Farmaco SET periodicitaProduzione=?, quantitaProduzione=? WHERE IDFarmaco=? ";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt   (1, periodo);
+            preparedStatement.setInt   (2, quantita);
+            preparedStatement.setInt   (3, id);
+            row =preparedStatement.executeUpdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+            return false;
+        }
+        if(row==1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public ResultSet getFarmaco(int IDFarmaco){
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "select periodicitaProduzione, quantitaProduzione from Farmaco where IDFarmaco=?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt   (1, IDFarmaco);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        }catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+        return null;
+    }
+
     public ResultSet getPassword(){
         DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try{
