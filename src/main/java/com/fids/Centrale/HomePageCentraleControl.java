@@ -78,7 +78,7 @@ public class HomePageCentraleControl extends GlobalData {
        loader.setLocation(getClass().getResource("InventarioCentrale.fxml"));
        Parent root = loader.load();
        InventarioCentraleControl inventarioCControl = loader.getController();
-       inventarioCControl.stampaTabella();
+       inventarioCControl.setField();
        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
        stage.setTitle("Inventario Centrale");
        stage.setScene(new Scene(root));

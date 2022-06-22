@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
 public class InventarioCentraleControl {
@@ -47,9 +49,18 @@ public class InventarioCentraleControl {
     private DBMSBoundary dbms = new DBMSBoundary();
     LinkedList<Farmaco> listaFarmaci = new LinkedList<>();
 
+    public void setField(){
 
-    public void stampaTabella() {
-        LinkedList<Farmaco> listaFarmaci = dbms.getInventarioCentrale();
+        listaFarmaci = dbms.getInventarioCentrale();
+        stampaTabella(listaFarmaci);
+
+        principioAttivoField.getItems().add("");
+        for(Farmaco f: listaFarmaci)
+            principioAttivoField.getItems().add(f.getPrincipioAttivo());
+
+    }
+
+    public void stampaTabella(LinkedList<Farmaco> listaFarmaci) {
         TreeItem root = new TreeItem(new Farmaco(" ", " ", " ", "", " "));
         TreeItem farmaco;
 
@@ -132,27 +143,56 @@ public class InventarioCentraleControl {
         stage.show();
     }
 
-    public void applicaFiltro(ActionEvent event) {/*
+    public void applicaFiltro(ActionEvent event) {
         String nomeFarmaco = nomeFarmacoField.getText();
         String principioAttivo = principioAttivoField.getValue();
-        String dataDiScadenza = null;
-        if(dataDiScadenzaField.getValue() != null)
-            dataDiScadenza = dataDiScadenzaField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        if(principioAttivo==null) principioAttivo="";
+
+        dataDiScadenzaField.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
+
+        String dataDiScadenza;
+        try{
+            dataDiScadenza = String.valueOf(dataDiScadenzaField.getValue());
+            if(dataDiScadenza != null)
+                dataDiScadenza = dataDiScadenzaField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        } catch (NullPointerException e){
+            dataDiScadenza = null;
+            dataDiScadenzaField.setValue(null);
+        }
+
+        System.err.println(dataDiScadenza);
 
         TreeItem root = new TreeItem(new Farmaco(" ", " ","",""," "));
         TreeItem farmaco;
         for(Farmaco f: listaFarmaci) {
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
 
-            if((nomeFarmaco != null && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase())) && (principioAttivo != null && principioAttivo.equals(f.getPrincipioAttivo()))) {
+            System.err.println(f.getNomeFarmaco().toLowerCase() + " " + nomeFarmaco.toLowerCase() + " " + f.getNomeFarmaco().toLowerCase().contains(nomeFarmaco.toLowerCase()));
+            //if(((!nomeFarmaco.isEmpty() || !nomeFarmaco.trim().equals("")) && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase())) && ((f.getPrincipioAttivo().equals(principioAttivo))))
+            if (nomeFarmaco.isEmpty() && principioAttivo == "") {
+                root.getChildren().add(farmaco);
+            } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().contains(nomeFarmaco.toLowerCase()) && principioAttivo == "") {
+                root.getChildren().add(farmaco);
+            } else if (nomeFarmaco.isEmpty() && f.getPrincipioAttivo().equals(principioAttivo)) {
+                root.getChildren().add(farmaco);
+            } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().contains(nomeFarmaco.toLowerCase()) && f.getPrincipioAttivo().equals(principioAttivo))
                 root.getChildren().add(farmaco);
 
-                // principioAttivoField.getItems().add(f.getPrincipioAttivo());
-            }
 
-            for(Lotto l: f.getListaLotti()){
-                if((dataDiScadenza != null && dataDiScadenza.equalsIgnoreCase(l.getDataScadenza())) || dataDiScadenza == null)
-                    farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza()))); }
+            for (Lotto l : f.getListaLotti()) {
+                if ((dataDiScadenza != null && dataDiScadenza.equalsIgnoreCase(l.getDataScadenza()) || dataDiScadenza == null))
+                    farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
+            }
+            if (farmaco.getChildren().isEmpty()) {
+                root.getChildren().remove(farmaco);
+            }
         }
 
         nomeCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getNomeFarmaco()));
@@ -164,7 +204,17 @@ public class InventarioCentraleControl {
         root.setExpanded(true);
         listaFarmaciTable.setRoot(root);
         listaFarmaciTable.setShowRoot(false);
+        dataDiScadenzaField.setValue(null);
 
-*/
+        nomeFarmaco=null;
+        principioAttivo=null;
+        dataDiScadenza=null;
+    }
+
+    public void resetTable(ActionEvent event) {
+        nomeFarmacoField.clear();
+        principioAttivoField.setValue(null);
+        dataDiScadenzaField.setValue(null);
+        stampaTabella(listaFarmaci);
     }
 }
