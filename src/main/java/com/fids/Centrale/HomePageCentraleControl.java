@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class HomePageCentraleControl extends GlobalData {
@@ -107,6 +108,7 @@ public class HomePageCentraleControl extends GlobalData {
     }
 
     private void startClock() {
+        DAY=LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString();
         Timeline clock = new Timeline(new KeyFrame(Duration.millis(1000 - Calendar.getInstance().get(Calendar.MILLISECOND)), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -122,6 +124,7 @@ public class HomePageCentraleControl extends GlobalData {
                 Calendar c = Calendar.getInstance();
                 c.add(Calendar.DATE, OFFSETDAY);
                 dt = sdf.format(c.getTime());
+                DAY=dt;
                 dateLabel.setText(dt);
 
 

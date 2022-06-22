@@ -8,7 +8,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -445,7 +447,7 @@ public class DBMSBoundary {
         return false;
     }
 
-    public ArrayList getUsernames(){
+    public ArrayList<String> getUsernames(){
         DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         ArrayList<String> usernames = new ArrayList<String>();
         try {
@@ -547,6 +549,29 @@ public class DBMSBoundary {
             cadutaConnessione();
         }
         return null;
+    }
+
+    public void checkProduzione(String day){
+        ArrayList<Integer> daProdurre= new ArrayList<Integer>();
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "select * from Farmaco";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()){
+                String ultimaProduzione= String.valueOf(LocalDate.parse(String.valueOf(resultSet.getDate("ultimaProduzione"))).plusDays(resultSet.getInt("periodicitaProduzione")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                System.err.println(ultimaProduzione+"="+day);
+                if(day.trim().equals(ultimaProduzione)){
+                    daProdurre.add(resultSet.getInt("IDFarmaco"));
+                    System.err.println(resultSet.getString("nomeFarmaco")+" è da produrre");
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
     }
 
     public ResultSet getPassword(){
