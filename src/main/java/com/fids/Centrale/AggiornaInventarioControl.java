@@ -38,17 +38,19 @@ public class AggiornaInventarioControl extends GlobalData {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-        String currentDay = LocalDate.now().toString();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar c = Calendar.getInstance();
-        currentDay = sdf.format(c.getTime());
-        System.err.println(DAY);
-        System.err.println(data);
-        if(DAY.equals(data)){
+        String currentDay = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        System.err.println(DAY+data);
+        if(!DAY.equals(data)){
+            System.err.println("Sono entrato");
             DBMSBoundary dbms = new DBMSBoundary();
             ArrayList<Farmaco> daProdurre = dbms.checkProduzione(DAY);
-            ArrayList<Lotto> daInserire = buildLotti(daProdurre);
-            System.err.println("Weeeeee");
+            if(!daProdurre.isEmpty()) {
+                ArrayList<Lotto> daInserire = buildLotti(daProdurre);
+                dbms.aggiungiLotto(daInserire);
+                System.err.println(currentDay != data);
+            }
+        }else{
+
         }
     }
 
@@ -66,6 +68,7 @@ public class AggiornaInventarioControl extends GlobalData {
     }
 
     public ArrayList<Lotto> buildLotti(ArrayList<Farmaco> daProdurre){
+        ArrayList<Lotto> daInserire= new ArrayList<Lotto>();
         for(Farmaco f : daProdurre){
             Lotto l=new Lotto();
             String nome=f.getNomeFarmaco().trim().substring(0, 4);
@@ -80,8 +83,8 @@ public class AggiornaInventarioControl extends GlobalData {
             l.setDataProduzione(String.valueOf(LocalDate.now()));
             l.setQuantitaLotto(f.getQuantitaProduzione());
             l.setFKFarmaco(f.getIDFarmaco());
-            System.out.println(l);
+            daInserire.add(l);
         }
-        return null;
+        return daInserire;
     }
 }

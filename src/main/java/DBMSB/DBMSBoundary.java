@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class DBMSBoundary {
+public class DBMSBoundary extends GlobalData{
     private String DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
 
     private void cadutaConnessione(){
@@ -561,8 +561,11 @@ public class DBMSBoundary {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
-                String ultimaProduzione= String.valueOf(LocalDate.parse(String.valueOf(resultSet.getDate("ultimaProduzione"))).plusDays(resultSet.getInt("periodicitaProduzione")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                if(day.trim().equals(ultimaProduzione)){
+                DateTimeFormatter formatter= DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate dataProduzione= LocalDate.parse(String.valueOf(LocalDate.parse(String.valueOf(resultSet.getDate("ultimaProduzione"))).plusDays(resultSet.getInt("periodicitaProduzione")).format(formatter)), formatter);
+                LocalDate oggiFinto=LocalDate.parse(day,formatter);
+                //System.out.println(oggiFinto+" è dopo "+ dataProduzione+"? "+(oggiFinto.isAfter(dataProduzione) || oggiFinto.isEqual(dataProduzione)));
+                if(oggiFinto.isAfter(dataProduzione) || oggiFinto.isEqual(dataProduzione)){
                     Farmaco f= new Farmaco();
                     f.setIDFarmaco(resultSet.getInt("IDFarmaco"));
                     f.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
@@ -577,6 +580,40 @@ public class DBMSBoundary {
             cadutaConnessione();
         }
         return daProdurre;
+    }
+
+    public void aggiungiLotto(ArrayList<Lotto> daInserire){
+        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        String sql="INSERT INTO Lotto(codiceLotto,dataScadenza,dataProduzione,quantitaLotto,FKFarmaco) VALUES";
+        for(Lotto l : daInserire){
+            sql=sql+"('"+l.getCodiceLotto()+"','"+l.getDataScadenza()+"','"+l.getDataProduzione()+"',"+l.getQuantitaLotto()+","+l.getFKFarmaco()+"),";
+        }
+        sql=sql.substring(0,sql.length()-1);
+        sql=sql+";";
+        System.out.println(sql);
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            int row=preparedStatement.executeUpdate();
+            System.out.println("Sono stati inseriti "+row+" lotti");
+            String currentData=LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            if(currentData.equals(DAY)) {
+                String ultimaProduzione=LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                sql="UPDATE Farmaco SET ultimaProduzione='"+ultimaProduzione+"' WHERE IDFarmaco IN(";
+                for(Lotto l : daInserire){
+                    sql=sql+""+l.getFKFarmaco()+",";
+                }
+                sql=sql.substring(0,sql.length()-1);
+                sql=sql+");";
+                System.out.println(sql);
+                preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.executeUpdate();
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
     }
 
     public ResultSet getPassword(){
