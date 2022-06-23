@@ -147,7 +147,7 @@ public class DBMSBoundary {
                     l.setCodiceLotto(resultSet.getString("codiceLotto"));
                     l.setDataScadenza(resultSet.getString("dataScadenza"));
                     l.setDataProduzione(resultSet.getString("dataProduzione"));
-                    l.setQuantitaLotto(String.valueOf(resultSet.getInt("quantitaLotto")));
+                    l.setQuantitaLotto(resultSet.getInt("quantitaLotto"));
                     f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(f.getQuantitaFarmaco())));
                     f.inserisciLotto(l);
 
@@ -158,7 +158,7 @@ public class DBMSBoundary {
                     l.setCodiceLotto(resultSet.getString("codiceLotto"));
                     l.setDataScadenza(resultSet.getString("dataScadenza"));
                     l.setDataProduzione(resultSet.getString("dataProduzione"));
-                    l.setQuantitaLotto(resultSet.getString("quantitaLotto"));
+                    l.setQuantitaLotto(resultSet.getInt("quantitaLotto"));
                     f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(f.getQuantitaFarmaco())));
                     f.inserisciLotto(l);
 
@@ -183,7 +183,7 @@ public class DBMSBoundary {
                 for(Farmaco lf: listaFarmaci){
                     for(Lotto ll : lf.getListaLotti()){
                         if(ll.getCodiceLotto().equalsIgnoreCase(f.getLottoS())){
-                                f.setQuantitaFarmacoInt(Integer.parseInt(ll.getQuantitaLotto()) - f.getQuantitaFarmacoInt());
+                                f.setQuantitaFarmacoInt(ll.getQuantitaLotto() - f.getQuantitaFarmacoInt());
                                 Connection conn = DriverManager.getConnection(DB_URL);
                                 Statement stat = conn.createStatement();
                                 String sql = "UPDATE Lotto SET quantitaLotto =? WHERE codiceLotto =?";
@@ -384,7 +384,7 @@ public class DBMSBoundary {
                     l.setCodiceLotto(resultSet.getString("codiceLotto"));
                     l.setDataScadenza(resultSet.getString("dataScadenza"));
                     l.setDataProduzione(resultSet.getString("dataProduzione"));
-                    l.setQuantitaLotto(String.valueOf(resultSet.getInt("quantitaLotto")));
+                    l.setQuantitaLotto(resultSet.getInt("quantitaLotto"));
                     f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(f.getQuantitaFarmaco())));
                     f.inserisciLotto(l);
 
@@ -393,7 +393,7 @@ public class DBMSBoundary {
                     l.setCodiceLotto(resultSet.getString("codiceLotto"));
                     l.setDataScadenza(resultSet.getString("dataScadenza"));
                     l.setDataProduzione(resultSet.getString("dataProduzione"));
-                    l.setQuantitaLotto(resultSet.getString("quantitaLotto"));
+                    l.setQuantitaLotto(resultSet.getInt("quantitaLotto"));
                     f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(f.getQuantitaFarmaco())));
                     f.inserisciLotto(l);
 
@@ -551,8 +551,8 @@ public class DBMSBoundary {
         return null;
     }
 
-    public void checkProduzione(String day){
-        ArrayList<Integer> daProdurre= new ArrayList<Integer>();
+    public ArrayList<Farmaco> checkProduzione(String day){
+        ArrayList<Farmaco> daProdurre= new ArrayList<Farmaco>();
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
@@ -562,9 +562,13 @@ public class DBMSBoundary {
 
             while(resultSet.next()){
                 String ultimaProduzione= String.valueOf(LocalDate.parse(String.valueOf(resultSet.getDate("ultimaProduzione"))).plusDays(resultSet.getInt("periodicitaProduzione")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                System.err.println(ultimaProduzione+"="+day);
                 if(day.trim().equals(ultimaProduzione)){
-                    daProdurre.add(resultSet.getInt("IDFarmaco"));
+                    Farmaco f= new Farmaco();
+                    f.setIDFarmaco(resultSet.getInt("IDFarmaco"));
+                    f.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
+                    f.setQuantitaProduzione(resultSet.getInt("quantitaProduzione"));
+                    f.setValidita(resultSet.getInt("validita"));
+                    daProdurre.add(f);
                     System.err.println(resultSet.getString("nomeFarmaco")+" è da produrre");
                 }
             }
@@ -572,6 +576,7 @@ public class DBMSBoundary {
             e.printStackTrace();
             cadutaConnessione();
         }
+        return daProdurre;
     }
 
     public ResultSet getPassword(){

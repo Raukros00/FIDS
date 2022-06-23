@@ -1,7 +1,9 @@
 package com.fids.Centrale;
 
 import DBMSB.DBMSBoundary;
+import Entity.Farmaco;
 import Entity.GlobalData;
+import Entity.Lotto;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -13,8 +15,11 @@ import javafx.util.Duration;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class AggiornaInventarioControl extends GlobalData {
@@ -41,7 +46,8 @@ public class AggiornaInventarioControl extends GlobalData {
         System.err.println(data);
         if(DAY.equals(data)){
             DBMSBoundary dbms = new DBMSBoundary();
-            dbms.checkProduzione(DAY);
+            ArrayList<Farmaco> daProdurre = dbms.checkProduzione(DAY);
+            ArrayList<Lotto> daInserire = buildLotti(daProdurre);
             System.err.println("Weeeeee");
         }
     }
@@ -57,5 +63,25 @@ public class AggiornaInventarioControl extends GlobalData {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Lotto> buildLotti(ArrayList<Farmaco> daProdurre){
+        for(Farmaco f : daProdurre){
+            Lotto l=new Lotto();
+            String nome=f.getNomeFarmaco().trim().substring(0, 4);
+            String dataProduzione=String.valueOf(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+            LocalTime now= LocalTime.now();
+            String oraProduzione= now.format(DateTimeFormatter.ofPattern("HHmm"));
+            String codiceLotto=nome+dataProduzione+oraProduzione;
+            l.setCodiceLotto(codiceLotto);
+            System.err.println(codiceLotto);
+            l.setDataScadenza(String.valueOf(LocalDate.now().plusDays(f.getValidita())));
+            System.err.println(String.valueOf(LocalDate.now().plusDays(f.getValidita())));
+            l.setDataProduzione(String.valueOf(LocalDate.now()));
+            l.setQuantitaLotto(f.getQuantitaProduzione());
+            l.setFKFarmaco(f.getIDFarmaco());
+            System.out.println(l);
+        }
+        return null;
     }
 }

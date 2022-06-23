@@ -115,7 +115,7 @@ public class InventarioCentraleControl {
             modificaCol.setCellFactory(cellFactory);
 
             for (Lotto l : f.getListaLotti()) {
-                farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
+                farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", String.valueOf(l.getQuantitaLotto()), l.getCodiceLotto(), l.getDataScadenza())));
             }
         }
         TreeItem last = new TreeItem(new Farmaco(" ", "", "", "", ""));
@@ -188,7 +188,7 @@ public class InventarioCentraleControl {
 
             for (Lotto l : f.getListaLotti()) {
                 if ((dataDiScadenza != null && dataDiScadenza.equalsIgnoreCase(l.getDataScadenza()) || dataDiScadenza == null))
-                    farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
+                    farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", String.valueOf(l.getQuantitaLotto()), l.getCodiceLotto(), l.getDataScadenza())));
             }
             if (farmaco.getChildren().isEmpty()) {
                 root.getChildren().remove(farmaco);
