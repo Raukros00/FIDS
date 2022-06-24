@@ -141,7 +141,7 @@ public class ModificaOrdineControl {
             else {
                 farmaciIterator.remove();
             }
-        }3
+        }
 
         if(listaFarmaciInVendita.size() > 0){
 

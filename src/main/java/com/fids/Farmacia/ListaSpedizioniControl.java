@@ -46,7 +46,7 @@ public class ListaSpedizioniControl {
     LinkedList<Spedizione> listaSpedizioni;
 
     public void setDatiOrdini(int ID_FARMACIA){
-        listaSpedizioni = dbms.getListaSpedizioni(ID_FARMACIA);
+        listaSpedizioni = dbms.getListaSpedizioniFarmacia(ID_FARMACIA);
         stampaSpedizioni(listaSpedizioni);
     }
 

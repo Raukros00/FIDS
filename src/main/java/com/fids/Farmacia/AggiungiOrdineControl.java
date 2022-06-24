@@ -114,29 +114,29 @@ public class AggiungiOrdineControl extends GlobalData {
                         mantieni = FSControl.returnMantieni();
                         if(mantieni){
 
-                            if(Integer.parseInt(l.getQuantitaLotto()) >= f.getQuantitaFarmacoInt()){
+                            if(l.getQuantitaLotto() >= f.getQuantitaFarmacoInt()){
                                 ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), f.getQuantitaFarmacoInt());
                                 ordine.add(ls);
                                 farmaciIterator.remove();
                             }
-                            else if (Integer.parseInt(l.getQuantitaLotto()) > 0){
-                                ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), Integer.parseInt(l.getQuantitaLotto()));
+                            else if (l.getQuantitaLotto()> 0){
+                                ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), l.getQuantitaLotto());
                                 ordine.add(ls);
-                                f.setQuantitaFarmacoInt(f.getQuantitaFarmacoInt() - Integer.parseInt(l.getQuantitaLotto()));
+                                f.setQuantitaFarmacoInt(f.getQuantitaFarmacoInt() - l.getQuantitaLotto());
                             }
                         }
                     }
                     else {
-                        if(Integer.parseInt(l.getQuantitaLotto()) >= f.getQuantitaFarmacoInt()){
+                        if(l.getQuantitaLotto() >= f.getQuantitaFarmacoInt()){
                             ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), f.getQuantitaFarmacoInt());
                             ordine.add(ls);
                             farmaciIterator.remove();
                             break;
                         }
-                        else if(Integer.parseInt(l.getQuantitaLotto()) > 0){
-                            ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), Integer.parseInt(l.getQuantitaLotto()));
+                        else if(l.getQuantitaLotto() > 0){
+                            ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), l.getQuantitaLotto());
                             ordine.add(ls);
-                            f.setQuantitaFarmacoInt(f.getQuantitaFarmacoInt() - Integer.parseInt(l.getQuantitaLotto()));
+                            f.setQuantitaFarmacoInt(f.getQuantitaFarmacoInt() - l.getQuantitaLotto());
                         }
                     }
                 }

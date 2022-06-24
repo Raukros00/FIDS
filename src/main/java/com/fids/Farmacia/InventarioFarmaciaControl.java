@@ -4,8 +4,6 @@ import DBMSB.DBMSBoundary;
 import Entity.Farmaco;
 import Entity.Lotto;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +27,7 @@ public class InventarioFarmaciaControl {
     @FXML
     private TreeTableColumn<Farmaco, String> principioCol;
     @FXML
-    private TreeTableColumn<Farmaco, Integer> quantitaCol;
+    private TreeTableColumn<Farmaco, String> quantitaCol;
     @FXML
     private TreeTableColumn<Farmaco, String> lottoCol;
     @FXML
@@ -86,7 +84,7 @@ public class InventarioFarmaciaControl {
 
         nomeCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getNomeFarmaco()));
         principioCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getPrincipioAttivo()));
-        quantitaCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, Integer> param) -> new SimpleStringProperty((String.valueOf(param.getValue().getValue().getQuantitaFarmaco()))));
+        quantitaCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty((param.getValue().getValue().getQuantitaFarmaco())));
         lottoCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getLottoS()));
         scadenzaCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getDataScadenza()));
 

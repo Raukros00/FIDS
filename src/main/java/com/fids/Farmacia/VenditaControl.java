@@ -64,7 +64,7 @@ public class VenditaControl extends GlobalData {
                 for(Farmaco f : listaFarmaci){
                     for(Lotto l : f.getListaLotti()){
                         if(l.getCodiceLotto().equalsIgnoreCase(newF.getLottoS())){
-                            if(Integer.parseInt(l.getQuantitaLotto()) >= event.getNewValue()) {
+                            if(l.getQuantitaLotto() >= event.getNewValue()) {
                                 newF.setQuantitaFarmacoInt(event.getNewValue());
                                 errorLabel.setText("");
                             }
