@@ -201,7 +201,7 @@ public class DBMSBoundary extends GlobalData{
         }
     }
 
-    public LinkedList<Spedizione> getListaSpedizioni(int idFarmacia) {
+    public LinkedList<Spedizione> getListaSpedizioniFarmacia(int idFarmacia) {
 
         LinkedList<Spedizione> listaSpedizioni = new LinkedList<>();
 
