@@ -2,7 +2,6 @@ package com.fids.Farmacia;
 
 import DBMSB.DBMSBoundary;
 import Entity.Farmaco;
-import Entity.GlobalData;
 import Entity.Lotto;
 import Entity.LottoSpedizione;
 import com.fids.PopUp.PopUpControl;
@@ -11,9 +10,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -25,58 +24,57 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Locale;
 
-public class AggiungiOrdineControl extends GlobalData {
+public class ModificaOrdineControl {
 
-    DBMSBoundary dbms = new DBMSBoundary();
-    LinkedList<Farmaco> listaFarmaci;
-    LinkedList<Farmaco> listaFarmaciInVendita;
-    LinkedList<LottoSpedizione> ordine = new LinkedList<>();
-
-    LottoSpedizione ls;
-    boolean mantieni;
-
-    @FXML TableView<Farmaco> ordineTable = new TableView<>();
-    @FXML TableColumn<Farmaco, String> nomeCol;
+    @FXML private TableView<Farmaco> ordineTable = new TableView<>();
+    @FXML private TableColumn<Farmaco, String> nomeCol;
     @FXML private TableColumn<Farmaco, Integer> quantitaCol;
+    @FXML private Button ordinaButton;
 
+    LinkedList<Farmaco> listaFarmaciInVendita = new LinkedList<>();
+    ListIterator<Farmaco> farmaciIterator;
+    LinkedList<LottoSpedizione> listaFarmaci;
+    LinkedList<LottoSpedizione> ordine = new LinkedList<>();
+    DBMSBoundary dbms = new DBMSBoundary();
+    LottoSpedizione ls;
 
-    public void setDatiOrdine() {
+    int IDOrdine;
+    boolean mantieni;
+    public void setModificaOrdine(LinkedList<LottoSpedizione> listaFarmaci, int IDOrdine) {
 
         listaFarmaciInVendita = dbms.getInventarioCentrale();
-        listaFarmaci = listaFarmaciInVendita;
+        farmaciIterator = listaFarmaciInVendita.listIterator();
+        this.listaFarmaci = listaFarmaci;
+        this.IDOrdine = IDOrdine;
+
         nomeCol.setCellValueFactory(new PropertyValueFactory<Farmaco, String>("nomeFarmaco"));
         quantitaCol.setCellValueFactory(new PropertyValueFactory<Farmaco, Integer>("quantitaFarmacoInt"));
         quantitaCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+
         quantitaCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Farmaco, Integer>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Farmaco, Integer> event) {
-                Farmaco newF = event.getRowValue();
+                Farmaco newF= event.getRowValue();
                 newF.setQuantitaFarmacoInt(event.getNewValue());
             }
         });
 
+        for(Farmaco f : listaFarmaciInVendita){
+            for(LottoSpedizione l : listaFarmaci){
+                if(f.getNomeFarmaco().equalsIgnoreCase(l.getNomeFarmaco()))
+                    f.setQuantitaFarmacoInt(l.getQuantita());
+            }
+        }
+
         ordineTable.setItems(FXCollections.observableArrayList(listaFarmaciInVendita));
         ordineTable.setEditable(true);
-
-
-    }
-    public void listaSpedizioni(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ListaSpedizioniControl.class.getResource("ListaSpedizioniFarmacia.fxml"));
-        Parent root = loader.load();
-        ListaSpedizioniControl homeFControl = loader.getController();
-        homeFControl.setDatiOrdini(ID_FARMACIA);
-        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Lista Ordini");
-        stage.setScene(new Scene(root));
-        stage.show();
     }
 
-    public void creaOrdine(ActionEvent actionEvent) throws SQLException, IOException {
+    public void updateOrdine(ActionEvent actionEvent) throws IOException, SQLException {
 
         LocalDate oggi = LocalDate.now();
         LocalDate scadenzaLotto;
@@ -84,8 +82,6 @@ public class AggiungiOrdineControl extends GlobalData {
         LocalDate currentDataPlusTwo = oggi.plusMonths(2);
         currentDataPlusTwo = LocalDate.parse(String.valueOf(currentDataPlusTwo), formatter);
         boolean empty = true;
-
-        Iterator<Farmaco> farmaciIterator = listaFarmaci.iterator();
 
         while(farmaciIterator.hasNext()) {
             Farmaco f = farmaciIterator.next();
@@ -118,8 +114,9 @@ public class AggiungiOrdineControl extends GlobalData {
                                 ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), f.getQuantitaFarmacoInt());
                                 ordine.add(ls);
                                 farmaciIterator.remove();
+                                break;
                             }
-                            else if (l.getQuantitaLotto()> 0){
+                            else if(l.getQuantitaLotto() > 0){
                                 ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), l.getQuantitaLotto());
                                 ordine.add(ls);
                                 f.setQuantitaFarmacoInt(f.getQuantitaFarmacoInt() - l.getQuantitaLotto());
@@ -146,7 +143,7 @@ public class AggiungiOrdineControl extends GlobalData {
             }
         }
 
-        if(listaFarmaci.size() > 0){
+        if(listaFarmaciInVendita.size() > 0){
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(FarmaciNonDisponibiliControl.class.getResource("FarmaciNonDisponibili.fxml"));
@@ -157,7 +154,7 @@ public class AggiungiOrdineControl extends GlobalData {
                 throw new RuntimeException(e);
             }
             FarmaciNonDisponibiliControl FNDControl = loader.getController();
-            FNDControl.setFarmaciNonDisponibili(listaFarmaci);
+            FNDControl.setFarmaciNonDisponibili(listaFarmaciInVendita);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setTitle("Lista Farmaci non disponibili");
@@ -185,20 +182,21 @@ public class AggiungiOrdineControl extends GlobalData {
 
         if(ordine.size() > 0){
 
-            int idSpedizione = dbms.creaSpedizione(ID_FARMACIA, DISTANZA);
-            dbms.inserisciLottiInSpedizione(idSpedizione, ordine);
+            dbms.modificaSpedizione(IDOrdine, ordine);
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
             Parent root = loader.load();
             PopUpControl popControl = loader.getController();
-            popControl.setPopUp("Ordine eseguito!");
+            popControl.setPopUp("Modifica eseguita!");
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setTitle("Avviso");
             stage.setScene(scene);
-            stage.show();
+            stage.showAndWait();
 
+            stage = (Stage) ordinaButton.getScene().getWindow();
+            stage.close();;
 
         }
     }

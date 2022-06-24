@@ -36,7 +36,7 @@
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
-                <Button fx:id="modificaContrattoButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D #21AD6D;" text="Modifica Contratto" textFill="WHITE" GridPane.rowIndex="4">
+                <Button fx:id="modificaContrattoButton" mnemonicParsing="false" onAction="#modificaContratto" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D #21AD6D;" text="Modifica Contratto" textFill="WHITE" GridPane.rowIndex="4">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
@@ -46,7 +46,7 @@
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
-                <Button fx:id="caricaConsegnaButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Carica Consegna" textFill="WHITE" GridPane.rowIndex="3">
+                <Button fx:id="caricaConsegnaButton" mnemonicParsing="false" onAction="#caricaConsegna" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Carica Consegna" textFill="WHITE" GridPane.rowIndex="3">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>

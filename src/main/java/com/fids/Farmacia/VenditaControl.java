@@ -189,4 +189,5 @@ public class VenditaControl extends GlobalData {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
 }

@@ -5,6 +5,7 @@ import Entity.Farmacia;
 import Entity.GlobalData;
 import Entity.Utente;
 import com.fids.AccessApplication;
+import com.fids.PopUp.PopUpControl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -57,7 +58,8 @@ public class HomeFarmaciaControl extends GlobalData{
         farmacia = dbms.richiediInfoHome(user.getIDSede());
 
         NOMINATIVO = user.getNome() + " " + user.getCognome();
-        NUM_CONSEGNE = String.valueOf(farmacia.getNumConsegne());
+        ID_UTENTE = user.getIDUtente();
+        NUM_CONSEGNE = farmacia.getNumConsegne();
         NOME_FARMACIA = farmacia.getNomeSede();
         INDIRIZZO_FARMACIA = farmacia.getIndirizzoSede();
         CITTA_FARMACIA = farmacia.getCitta();
@@ -65,7 +67,7 @@ public class HomeFarmaciaControl extends GlobalData{
         DISTANZA = farmacia.getDistanza();
 
         nomeCognomeLabel.setText(NOMINATIVO);
-        numConsegneArrivoLabel.setText(NUM_CONSEGNE);
+        numConsegneArrivoLabel.setText(String.valueOf(NUM_CONSEGNE));
         nomeFarmaciaLabel.setText(NOME_FARMACIA);
         indirizzoLabel.setText(INDIRIZZO_FARMACIA);
         cittaLabel.setText(CITTA_FARMACIA);
@@ -74,7 +76,7 @@ public class HomeFarmaciaControl extends GlobalData{
 
     public void setLabels() {
         nomeCognomeLabel.setText(NOMINATIVO);
-        numConsegneArrivoLabel.setText(NUM_CONSEGNE);
+        numConsegneArrivoLabel.setText(String.valueOf(NUM_CONSEGNE));
         nomeFarmaciaLabel.setText(NOME_FARMACIA);
         indirizzoLabel.setText(INDIRIZZO_FARMACIA);
         cittaLabel.setText(CITTA_FARMACIA);
@@ -122,6 +124,52 @@ public class HomeFarmaciaControl extends GlobalData{
         listaSpedizioniFControl.setDatiOrdini(ID_FARMACIA);
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Lista Ordini");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public void caricaConsegna(ActionEvent event) throws IOException {
+
+        if(NUM_CONSEGNE == 0){
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            PopUpControl popControl = loader.getController();
+            popControl.setPopUp("Non ci sono consegne da caricare!");
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Avviso");
+            stage.setScene(scene);
+            stage.show();
+        }
+        else{
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("CaricaConsegna.fxml"));
+            Parent root = loader.load();
+            CaricaConsegnaControl CCControl = loader.getController();
+            CCControl.setDatiConsegna(ID_FARMACIA);
+            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("Carica Consegna");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        }
+    }
+
+    public void modificaContratto(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ModificaContratto.fxml"));
+        Parent root = loader.load();
+        ModificaContrattoControl ModificaContrattoFControl = loader.getController();
+        ModificaContrattoFControl.setDatiContratto(ID_FARMACIA);
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Modifica Contratto");
         stage.setScene(new Scene(root));
         stage.show();
     }

@@ -3,6 +3,7 @@ package com.fids.Farmacia;
 import DBMSB.DBMSBoundary;
 import Entity.LottoSpedizione;
 import Entity.Spedizione;
+import com.fids.PopUp.PopUpControl;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -19,7 +20,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
+import java.util.Locale;
+
+import static Entity.GlobalData.ID_FARMACIA;
 
 public class ListaSpedizioniControl {
 
@@ -41,7 +47,6 @@ public class ListaSpedizioniControl {
 
     public void setDatiOrdini(int ID_FARMACIA){
         listaSpedizioni = dbms.getListaSpedizioniFarmacia(ID_FARMACIA);
-        System.out.println("SETDATI " + listaSpedizioni.getFirst().getListaLottiSpedizione().size());
         stampaSpedizioni(listaSpedizioni);
     }
 
@@ -55,10 +60,10 @@ public class ListaSpedizioniControl {
             private final Button visualizzaButton = new Button("Visualizza");
 
             @Override
-            protected void updateItem(Spedizione f, boolean empty) {
-                super.updateItem(f, empty);
+            protected void updateItem(Spedizione s, boolean empty) {
+                super.updateItem(s, empty);
 
-                if (f == null) {
+                if (s == null) {
                     setGraphic(null);
                     return;
                 }
@@ -76,7 +81,7 @@ public class ListaSpedizioniControl {
                     }
                     VisualizzaOrdineControl visualizzaOrdineFControl = loader.getController();
 
-                    LinkedList<LottoSpedizione> fs = f.getListaLottiSpedizione();
+                    LinkedList<LottoSpedizione> fs = s.getListaLottiSpedizione();
                     System.err.println("Size: " + fs.size());
                     visualizzaOrdineFControl.setDatiSpedizione(fs);
                     Scene scene = new Scene(root);
@@ -93,10 +98,10 @@ public class ListaSpedizioniControl {
             private final Button modificaButton = new Button("Modifica");
 
             @Override
-            protected void updateItem(Spedizione f, boolean empty) {
-                super.updateItem(f, empty);
+            protected void updateItem(Spedizione s, boolean empty) {
+                super.updateItem(s, empty);
 
-                if (f == null) {
+                if (s == null) {
                     setGraphic(null);
                     return;
                 }
@@ -104,6 +109,50 @@ public class ListaSpedizioniControl {
                 setGraphic(modificaButton);
 
                 modificaButton.setOnAction(event -> {
+                    LocalDate oggi = LocalDate.now();
+                    LocalDate dataConsegna;
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
+                    LocalDate currentDataPlusTwo = oggi.plusDays(2);
+                    dataConsegna = LocalDate.parse(s.getDataConsegna(), formatter);
+
+                    if(!currentDataPlusTwo.isAfter(dataConsegna)){
+
+                        LinkedList<LottoSpedizione> fs = s.getListaLottiSpedizione();
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(ModificaOrdineControl.class.getResource("ModificaOrdine.fxml"));
+                        Parent root = null;
+                        try {
+                            root = loader.load();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        ModificaOrdineControl MOControl = loader.getController();
+                        MOControl.setModificaOrdine(fs, s.getIDSpedizione());
+                        Scene scene = new Scene(root);
+                        Stage stage = new Stage();
+                        stage.setTitle("Modifica Ordine");
+                        stage.setScene(scene);
+                        stage.showAndWait();
+
+                        setDatiOrdini(ID_FARMACIA);
+                    }
+                    else{
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+                        Parent root = null;
+                        try {
+                            root = loader.load();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        PopUpControl popControl = loader.getController();
+                        popControl.setPopUp("Questo ordine è stato già spedito!");
+                        Scene scene = new Scene(root);
+                        Stage stage = new Stage();
+                        stage.setTitle("Avviso");
+                        stage.setScene(scene);
+                        stage.show();
+                    }
 
                 });
             }
@@ -124,10 +173,10 @@ public class ListaSpedizioniControl {
             private final Button visualizzaArcButton = new Button("Visualizza");
 
             @Override
-            protected void updateItem(Spedizione f, boolean empty) {
-                super.updateItem(f, empty);
+            protected void updateItem(Spedizione s, boolean empty) {
+                super.updateItem(s, empty);
 
-                if (f == null) {
+                if (s == null) {
                     setGraphic(null);
                     return;
                 }
@@ -145,7 +194,7 @@ public class ListaSpedizioniControl {
                     }
                     VisualizzaOrdineControl visualizzaOrdineFControl = loader.getController();
 
-                    LinkedList<LottoSpedizione> fs = f.getListaLottiSpedizione();
+                    LinkedList<LottoSpedizione> fs = s.getListaLottiSpedizione();
                     System.err.println("Size: " + fs.size());
                     visualizzaOrdineFControl.setDatiSpedizione(fs);
                     Scene scene = new Scene(root);
