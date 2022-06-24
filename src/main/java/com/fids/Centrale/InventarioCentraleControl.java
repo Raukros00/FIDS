@@ -83,29 +83,31 @@ public class InventarioCentraleControl {
                         @Override
                         public void updateItem(Farmaco item, boolean empty) {
                             super.updateItem(item, empty);
-                            if (empty) {
-                                setGraphic(null);
-                                setText(null);
-                            } else {
-                                modificaButton.setOnAction(event -> {
-                                    try {
-                                        Farmaco f = getTreeTableRow().getItem();
-                                        FXMLLoader loader = new FXMLLoader();
-                                        loader.setLocation(getClass().getResource("ModificaProduzione.fxml"));
-                                        Parent root = loader.load();
-                                        ModificaProduzioneControl modificaProduzioneControl = loader.getController();
-                                        modificaProduzioneControl.setPresets(f);
-                                        Scene scene = new Scene(root);
-                                        Stage stage = new Stage();
-                                        stage.setTitle("Modifica Produzione");
-                                        stage.setScene(scene);
-                                        stage.show();
-                                    }catch(Exception e) {
-                                        e.printStackTrace();
-                                    }
+                            if(getTreeTableRow().getItem()!=null){
+                                if (empty || getTreeTableRow().getItem().getNomeFarmaco()==" ") {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    modificaButton.setOnAction(event -> {
+                                        try {
+                                            Farmaco f = getTreeTableRow().getItem();
+                                            FXMLLoader loader = new FXMLLoader();
+                                            loader.setLocation(getClass().getResource("ModificaProduzione.fxml"));
+                                            Parent root = loader.load();
+                                            ModificaProduzioneControl modificaProduzioneControl = loader.getController();
+                                            modificaProduzioneControl.setPresets(f);
+                                            Scene scene = new Scene(root);
+                                            Stage stage = new Stage();
+                                            stage.setTitle("Modifica Produzione");
+                                            stage.setScene(scene);
+                                            stage.show();
+                                        }catch(Exception e) {
+                                            e.printStackTrace();
+                                        }
                                 });
                                 setGraphic(modificaButton);
                                 setText(null);
+                                }
                             }
                         }
                     };

@@ -39,9 +39,7 @@ public class AggiornaInventarioControl extends GlobalData {
             e.printStackTrace();
         }
         String currentDay = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        System.err.println(DAY+data);
         if(!DAY.equals(data)){
-            System.err.println("Sono entrato");
             DBMSBoundary dbms = new DBMSBoundary();
             ArrayList<Farmaco> daProdurre = dbms.checkProduzione(DAY);
             if(!daProdurre.isEmpty()) {
@@ -49,8 +47,17 @@ public class AggiornaInventarioControl extends GlobalData {
                 dbms.aggiungiLotto(daInserire);
                 System.err.println(currentDay != data);
             }
-        }else{
-
+            if(!currentDay.equals(data)){
+                try {
+                    FileWriter myWriter = new FileWriter(filePath);
+                    myWriter.write(currentDay);
+                    myWriter.close();
+                    System.out.println("Successfully wrote to the file.");
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -58,8 +65,6 @@ public class AggiornaInventarioControl extends GlobalData {
         try {
             if (file.createNewFile()) {
                 System.out.println("File created: " + file.getName());
-            } else {
-                System.out.println("File already exists.");
             }
         } catch (IOException e) {
             System.out.println("An error occurred.");
