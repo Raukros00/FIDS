@@ -76,7 +76,7 @@ public class AggiornaInventarioControl extends GlobalData {
         ArrayList<Lotto> daInserire= new ArrayList<Lotto>();
         for(Farmaco f : daProdurre){
             Lotto l=new Lotto();
-            String nome=f.getNomeFarmaco().trim().substring(0, 4);
+            String nome=f.getNomeFarmaco().trim().substring(0, 4)+String.valueOf(f.getIDFarmaco());
             String dataProduzione=String.valueOf(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
             LocalTime now= LocalTime.now();
             String oraProduzione= now.format(DateTimeFormatter.ofPattern("HHmm"));

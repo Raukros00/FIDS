@@ -650,7 +650,7 @@ public class DBMSBoundary extends GlobalData{
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
+            while(resultSet.next()) {
                 return resultSet.getString("NUM_SPEDIZIONI");
             }
         } catch (Exception e) {
