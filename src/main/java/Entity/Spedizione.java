@@ -8,6 +8,11 @@ public class Spedizione {
     private String dataConsegna;
     private int statoConsegna; //può assumere i valori 1,2,3. 1:confermata  2:consegnata  3:caricata
     private int IDSede;
+    private String nomeFarmacia;
+    private String citta;
+    private int distanza;
+    private String indirizzoFarmacia;
+
 
     private LinkedList<LottoSpedizione> listaLotti = new LinkedList<>();
 
@@ -30,6 +35,18 @@ public class Spedizione {
     public void setIDSede(int IDSede) { this.IDSede = IDSede; }
     public int getIDSede() {return IDSede;}
 
+    public void setIndirizzoFarmacia(String indirizzoFarmacia) { this.indirizzoFarmacia = indirizzoFarmacia; }
+    public String getIndirizzoFarmacia() { return indirizzoFarmacia; }
+
+    public String getNomeFarmacia() {return nomeFarmacia;}
+    public void setNomeFarmacia(String nomeFarmacia){this.nomeFarmacia=nomeFarmacia; }
+    public String getCitta() {return citta;}
+    public void setCitta(String citta){this.citta=citta;}
+    public int getDistanza(){return distanza;}
+    public void setDistanza(int distanza){this.distanza=distanza; }
+
     public void addLotto(LottoSpedizione ls) { listaLotti.add(ls); }
     public LinkedList<LottoSpedizione> getListaLottiSpedizione() { return listaLotti; }
+
+
 }
