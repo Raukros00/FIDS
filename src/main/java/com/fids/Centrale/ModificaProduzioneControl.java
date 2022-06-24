@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.stage.Stage;
@@ -21,6 +22,8 @@ public class ModificaProduzioneControl {
     private Spinner<Integer> periodicitaProduzioneField;
     @FXML
     private Spinner<Integer> quantitaProduzioneField;
+    @FXML
+    private Label farmacoLabel;
     private DBMSBoundary dbms = new DBMSBoundary();
     private int idFarmaco;
 
@@ -30,6 +33,7 @@ public class ModificaProduzioneControl {
     SpinnerValueFactory<Integer> quantitValues = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10000);
 
     public void setPresets(Farmaco farmaco){
+        farmacoLabel.setText(farmaco.getNomeFarmaco());
         ResultSet result=dbms.getFarmaco(farmaco.getIDFarmaco());
         try {
             result.next();
