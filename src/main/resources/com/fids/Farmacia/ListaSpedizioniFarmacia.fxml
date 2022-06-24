@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.ListaSpedizioniControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.ListaSpedizioniControl">
    <top>
-      <Pane prefHeight="41.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="113.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
          <children>
-            <ToolBar prefHeight="46.0" prefWidth="1050.0">
+            <Button fx:id="creaOrdineButton" layoutX="272.0" layoutY="57.0" mnemonicParsing="false" onAction="#creaOrdine" prefHeight="46.0" prefWidth="506.0" style="-fx-background-radius: 8; -fx-background-color: #2BEA97;" text="Crea Ordine" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Button>
+            <ToolBar prefHeight="13.0" prefWidth="1050.0">
                <items>
-                  <Button fx:id="indietroButton" mnemonicParsing="false" onAction="#homePageCorriere" style="-fx-background-color: #206777;" text="Indietro" textFill="WHITE">
+                  <Button fx:id="indietroButton" mnemonicParsing="false" onAction="#homeFarmacia" style="-fx-background-color: #206777;" text="Indietro" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
@@ -24,13 +32,40 @@
       </Pane>
    </top>
    <center>
-      <TableView prefHeight="575.0" prefWidth="1002.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn fx:id="IDSpedizioneCol" prefWidth="121.60000306367874" text="ID Spedizione" />
-          <TableColumn fx:id="nomeFarmaciaCol" prefWidth="552.0000152587891" text="Farmacia" />
-            <TableColumn fx:id="dataConsegnaCol" prefWidth="195.20001220703125" text="Data di consegna" />
-            <TableColumn fx:id="firmaButtonCol" prefWidth="180.7999267578125" text="Firma" />
-        </columns>
-      </TableView>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Ordini in arrivo">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="ordiniInArrivoTable" prefHeight="472.0" prefWidth="1050.0">
+                           <columns>
+                              <TableColumn fx:id="spedizioneCol" prefWidth="313.0" text="Codice spedizione" />
+                              <TableColumn fx:id="dataConsegnaCol" minWidth="0.0" prefWidth="285.0" text="Data di consegna" />
+                              <TableColumn fx:id="visualizzaCol" minWidth="1.0" prefWidth="216.0" text="Visualizza" />
+                              <TableColumn fx:id="modificaCol" prefWidth="235.0" text="Modifica" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Ordini archiviati">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="ordiniArchiviatiTable" prefHeight="472.0" prefWidth="1050.0">
+                          <columns>
+                            <TableColumn fx:id="spedizioneArcCol" prefWidth="313.0" text="Codice spedizione" />
+                            <TableColumn fx:id="consegnaArcCol" minWidth="0.0" prefWidth="474.0" text="Data di consegna" />
+                              <TableColumn fx:id="visualizzaArcCol" minWidth="1.0" prefWidth="262.0" text="Visualizza" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </center>
 </BorderPane>
