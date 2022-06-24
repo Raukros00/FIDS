@@ -4,6 +4,8 @@ import DBMSB.DBMSBoundary;
 import Entity.Farmaco;
 import Entity.Lotto;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
@@ -44,6 +47,7 @@ public class InventarioFarmaciaControl {
     private int idFarmacia;
     private DBMSBoundary dbms = new DBMSBoundary();
 
+
     LinkedList<Farmaco> listaFarmaci = new LinkedList<>();
 
     public void setDatiInventario(int idFarmacia) {
@@ -60,6 +64,15 @@ public class InventarioFarmaciaControl {
         TreeItem root = new TreeItem(new Farmaco(" ", " ", "", "", " "));
         TreeItem farmaco;
 
+        dataDiScadenzaField.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
+
         for (Farmaco f : listaFarmaci) {
 
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
@@ -67,7 +80,7 @@ public class InventarioFarmaciaControl {
 
 
             for (Lotto l : f.getListaLotti()) {
-                farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza())));
+                farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", String.valueOf(l.getQuantitaLotto()), l.getCodiceLotto(), l.getDataScadenza())));
             }
         }
 
@@ -98,30 +111,52 @@ public class InventarioFarmaciaControl {
         String nomeFarmaco = nomeFarmacoField.getText();
         String principioAttivo = principioAttivoField.getValue();
         if(principioAttivo==null) principioAttivo="";
-        String dataDiScadenza = null;
-        if(dataDiScadenzaField.getValue() != null)
-            dataDiScadenza = dataDiScadenzaField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        dataDiScadenzaField.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
+
+        String dataDiScadenza;
+        try{
+            dataDiScadenza = String.valueOf(dataDiScadenzaField.getValue());
+            if(dataDiScadenza != null)
+                dataDiScadenza = dataDiScadenzaField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        } catch (NullPointerException e){
+            dataDiScadenza = null;
+            dataDiScadenzaField.setValue(null);
+        }
+
+            System.err.println(dataDiScadenza);
 
         TreeItem root = new TreeItem(new Farmaco(" ", " ","",""," "));
         TreeItem farmaco;
         for(Farmaco f: listaFarmaci) {
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
 
-            System.err.println(f.getNomeFarmaco().toLowerCase() + " " + nomeFarmaco.toLowerCase() + " " + f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()));
+            System.err.println(f.getNomeFarmaco().toLowerCase() + " " + nomeFarmaco.toLowerCase() + " " + f.getNomeFarmaco().toLowerCase().contains(nomeFarmaco.toLowerCase()));
             //if(((!nomeFarmaco.isEmpty() || !nomeFarmaco.trim().equals("")) && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase())) && ((f.getPrincipioAttivo().equals(principioAttivo))))
-            if(nomeFarmaco.isEmpty() && principioAttivo=="") {
+            if (nomeFarmaco.isEmpty() && principioAttivo == "") {
                 root.getChildren().add(farmaco);
-            } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()) && principioAttivo==""){
+            } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().contains(nomeFarmaco.toLowerCase()) && principioAttivo == "") {
                 root.getChildren().add(farmaco);
-            } else if (nomeFarmaco.isEmpty() && f.getPrincipioAttivo().equals(principioAttivo)){
+            } else if (nomeFarmaco.isEmpty() && f.getPrincipioAttivo().equals(principioAttivo)) {
                 root.getChildren().add(farmaco);
-            } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase()) && f.getPrincipioAttivo().equals(principioAttivo))
+            } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().contains(nomeFarmaco.toLowerCase()) && f.getPrincipioAttivo().equals(principioAttivo))
                 root.getChildren().add(farmaco);
 
 
-            for(Lotto l: f.getListaLotti()){
-                if((dataDiScadenza != null && dataDiScadenza.equalsIgnoreCase(l.getDataScadenza())) || dataDiScadenza == null)
-                    farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", l.getQuantitaLotto(), l.getCodiceLotto(), l.getDataScadenza()))); }
+            for (Lotto l : f.getListaLotti()) {
+                if ((dataDiScadenza != null && dataDiScadenza.equalsIgnoreCase(l.getDataScadenza()) || dataDiScadenza == null))
+                    farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", String.valueOf(l.getQuantitaLotto()), l.getCodiceLotto(), l.getDataScadenza())));
+            }
+            if (farmaco.getChildren().isEmpty()) {
+                root.getChildren().remove(farmaco);
+            }
         }
 
         nomeCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Farmaco, String> param) -> new SimpleStringProperty(param.getValue().getValue().getNomeFarmaco()));
@@ -133,7 +168,7 @@ public class InventarioFarmaciaControl {
         root.setExpanded(true);
         listaFarmaciTable.setRoot(root);
         listaFarmaciTable.setShowRoot(false);
-
+        dataDiScadenzaField.setValue(null);
 
         nomeFarmaco=null;
         principioAttivo=null;
@@ -141,6 +176,9 @@ public class InventarioFarmaciaControl {
             }
 
     public void resetTable(ActionEvent event) {
-    stampaTabella(listaFarmaci);
+        nomeFarmacoField.clear();
+        principioAttivoField.setValue(null);
+        dataDiScadenzaField.setValue(null);
+        stampaTabella(listaFarmaci);
     }
 }

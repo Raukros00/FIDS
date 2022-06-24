@@ -107,7 +107,7 @@
                   <RowConstraints maxHeight="286.0" minHeight="10.0" prefHeight="137.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label fx:id="numSegnalazioniLabel" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Label fx:id="numSpedizioniLabel" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

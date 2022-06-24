@@ -12,6 +12,7 @@ public class Farmaco {
     private int quantitaFarmacoInt;
     private int periodicitaProduzione;
     private int quantitaProduzione;
+    private int validita;
     private LinkedList<Lotto> listaLotti = new LinkedList<Lotto>();
     private Lotto lotto;
 
@@ -75,5 +76,7 @@ public class Farmaco {
     public void setQuantitaProduzione(int quantitaProduzione) { this.quantitaProduzione = quantitaProduzione; }
     public void setQuantitaFarmacoInt(int quantitaFarmacoInt){ this.quantitaFarmacoInt = quantitaFarmacoInt; }
     public int getQuantitaFarmacoInt() { return quantitaFarmacoInt; }
+    public void setValidita(int validita ){ this.validita=validita; }
+    public int getValidita(){ return validita;}
 
 }

@@ -20,8 +20,8 @@ public class OffsetControl extends GlobalData {
     @FXML
     private Button impostaOffsetButton;
 
-    SpinnerValueFactory<Integer> offsetH = new SpinnerValueFactory.IntegerSpinnerValueFactory(-10,10);
-    SpinnerValueFactory<Integer> offsetD = new SpinnerValueFactory.IntegerSpinnerValueFactory(-10,10);
+    SpinnerValueFactory<Integer> offsetH = new SpinnerValueFactory.IntegerSpinnerValueFactory(-23,23);
+    SpinnerValueFactory<Integer> offsetD = new SpinnerValueFactory.IntegerSpinnerValueFactory(-31,31);
 
     public void setPresets(){
         offsetH.setValue(0);

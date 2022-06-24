@@ -2,6 +2,7 @@ package com.fids.Login;
 
 import DBMSB.DBMSBoundary;
 import Entity.Utente;
+import com.fids.Centrale.AggiornaInventarioControl;
 import com.fids.Centrale.HomePageCentraleControl;
 import com.fids.Corriere.HomePageCorriereControl;
 import com.fids.Farmacia.HomeFarmaciaControl;

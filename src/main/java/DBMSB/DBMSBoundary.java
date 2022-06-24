@@ -10,11 +10,12 @@ import javafx.stage.Stage;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 
-public class DBMSBoundary {
+public class DBMSBoundary extends GlobalData{
     private String DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
 
     private void cadutaConnessione(){
@@ -201,7 +202,7 @@ public class DBMSBoundary {
         }
     }
 
-    public LinkedList<Spedizione> getListaSpedizioni(int idFarmacia) {
+    public LinkedList<Spedizione> getListaSpedizioniFarmacia(int idFarmacia) {
 
         LinkedList<Spedizione> listaSpedizioni = new LinkedList<>();
 
@@ -585,7 +586,7 @@ public class DBMSBoundary {
                     l.setDataScadenza(resultSet.getString("dataScadenza"));
                     l.setDataProduzione(resultSet.getString("dataProduzione"));
                     l.setQuantitaLotto(resultSet.getInt("quantitaLotto"));
-                    f.setQuantitaFarmaco(String.valueOf(resultSet.getInt("quantitaLotto") + Integer.valueOf(f.getQuantitaFarmaco())));
+                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(f.getQuantitaFarmaco())));
                     f.inserisciLotto(l);
 
                 } else {
@@ -594,7 +595,7 @@ public class DBMSBoundary {
                     l.setDataScadenza(resultSet.getString("dataScadenza"));
                     l.setDataProduzione(resultSet.getString("dataProduzione"));
                     l.setQuantitaLotto(resultSet.getInt("quantitaLotto"));
-                    f.setQuantitaFarmaco(String.valueOf(resultSet.getInt("quantitaLotto") + Integer.valueOf(f.getQuantitaFarmaco())));
+                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(f.getQuantitaFarmaco())));
                     f.inserisciLotto(l);
 
                 }
@@ -609,7 +610,7 @@ public class DBMSBoundary {
         return listaFarmaci;
     }
 
-    public ResultSet getUtenti(){
+    public ResultSet getSedi(){
         DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -646,7 +647,7 @@ public class DBMSBoundary {
         return false;
     }
 
-    public ArrayList getUsernames(){
+    public ArrayList<String> getUsernames(){
         DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         ArrayList<String> usernames = new ArrayList<String>();
         try {
@@ -747,6 +748,71 @@ public class DBMSBoundary {
         return null;
     }
 
+    public ArrayList<Farmaco> checkProduzione(String day){
+        ArrayList<Farmaco> daProdurre= new ArrayList<Farmaco>();
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "select * from Farmaco";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()){
+                DateTimeFormatter formatter= DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate dataProduzione= LocalDate.parse(String.valueOf(LocalDate.parse(String.valueOf(resultSet.getDate("ultimaProduzione"))).plusDays(resultSet.getInt("periodicitaProduzione")).format(formatter)), formatter);
+                LocalDate oggiFinto=LocalDate.parse(day,formatter);
+                //System.out.println(oggiFinto+" è dopo "+ dataProduzione+"? "+(oggiFinto.isAfter(dataProduzione) || oggiFinto.isEqual(dataProduzione)));
+                if(oggiFinto.isAfter(dataProduzione) || oggiFinto.isEqual(dataProduzione)){
+                    Farmaco f= new Farmaco();
+                    f.setIDFarmaco(resultSet.getInt("IDFarmaco"));
+                    f.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
+                    f.setQuantitaProduzione(resultSet.getInt("quantitaProduzione"));
+                    f.setValidita(resultSet.getInt("validita"));
+                    daProdurre.add(f);
+                    System.err.println(resultSet.getString("nomeFarmaco")+" è da produrre");
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+        return daProdurre;
+    }
+
+    public void aggiungiLotto(ArrayList<Lotto> daInserire){
+        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        String sql="INSERT INTO Lotto(codiceLotto,dataScadenza,dataProduzione,quantitaLotto,FKFarmaco) VALUES";
+        for(Lotto l : daInserire){
+            sql=sql+"('"+l.getCodiceLotto()+"','"+l.getDataScadenza()+"','"+l.getDataProduzione()+"',"+l.getQuantitaLotto()+","+l.getFKFarmaco()+"),";
+        }
+        sql=sql.substring(0,sql.length()-1);
+        sql=sql+";";
+        System.out.println(sql);
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            int row=preparedStatement.executeUpdate();
+            System.out.println("Sono stati inseriti "+row+" lotti");
+            String currentData=LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            if(currentData.equals(DAY)) {
+                String ultimaProduzione=LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                sql="UPDATE Farmaco SET ultimaProduzione='"+ultimaProduzione+"' WHERE IDFarmaco IN(";
+                for(Lotto l : daInserire){
+                    sql=sql+""+l.getFKFarmaco()+",";
+                }
+                sql=sql.substring(0,sql.length()-1);
+                sql=sql+");";
+                System.out.println(sql);
+                preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.executeUpdate();
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+    }
+
     public ResultSet getPassword(){
         DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try{
@@ -781,7 +847,7 @@ public class DBMSBoundary {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
+            while(resultSet.next()) {
                 return resultSet.getString("NUM_SPEDIZIONI");
             }
         } catch (Exception e) {
