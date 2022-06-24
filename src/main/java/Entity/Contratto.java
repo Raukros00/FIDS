@@ -1,5 +1,7 @@
 package Entity;
 
+import java.util.LinkedList;
+
 public class Contratto {
 
     private int IDContratto;
@@ -10,14 +12,16 @@ public class Contratto {
 
     private int IDSede;
 
+    private LinkedList<FarmacoContratto> listaFarmaciContratto = new LinkedList<>();
+
 
     public Contratto(int IDContratto, int perioditicita, String ultimaConsegna) {
-
         setIDContratto(IDContratto);
         setPerioditicita(perioditicita);
         setUltimaConsegna(ultimaConsegna);
-
     }
+
+    public Contratto() {}
 
     public void setIDContratto(int IDContratto) { this.IDContratto = IDContratto; }
     public int getIDContratto() { return IDContratto; }
@@ -30,4 +34,7 @@ public class Contratto {
 
     public void setIDSede(int IDSede) { this.IDSede = IDSede; }
     public int getIDSede() { return IDSede; }
+
+    public void addListaFarmaciContratto(FarmacoContratto fc) { listaFarmaciContratto.add(fc); }
+    public LinkedList<FarmacoContratto> getListaFarmaciContratto() { return listaFarmaciContratto; }
 }

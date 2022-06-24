@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.ModificaOrdineControl">
+   <center>
+      <TableView fx:id="ordineTable" prefHeight="650.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="nomeCol" prefWidth="652.0" text="Nome Farmaco" />
+          <TableColumn fx:id="quantitaCol" prefWidth="142.0" text="Quantità" />
+        </columns>
+      </TableView>
+   </center>
+   <bottom>
+      <BorderPane prefHeight="63.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
+         <center>
+            <Button fx:id="ordinaButton" mnemonicParsing="false" onAction="#updateOrdine" prefHeight="31.0" prefWidth="337.0" style="-fx-background-color: #2BEA97; -fx-background-radius: 8;" text="Modifica" textFill="WHITE" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+         </center>
+      </BorderPane>
+   </bottom>
+</BorderPane>

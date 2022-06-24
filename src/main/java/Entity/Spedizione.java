@@ -32,4 +32,6 @@ public class Spedizione {
 
     public void addLotto(LottoSpedizione ls) { listaLotti.add(ls); }
     public LinkedList<LottoSpedizione> getListaLottiSpedizione() { return listaLotti; }
+
+    public LinkedList<LottoSpedizione> clonaLista() { return (LinkedList<LottoSpedizione>) listaLotti.clone(); }
 }

@@ -190,6 +190,4 @@ public class VenditaControl extends GlobalData {
         stage.show();
     }
 
-    public void creaOrdine(ActionEvent actionEvent) {
-    }
 }

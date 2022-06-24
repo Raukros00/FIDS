@@ -9,10 +9,9 @@ public class FarmacoContratto {
     private int quantitaRichiesta;
 
 
-    public FarmacoContratto(int quantitaRichiesta){
-
+    public FarmacoContratto(int IDFarmaco, int quantitaRichiesta){
+        setIDFarmaco(IDFarmaco);
         setQuantitaRichiesta(quantitaRichiesta);
-
     }
 
     public FarmacoContratto() {}
