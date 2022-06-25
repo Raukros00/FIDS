@@ -44,16 +44,18 @@ public class HomePageCorriereControl {
         window.setScene(new Scene(root));
     }
 
-/*
+
     public void listaSpedizioni(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ListaSpedizioni.fxml"));
+        loader.setLocation(ListaSpedizioniControl.class.getResource("ListaSpedizioni.fxml"));
         Parent root = loader.load();
+        ListaSpedizioniControl listaSpedizioniControl= loader.getController();
+        listaSpedizioniControl.setField();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("ListaSpedizioni");
+        stage.setTitle("Lista Spedizioni");
         stage.setScene(new Scene(root));
         stage.show();
     }
 
- */
+
 }

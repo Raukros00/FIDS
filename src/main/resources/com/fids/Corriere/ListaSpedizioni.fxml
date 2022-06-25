@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Corriere.ListaSpedizioniControl">
+   <top>
+      <Pane prefHeight="40.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
+         <children>
+            <ToolBar prefHeight="13.0" prefWidth="1050.0">
+               <items>
+                  <Button fx:id="indietroButton" mnemonicParsing="false" onAction="#homeCorriere" style="-fx-background-color: #206777;" text="Indietro" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </items>
+            </ToolBar>
+         </children>
+      </Pane>
+   </top>
+   <center>
+      <TableView fx:id="listaSpedizioniTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="IDSpedizioneCol" prefWidth="96.0" text="ID Spedizione" />
+          <TableColumn fx:id="farmaciaCol" minWidth="2.5" prefWidth="269.5" text="Farmacia" />
+            <TableColumn fx:id="indirizzoCol" prefWidth="426.0" text="Indirizzo" />
+            <TableColumn fx:id="distanzaCol" prefWidth="58.5" text="Distanza" />
+            <TableColumn fx:id="dataConsegnaCol" minWidth="0.0" prefWidth="97.5" text="Data Consegna" />
+            <TableColumn fx:id="firmaCol" minWidth="0.0" prefWidth="101.5" text="Firma" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>

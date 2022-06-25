@@ -974,6 +974,82 @@ public class DBMSBoundary extends GlobalData{
         return null;
     }
 
+    public ArrayList<Spedizione> getListaSpedizioni() {
+        ArrayList<Spedizione> listaSpedizioni=new ArrayList<Spedizione>();
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "SELECT IDSpedizione, dataConsegna, distanza, nomeSede, indirizzoSede, citta, IDSede FROM Spedizione, Sede WHERE IDSede=FKFarmacia AND statoSpedizione=0;";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                Spedizione spedizione= new Spedizione();
+                spedizione.setIDSpedizione(resultSet.getInt("IDSpedizione"));
+                spedizione.setDataConsegna(resultSet.getString("dataConsegna"));
+                spedizione.setDistanza(resultSet.getString("distanza"));
+                spedizione.setNomeFarmacia(resultSet.getString("nomeSede"));
+                spedizione.setIndirizzoFarmacia(resultSet.getString("indirizzoSede"));
+                spedizione.setCitta(resultSet.getString("citta"));
+                spedizione.setIDSede(resultSet.getInt("IDSede"));
+                listaSpedizioni.add(spedizione);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+
+        return listaSpedizioni;
+    }
+
+    public int verificaFirma(String username, String password, int IDSede, int IDSpedizione) {
+
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "SELECT * FROM Utente WHERE username = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                sql = "SELECT * FROM Utente WHERE username =? AND password =?";
+                preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+                resultSet = preparedStatement.executeQuery();
+
+                if(resultSet.next()) {
+                    sql = "SELECT * FROM Utente WHERE username =? AND password =? AND ruolo=1 AND FKSede=?";
+                    preparedStatement = conn.prepareStatement(sql);
+                    preparedStatement.setString(1, username);
+                    preparedStatement.setString(2, password);
+                    preparedStatement.setInt(3, IDSede);
+                    resultSet = preparedStatement.executeQuery();
+
+                    if (resultSet.next()) {
+                        sql = "UPDATE Spedizione SET statoSpedizione=1 WHERE IDSpedizione=?";
+                        preparedStatement = conn.prepareStatement(sql);
+                        preparedStatement.setInt(1, IDSpedizione);
+                        int row = preparedStatement.executeUpdate();
+                        System.out.println(row);
+                        return 1;
+                    }
+                }else{
+                    return -3;
+                }
+            }else{
+                return -2;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+        return -1;
+    }
+
 
 
 
