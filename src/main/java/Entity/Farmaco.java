@@ -49,6 +49,11 @@ public class Farmaco {
         setQuantitaFarmacoInt(quantitaFarmacoInt);
     }
 
+    public Farmaco(String nomeFarmaco, int quantita) {
+        setNomeFarmaco(nomeFarmaco);
+        setQuantitaFarmacoInt(quantita);
+    }
+
 
     public void setIDFarmaco(int IDFarmaco) { this.IDFarmaco = IDFarmaco; }
     public int getIDFarmaco() { return IDFarmaco; }

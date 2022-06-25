@@ -2,7 +2,6 @@ package com.fids.Farmacia;
 
 import DBMSB.DBMSBoundary;
 import Entity.Farmaco;
-import Entity.Lotto;
 import Entity.LottoSpedizione;
 import com.fids.PopUp.PopUpControl;
 import javafx.collections.FXCollections;
@@ -51,6 +50,10 @@ public class ModificaOrdineControl {
         this.listaFarmaci = listaFarmaci;
         this.IDOrdine = IDOrdine;
 
+        for(LottoSpedizione ls : listaFarmaci){
+            System.out.println("FARMACO: " + ls.getNomeFarmaco() + " QU: " + ls.getQuantita() + " SCAD: " + ls.getDataScadenza());
+        }
+
         nomeCol.setCellValueFactory(new PropertyValueFactory<Farmaco, String>("nomeFarmaco"));
         quantitaCol.setCellValueFactory(new PropertyValueFactory<Farmaco, Integer>("quantitaFarmacoInt"));
         quantitaCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -66,7 +69,7 @@ public class ModificaOrdineControl {
         for(Farmaco f : listaFarmaciInVendita){
             for(LottoSpedizione l : listaFarmaci){
                 if(f.getNomeFarmaco().equalsIgnoreCase(l.getNomeFarmaco()))
-                    f.setQuantitaFarmacoInt(l.getQuantita());
+                    f.setQuantitaFarmacoInt(f.getQuantitaFarmacoInt() + l.getQuantita());
             }
         }
 
@@ -85,12 +88,13 @@ public class ModificaOrdineControl {
 
         while(farmaciIterator.hasNext()) {
             Farmaco f = farmaciIterator.next();
-            if (f.getQuantitaFarmacoInt() > 0) {
+            if (f.getQuantitaFarmacoInt() >= 0) {
                 empty = false;
-                for (Lotto l : f.getListaLotti()) {
+                for (LottoSpedizione l : listaFarmaci) {
+                    System.out.println("Data: " + l.getDataScadenza());
                     scadenzaLotto = LocalDate.parse(l.getDataScadenza(), formatter);
 
-                    if (scadenzaLotto.isBefore(currentDataPlusTwo)) {
+                    if (scadenzaLotto.isBefore(currentDataPlusTwo) && f.getQuantitaFarmacoInt() != 0) {
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(FarmacoScadenzaControl.class.getResource("FarmacoInScadenza.fxml"));
                         Parent root = null;
@@ -109,31 +113,30 @@ public class ModificaOrdineControl {
 
                         mantieni = FSControl.returnMantieni();
                         if(mantieni){
-
-                            if(l.getQuantitaLotto() >= f.getQuantitaFarmacoInt()){
-                                ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), f.getQuantitaFarmacoInt());
+                            if(l.getQuantita() >= f.getQuantitaFarmacoInt()){
+                                ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), f.getQuantitaFarmacoInt(), l.getDataScadenza(), l.getDataScadenza(), l.getIDFarmaco());
                                 ordine.add(ls);
                                 farmaciIterator.remove();
                                 break;
                             }
-                            else if(l.getQuantitaLotto() > 0){
-                                ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), l.getQuantitaLotto());
+                            else if(l.getQuantita() > 0){
+                                ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), l.getQuantita(), l.getDataScadenza(), l.getDataScadenza(), l.getIDFarmaco());
                                 ordine.add(ls);
-                                f.setQuantitaFarmacoInt(f.getQuantitaFarmacoInt() - l.getQuantitaLotto());
+                                f.setQuantitaFarmacoInt(f.getQuantitaFarmacoInt() - l.getQuantita());
                             }
                         }
                     }
                     else {
-                        if(l.getQuantitaLotto() >= f.getQuantitaFarmacoInt()){
-                            ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), f.getQuantitaFarmacoInt());
+                        if(l.getQuantita() >= f.getQuantitaFarmacoInt()){
+                            ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), f.getQuantitaFarmacoInt(), l.getDataScadenza(), l.getDataScadenza(), l.getIDFarmaco());
                             ordine.add(ls);
                             farmaciIterator.remove();
                             break;
                         }
-                        else if(l.getQuantitaLotto() > 0){
-                            ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), l.getQuantitaLotto());
+                        else if(l.getQuantita() > 0){
+                            ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), l.getQuantita(), l.getDataScadenza(), l.getDataScadenza(), l.getIDFarmaco());
                             ordine.add(ls);
-                            f.setQuantitaFarmacoInt(f.getQuantitaFarmacoInt() - l.getQuantitaLotto());
+                            f.setQuantitaFarmacoInt(f.getQuantitaFarmacoInt() - l.getQuantita());
                         }
                     }
                 }

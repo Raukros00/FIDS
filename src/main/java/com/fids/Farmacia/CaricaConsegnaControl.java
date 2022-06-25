@@ -25,6 +25,7 @@ import javafx.util.converter.IntegerStringConverter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class CaricaConsegnaControl extends GlobalData {
@@ -98,18 +99,20 @@ public class CaricaConsegnaControl extends GlobalData {
 
         LinkedList<LottoSpedizione> listaLottiSpedizione = listaSpdizioni.getFirst().getListaLottiSpedizione();
         LinkedList<LottoSpedizione> listaFarmaciRimanenti = new LinkedList<>();
+        Iterator<LottoSpedizione> lottiSIterator = listaLottiSpedizione.iterator();
 
         for(LottoSpedizione newLS : listaNuoviFarmaci){
-            for(LottoSpedizione ls : listaLottiSpedizione){
+            while (lottiSIterator.hasNext()){
+                LottoSpedizione ls = lottiSIterator.next();
                 if(newLS.getNomeFarmaco().equalsIgnoreCase(ls.getNomeFarmaco())){
 
                     if(newLS.getQuantita() == ls.getQuantita()){
-                        listaLottiSpedizione.remove(ls);
+                        lottiSIterator.remove();
                     }
                     else if(!edit){
                         ls.setQuantita(ls.getQuantita() - newLS.getQuantita());
                         listaFarmaciRimanenti.add(ls);
-                        listaLottiSpedizione.remove(ls);
+                        lottiSIterator.remove();
                         edit = true;
                     }
                 }

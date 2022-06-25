@@ -14,6 +14,7 @@ public class FarmacoContratto {
         setQuantitaRichiesta(quantitaRichiesta);
     }
 
+
     public FarmacoContratto() {}
 
     public void setIDFarmaco(int IDFarmaco) { this.IDFarmaco = IDFarmaco; }
