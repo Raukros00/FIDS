@@ -52,7 +52,7 @@ public class HomePageCorriereControl {
         ListaSpedizioniControl listaSpedizioniControl= loader.getController();
         listaSpedizioniControl.setField();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("ListaSpedizioni");
+        stage.setTitle("Lista Spedizioni");
         stage.setScene(new Scene(root));
         stage.show();
     }
