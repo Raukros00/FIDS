@@ -41,7 +41,7 @@ public class FirmaControl {
 
     private DBMSBoundary dbms = new DBMSBoundary();
 
-    public void setPreset(Spedizione s){
+    public void setPresets(Spedizione s){
         this.sp=s;
         IDSpedizioneLabel.setText(String.valueOf(s.getIDSpedizione()));
         nomeFarmaciaLabel.setText(s.getNomeFarmacia());

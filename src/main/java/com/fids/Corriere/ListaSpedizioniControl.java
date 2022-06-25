@@ -90,7 +90,7 @@ public class ListaSpedizioniControl {
                         throw new RuntimeException(e);
                     }
                     FirmaControl firmaControl = loader.getController();
-                    firmaControl.setPreset(sp);
+                    firmaControl.setPresets(sp);
                     Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                     stage.setTitle("Firma consegna");
                     stage.setScene(new Scene(root));
