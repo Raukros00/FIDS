@@ -2,6 +2,7 @@ package com.fids.Farmacia;
 
 import DBMSB.DBMSBoundary;
 import Entity.Farmaco;
+import Entity.GlobalData;
 import Entity.Lotto;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
-public class InventarioFarmaciaControl {
+public class InventarioFarmaciaControl extends GlobalData {
 
     @FXML
     private TreeTableView<Farmaco> listaFarmaciTable;
@@ -48,9 +49,9 @@ public class InventarioFarmaciaControl {
 
     LinkedList<Farmaco> listaFarmaci = new LinkedList<>();
 
-    public void setDatiInventario(int idFarmacia) {
-        this.idFarmacia = idFarmacia;
-        listaFarmaci = dbms.getInventarioFarmacia(idFarmacia);
+    public void setDatiInventario() {
+
+        listaFarmaci = dbms.getInventarioFarmacia(ID_FARMACIA);
         stampaTabella(listaFarmaci);
 
         principioAttivoField.getItems().add("");

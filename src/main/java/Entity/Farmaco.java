@@ -14,7 +14,6 @@ public class Farmaco {
     private int quantitaProduzione;
     private int validita;
     private LinkedList<Lotto> listaLotti = new LinkedList<Lotto>();
-    private Lotto lotto;
 
     public Farmaco() {}
     public Farmaco(int IDFarmaco, String nomeFarmaco, String principioAttivo, String quantitaFarmaco ,String lottoS, String dataScadenza,int periodicitaProduzione, int quantitaProduzione) {

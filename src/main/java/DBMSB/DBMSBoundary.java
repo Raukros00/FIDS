@@ -568,7 +568,7 @@ public class DBMSBoundary extends GlobalData{
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "SELECT IDContratto, perioditicita, FKFarmaco, quantitaRichiesta FROM Contratto, Farmaco_Contratto WHERE Contratto.IDContratto = Farmaco_Contratto.FKContratto AND Contratto.FKFarmacia=?";
+            String sql = "SELECT IDContratto, perioditicita, FKFarmaco, quantitaRichiesta FROM Contratto LEFT JOIN Farmaco_Contratto FC on Contratto.IDContratto = FC.FKContratto WHERE Contratto.FKFarmacia=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, ID_FARMACIA);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -599,6 +599,7 @@ public class DBMSBoundary extends GlobalData{
             PreparedStatement preparedStatement;
             Statement stat = conn.createStatement();
             String sql;
+            boolean flag = false;
             int row;
 
             if(periodo != 0){
@@ -619,11 +620,18 @@ public class DBMSBoundary extends GlobalData{
             sql = "INSERT INTO Farmaco_Contratto (FKFarmaco, FKContratto, quantitaRichiesta) VALUES ";
 
             for(FarmacoContratto fc : farmaciContratto){
-                sql += "(" + fc.getIDFarmaco() + "," + IDContratto + "," + fc.getQuantitaRichiesta() + "),";
+                if(fc.getIDFarmaco() != 0) {
+                    sql += "(" + fc.getIDFarmaco() + "," + IDContratto + "," + fc.getQuantitaRichiesta() + "),";
+                    flag = true;
+                }
+
             }
-            sql=sql.substring(0,sql.length()-1);
-            preparedStatement = conn.prepareStatement(sql);
-            row = preparedStatement.executeUpdate();
+            if(flag){
+                sql=sql.substring(0,sql.length()-1);
+                preparedStatement = conn.prepareStatement(sql);
+                row = preparedStatement.executeUpdate();
+            }
+
 
         }
         catch (Exception e){

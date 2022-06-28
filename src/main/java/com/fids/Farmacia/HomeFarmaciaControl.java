@@ -97,7 +97,7 @@ public class HomeFarmaciaControl extends GlobalData{
         loader.setLocation(getClass().getResource("InventarioFarmacia.fxml"));
         Parent root = loader.load();
         InventarioFarmaciaControl inventarioFControl = loader.getController();
-        inventarioFControl.setDatiInventario(ID_FARMACIA);
+        inventarioFControl.setDatiInventario();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Inventario Farmacia");
         stage.setScene(new Scene(root));

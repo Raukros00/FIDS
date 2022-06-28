@@ -79,7 +79,8 @@ public class ModificaContrattoControl {
                 else {
                     for (Farmaco f : farmaciDisponibili) {
                         if (event.getRowValue().getIDFarmaco() == f.getIDFarmaco())
-                            farmaciContratto.add(new FarmacoContratto(f.getIDFarmaco(), event.getNewValue()));}
+                            farmaciContratto.add(new FarmacoContratto(f.getIDFarmaco(), event.getNewValue()));
+                    }
                 }
             }
         });
@@ -92,13 +93,14 @@ public class ModificaContrattoControl {
     public void updateFarmaciContratto(ActionEvent actionEvent) throws IOException {
         int periodo = periodoConsegnaField.getValue();
         if(periodo == contratto.getPerioditicita()) periodo = 0;
+
         dbms.updateContratto(farmaciContratto, periodo, contratto.getIDContratto());
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
         Parent root = loader.load();
         PopUpControl popControl = loader.getController();
-        popControl.setPopUp("Vendita avvenuta!");
+        popControl.setPopUp("Contratto aggiornato!");
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setTitle("Avviso");
