@@ -18,10 +18,10 @@ public class VisualizzaOrdineControl {
     @FXML private TableColumn<LottoSpedizione, String> nomeCol;
     @FXML private TableColumn<LottoSpedizione, String> codLottoCol;
     @FXML private TableColumn<LottoSpedizione, Integer> quantitaCol;
-    @FXML private Button okayButton;
+    @FXML private Button okButton;
 
     public void closePopUp(ActionEvent actionEvent) {
-        Stage stage = (Stage) okayButton.getScene().getWindow();
+        Stage stage = (Stage) okButton.getScene().getWindow();
         stage.close();
     }
     public void setDatiSpedizione(LinkedList<LottoSpedizione> listaLotti) {

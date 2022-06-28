@@ -27,9 +27,14 @@ import java.util.Calendar;
 public class HomeFarmaciaControl extends GlobalData{
     @FXML
     public Button venditaFarmaciButton;
+    @FXML
     public Button modificaContrattoButton;
+    @FXML
     public Button gestioneInventarioButton;
+    @FXML
     public Button caricaConsegnaButton;
+    @FXML
+    public Button modificaCredenzialiButton;
     @FXML
     public Button logoutButton;
     @FXML
@@ -49,7 +54,7 @@ public class HomeFarmaciaControl extends GlobalData{
     private int minute;
     private int hour;
     private String am_pm;
-    boolean avviso;
+    private boolean avviso;
 
     public void setUser(Utente user) {
         startClock();
@@ -174,17 +179,15 @@ public class HomeFarmaciaControl extends GlobalData{
         stage.show();
     }
 
-    /*public void modificaCredenziali(ActionEvent event) throws IOException {
+    public void modificaCredenziali(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ModificaPassword.fxml"));
+        loader.setLocation(getClass().getResource("ModificaCredenziali.fxml"));
         Parent root = loader.load();
-        ModificaPasswordControl modificaPasswordControl = loader.getController();
-        modificaPasswordControl.setPassword(PASSWORD);
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Modifica Password");
         stage.setScene(new Scene(root));
         stage.show();
-    }*/
+    }
 
     private void startClock() {
         Timeline clock = new Timeline(new KeyFrame(Duration.millis(1000 - Calendar.getInstance().get(Calendar.MILLISECOND)), new EventHandler<ActionEvent>() {

@@ -9,7 +9,9 @@ public class GlobalData {
     public static int OFFSETDAY;
     public static Date DATA;
     public static int ID_FARMACIA;
+
     public static int ID_UTENTE;
+
     public static String PASSWORD;
     public static String DAY;
 

@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.HomeFarmaciaControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.HomeFarmaciaControl">
     <right>
         <GridPane prefHeight="622.0" prefWidth="336.0" BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -136,7 +136,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button fx:id="modificaPasswordButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="181.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Modifica &#10;Credenziali" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1">
+                        <Button fx:id="modificaPasswordButton" mnemonicParsing="false" onAction="#modificaCredenziali" prefHeight="48.0" prefWidth="181.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Modifica &#10;Credenziali" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1">
                             <font>
                                 <Font name="System Bold" size="15.0" />
                             </font>
