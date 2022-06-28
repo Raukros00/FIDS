@@ -128,7 +128,16 @@ public class AccessControl {
         }
     }
 
-    public void recuperaCredenzialiButton(ActionEvent actionEvent) {
-        System.out.println("Recupera");
+    public void recuperaCredenzialiButton(ActionEvent event) throws IOException {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("recuperaCredenziali.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("Recupera Credenziali");
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+
+    public void setLabels() {
     }
 }
