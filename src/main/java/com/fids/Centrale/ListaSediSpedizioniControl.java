@@ -2,6 +2,7 @@ package com.fids.Centrale;
 
 import DBMSB.DBMSBoundary;
 import Entity.Farmacia;
+import Entity.GlobalData;
 import Entity.Spedizione;
 import com.fids.Corriere.FirmaControl;
 import com.fids.Corriere.ListaSpedizioniControl;
@@ -21,7 +22,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
-public class ListaSediSpedizioniControl {
+public class ListaSediSpedizioniControl extends GlobalData {
     @FXML
     private Button indietroButton;
     @FXML
@@ -33,9 +34,10 @@ public class ListaSediSpedizioniControl {
     @FXML
     private TableColumn<Farmacia, Farmacia> visualizzaCol;
     DBMSBoundary dbms = new DBMSBoundary();
+    LinkedList<Farmacia> listaSpedizioniSedi= new LinkedList<>();
 
     public void setDatiSediSpedizioni(){
-        LinkedList<Farmacia> listaSpedizioniSedi=dbms.getListaSpedizioniSedi();
+        listaSpedizioniSedi=dbms.getListaSpedizioniSedi();
         stampaFarmacia(listaSpedizioniSedi);
     }
 
@@ -60,25 +62,24 @@ public class ListaSediSpedizioniControl {
 
                 setGraphic(visualizzaButton);
 
-                /*visualizzaButton.setOnAction(event -> {
+                visualizzaButton.setOnAction(event -> {
                     Farmacia fa = getTableRow().getItem();
+                    ID_FARMACIA=fa.getIDFarmacia();
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(ListaSpedizioniControl.class.getResource("Firma.fxml"));
+                    loader.setLocation(ListaSediSpedizioniControl.class.getResource("SpedizioniCompletate.fxml"));
                     Parent root = null;
                     try {
                         root = loader.load();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    FirmaControl firmaControl = loader.getController();
-                    firmaControl.setPresets(sp);
+                    SpedizioniFarmaciaControl spedizioniFarmaciaControl = loader.getController();
+                    spedizioniFarmaciaControl.setDatiOrdini();
                     Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-                    stage.setTitle("Firma consegna");
+                    stage.setTitle("Lista Spedizioni");
                     stage.setScene(new Scene(root));
                     stage.show();
-                });*/
-
-
+                });
             }
         });
         listaSediTable.setItems(FXCollections.observableArrayList(listaFarmacie));

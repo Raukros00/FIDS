@@ -110,7 +110,7 @@ public class HomePageCentraleControl extends GlobalData {
 
     public void spedizioni(ActionEvent event) throws IOException{
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("SpedizioniConfermateFarmacie.fxml"));
+        loader.setLocation(getClass().getResource("ListaSediSpedizioni.fxml"));
         Parent root = loader.load();
         ListaSediSpedizioniControl listaSediSpedizioniControl= loader.getController();
         listaSediSpedizioniControl.setDatiSediSpedizioni();

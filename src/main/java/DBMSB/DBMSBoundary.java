@@ -50,7 +50,7 @@ public class DBMSBoundary extends GlobalData{
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                sql = "SELECT * FROM Utente WHERE username =? AND password =?";
+                sql = "SELECT * FROM Utente WHERE username = ? AND password = ?";
                 preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, username);
                 preparedStatement.setString(2, password);
