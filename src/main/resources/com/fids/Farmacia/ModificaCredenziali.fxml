@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="816.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.ModificaPasswordControl">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="816.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Login.ModificaPasswordControl">
    <children>
       <Button fx:id="credenzialiButton" layoutX="346.0" layoutY="389.0" mnemonicParsing="false" onAction="#aggiornaCredenziali" text="Aggiorna credenziali" />
       <Label layoutX="50.0" layoutY="147.0" prefHeight="17.0" prefWidth="149.0" text="Inserisci vecchia password" />
