@@ -11,6 +11,7 @@ public class GlobalData {
     public static int ID_FARMACIA;
 
     public static int ID_UTENTE;
+    public static String EMAIL;
 
     public static String PASSWORD;
     public static String DAY;
