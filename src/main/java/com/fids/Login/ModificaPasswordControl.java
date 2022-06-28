@@ -68,9 +68,9 @@ public class ModificaPasswordControl extends GlobalData {
         } else {
             if (vecchiaPassword.equalsIgnoreCase(PASSWORD)) {
                 if (nuovaPassword.equalsIgnoreCase(confermaPassword)) {
-                    if (dbms.modificaCredenziali(confermaPassword)) {
+                    if (dbms.aggiornaPassword(confermaPassword, EMAIL)) {
                         FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
+                        loader.setLocation(getClass().getResource("successful.fxml"));
                         Parent root = null;
                         try {
                             root = loader.load();
@@ -78,7 +78,7 @@ public class ModificaPasswordControl extends GlobalData {
                             throw new RuntimeException(e);
                         }
                         PopUpControl popControl = loader.getController();
-                        popControl.setPopUp("Password correttamente\naggiornata!");
+                        popControl.setPopUp("Password correttamente\nmodificata");
                         Scene scene = new Scene(root);
                         Stage stage = new Stage();
                         stage.setTitle("Avviso");
@@ -86,7 +86,7 @@ public class ModificaPasswordControl extends GlobalData {
                         stage.show();
                     } else {
                         FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+                        loader.setLocation(getClass().getResource("error.fxml"));
                         Parent root = null;
                         try {
                             root = loader.load();
@@ -94,16 +94,13 @@ public class ModificaPasswordControl extends GlobalData {
                             throw new RuntimeException(e);
                         }
                         PopUpControl popControl = loader.getController();
-                        popControl.setPopUp("Qualcosa è\nandato storto!");
+                        popControl.setPopUp("Qualcosa è andato\nstorto");
                         Scene scene = new Scene(root);
                         Stage stage = new Stage();
                         stage.setTitle("Avviso");
                         stage.setScene(scene);
                         stage.show();
                     }
-
-                    Stage stage = (Stage) credenzialiButton.getScene().getWindow();
-                    stage.close();
                 } else {
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(PopUpControl.class.getResource("error.fxml"));

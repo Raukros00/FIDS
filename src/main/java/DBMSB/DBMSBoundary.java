@@ -856,17 +856,17 @@ public class DBMSBoundary extends GlobalData{
         }
     }
 
-    public boolean modificaCredenziali(String password){
+    public boolean aggiornaPassword(String password, String email){
 
         DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         int row;
         try{
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "UPDATE Utente SET password=? WHERE IDUtente=6 ";
+            String sql = "UPDATE Utente SET password=? WHERE email=? ";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, password);
-            //preparedStatement.setInt(2, IDUtente);
+            preparedStatement.setString(2, email);
             row =preparedStatement.executeUpdate();
         } catch (Exception e){
             e.printStackTrace();
@@ -880,6 +880,7 @@ public class DBMSBoundary extends GlobalData{
         }
 
     }
+
 
     public ResultSet getFarmaco(int IDFarmaco){
         try {

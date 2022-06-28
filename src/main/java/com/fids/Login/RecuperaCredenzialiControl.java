@@ -47,21 +47,8 @@ public class RecuperaCredenzialiControl{
 
         String password_toSend = sb.toString();
 
-        MessageDigest md5 = null;
-
-        try {
-            md5 = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-
-        md5.update(StandardCharsets.UTF_8.encode(password_toSend));
-        password_toSend = String.format("%032x", new BigInteger(1, md5.digest()));
-
-        dbms.modificaCredenziali(password_toSend);
-
-        String emailProg = "fids.fortissimi@gmail.com";
-        String password = "FarmaciaSopravvissuti";
+        String emailProg = "fids.farmacia@gmail.com";
+        String password = "qiawfoyrzasnbpia";
         String email = emailField.getText();
 
         if(dbms.verificaEmail(email)) {
@@ -92,13 +79,26 @@ public class RecuperaCredenzialiControl{
                         "\nMail: " + email +
                         "\nPassword: " + password_toSend);
 
+                MessageDigest md5 = null;
+
+                try {
+                    md5 = MessageDigest.getInstance("MD5");
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
+                }
+
+                md5.update(StandardCharsets.UTF_8.encode(password_toSend));
+                password_toSend = String.format("%032x", new BigInteger(1, md5.digest()));
+
+                dbms.aggiornaPassword(password_toSend, email);
+
+                System.out.println("Sto mandando l'email");
                 Transport.send(message);
+                System.out.println("Email mandata con successo, verificate la vostra INBOX");
 
-                System.out.println("Fatto");
+            }catch (MessagingException mex){
 
-            }catch (Exception e){
-
-
+                mex.printStackTrace();
 
             }
 
