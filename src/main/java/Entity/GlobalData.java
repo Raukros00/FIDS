@@ -14,6 +14,8 @@ public class GlobalData {
     public static String EMAIL;
 
     public static String PASSWORD;
+
+    public static int RUOLO;
     public static String DAY;
 
     /*FARMACIA*/

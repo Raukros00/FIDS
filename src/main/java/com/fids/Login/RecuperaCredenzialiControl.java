@@ -96,6 +96,22 @@ public class RecuperaCredenzialiControl{
                 Transport.send(message);
                 System.out.println("Email mandata con successo, verificate la vostra INBOX");
 
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
+                Parent root = null;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                PopUpControl popControl = loader.getController();
+                popControl.setPopUp("Email mandata\ncon successo!");
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setTitle("Email mandata");
+                stage.setScene(scene);
+                stage.show();
+
             }catch (MessagingException mex){
 
                 mex.printStackTrace();
