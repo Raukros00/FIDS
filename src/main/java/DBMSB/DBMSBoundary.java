@@ -962,6 +962,73 @@ public class DBMSBoundary extends GlobalData{
         }
     }
 
+    public LinkedList getListaSpedizioniSedi(){
+        Farmacia f=new Farmacia();
+        Spedizione s=new Spedizione();
+        LottoSpedizione l = new LottoSpedizione();
+        LinkedList<Farmacia> farmacie = new LinkedList<Farmacia>();
+        int IDSede=-1;
+        int IDSpedizione=-1;
+        try{
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql="SELECT S.IDSede, S.nomeSede, S.indirizzoSede, S.citta, SP.IDSpedizione, SP.dataConsegna, SP.statoSpedizione, L.quantita, L.nomeFarmaco, L.FKFarmaco, L.FKLotto FROM Sede AS S LEFT JOIN Spedizione AS SP ON S.IDSede=SP.FKFarmacia LEFT JOIN Lotto_Spedizione AS L ON L.FKSpedizione=SP.IDSpedizione;";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                if(resultSet.getInt("IDSede")!=IDSede){
+                    f=new Farmacia();
+                    f.setIDFarmacia(resultSet.getInt("IDSede"));
+                    f.setNomeSede(resultSet.getString("nomeSede"));
+                    f.setIndirizzoSede(resultSet.getString("indirizzoSede"));
+                    f.setCitta(resultSet.getString("citta"));
+
+                    s=new Spedizione();
+                    s.setIDSpedizione(resultSet.getInt("IDSpedizione"));
+                    s.setDataConsegna(resultSet.getString("dataConsegna"));
+                    s.setStatoConsegna(resultSet.getInt("statoSpedizione"));
+
+                    l= new LottoSpedizione();
+                    l.setCodiceLotto(resultSet.getString("FKLotto"));
+                    l.setIDFarmaco(resultSet.getInt("FKFarmaco"));
+                    l.setQuantita(resultSet.getInt("quantita"));
+                    l.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
+                    s.addLotto(l);
+                    f.addSpedizione(s);
+                    farmacie.add(f);
+                    IDSede=resultSet.getInt("IDSede");
+                    IDSpedizione=resultSet.getInt("IDSpedizione");
+
+                } else if (resultSet.getInt("IDSpedizione")!=IDSpedizione) {
+                    s=new Spedizione();
+                    s.setIDSpedizione(resultSet.getInt("IDSpedizione"));
+                    s.setDataConsegna(resultSet.getString("dataConsegna"));
+                    s.setStatoConsegna(resultSet.getInt("statoSpedizione"));
+
+                    l= new LottoSpedizione();
+                    l.setCodiceLotto(resultSet.getString("FKLotto"));
+                    l.setIDFarmaco(resultSet.getInt("FKFarmaco"));
+                    l.setQuantita(resultSet.getInt("quantita"));
+                    l.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
+                    s.addLotto(l);
+                    f.addSpedizione(s);
+                    IDSpedizione=resultSet.getInt("IDSpedizione");
+                } else {
+                    l= new LottoSpedizione();
+                    l.setCodiceLotto(resultSet.getString("FKLotto"));
+                    l.setIDFarmaco(resultSet.getInt("FKFarmaco"));
+                    l.setQuantita(resultSet.getInt("quantita"));
+                    l.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
+                    s.addLotto(l);
+                }
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+        return farmacie;
+    }
+
     public ResultSet getPassword(){
         DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try{

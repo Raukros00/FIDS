@@ -46,6 +46,8 @@ public class HomePageCentraleControl extends GlobalData {
     @FXML
     public Button inventarioCentraleButton;
     @FXML
+    public Button spedizioniButton;
+    @FXML
     private VBox VBoxOffset;
     private Utente user;
     private Calendar cal;
@@ -102,6 +104,18 @@ public class HomePageCentraleControl extends GlobalData {
         Parent root = loader.load();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Segnalazioni");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public void spedizioni(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("SpedizioniConfermateFarmacie.fxml"));
+        Parent root = loader.load();
+        ListaSediSpedizioniControl listaSediSpedizioniControl= loader.getController();
+        listaSediSpedizioniControl.setDatiSediSpedizioni();
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Lista delle farmacie");
         stage.setScene(new Scene(root));
         stage.show();
     }

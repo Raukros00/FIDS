@@ -55,9 +55,6 @@ public class ListaSpedizioniControl {
     private void stampaTabella(ArrayList<Spedizione> listaSpedizioni){
         for(Spedizione s: listaSpedizioni){
             s.setDistanza(s.getDistanza() + " Km");
-
-
-
         }
         IDSpedizioneCol.setCellValueFactory(new PropertyValueFactory<Spedizione, Integer>("IDSpedizione"));
         farmaciaCol.setCellValueFactory(new PropertyValueFactory<Spedizione, String>("nomeFarmacia"));

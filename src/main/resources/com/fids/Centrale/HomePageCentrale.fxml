@@ -42,7 +42,7 @@
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
-                <Button fx:id="spedizioniButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Visualizza Spedizioni" textFill="WHITE" GridPane.rowIndex="3">
+                <Button fx:id="spedizioniButton" mnemonicParsing="false" onAction="#spedizioni" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Visualizza Spedizioni" textFill="WHITE" GridPane.rowIndex="3">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
