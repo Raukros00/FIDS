@@ -987,6 +987,7 @@ public class DBMSBoundary extends GlobalData{
                     s.setIDSpedizione(resultSet.getInt("IDSpedizione"));
                     s.setDataConsegna(resultSet.getString("dataConsegna"));
                     s.setStatoConsegna(resultSet.getInt("statoSpedizione"));
+                    s.setNomeFarmacia(resultSet.getString("nomeSede"));
 
                     l= new LottoSpedizione();
                     l.setCodiceLotto(resultSet.getString("FKLotto"));

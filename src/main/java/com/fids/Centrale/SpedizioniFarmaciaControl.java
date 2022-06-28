@@ -3,9 +3,6 @@ package com.fids.Centrale;
 import Entity.Farmacia;
 import Entity.LottoSpedizione;
 import Entity.Spedizione;
-import com.fids.Farmacia.ModificaOrdineControl;
-import com.fids.Farmacia.VisualizzaOrdineControl;
-import com.fids.PopUp.PopUpControl;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -46,10 +43,12 @@ public class SpedizioniFarmaciaControl extends ListaSediSpedizioniControl{
     LinkedList<Spedizione> listaSpedizioni = new LinkedList<>();
 
     public void setDatiOrdini(){
+        System.out.println(listaSpedizioniSedi.size());
         for(Farmacia f: listaSpedizioniSedi){
             if(f.getIDFarmacia()==ID_FARMACIA)
                 listaSpedizioni=f.getListaSpedizioni();
         }
+
         stampaSpedizioni(listaSpedizioni);
     }
 

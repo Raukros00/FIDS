@@ -34,7 +34,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="ordiniInArrivoTable" prefHeight="472.0" prefWidth="1050.0">
+                        <TableView fx:id="listaSpedizioniInArrivoTable" prefHeight="554.0" prefWidth="1050.0">
                            <columns>
                               <TableColumn fx:id="IDspedizioneCol" prefWidth="313.0" text="Codice spedizione" />
                               <TableColumn fx:id="nomeFarmaciaCol" prefWidth="340.7999572753906" text="Nome Farmacia" />
@@ -50,9 +50,9 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="ordiniInArrivoTable1" prefHeight="554.0" prefWidth="1050.0">
+                        <TableView fx:id="listaSpedizioniConsegnateTable" prefHeight="554.0" prefWidth="1050.0">
                            <columns>
-                              <TableColumn fx:id="spedizioneCol1" prefWidth="313.0" text="Codice spedizione" />
+                              <TableColumn fx:id="IDspedizioneCol1" prefWidth="313.0" text="Codice spedizione" />
                               <TableColumn fx:id="nomeFarmaciaCol1" prefWidth="340.7999572753906" text="Nome Farmacia" />
                               <TableColumn fx:id="dataConsegnaCol1" minWidth="0.0" prefWidth="264.800048828125" text="Data di consegna" />
                               <TableColumn fx:id="visualizzaCol1" minWidth="1.0" prefWidth="131.20001220703125" text="Visualizza" />

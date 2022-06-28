@@ -34,7 +34,7 @@ public class ListaSediSpedizioniControl extends GlobalData {
     @FXML
     private TableColumn<Farmacia, Farmacia> visualizzaCol;
     DBMSBoundary dbms = new DBMSBoundary();
-    LinkedList<Farmacia> listaSpedizioniSedi= new LinkedList<>();
+    static LinkedList<Farmacia> listaSpedizioniSedi= new LinkedList<>();
 
     public void setDatiSediSpedizioni(){
         listaSpedizioniSedi=dbms.getListaSpedizioniSedi();
@@ -63,10 +63,11 @@ public class ListaSediSpedizioniControl extends GlobalData {
                 setGraphic(visualizzaButton);
 
                 visualizzaButton.setOnAction(event -> {
+                    System.out.println(listaSpedizioniSedi.size());
                     Farmacia fa = getTableRow().getItem();
                     ID_FARMACIA=fa.getIDFarmacia();
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(ListaSediSpedizioniControl.class.getResource("SpedizioniCompletate.fxml"));
+                    loader.setLocation(SpedizioniFarmaciaControl.class.getResource("SpedizioniCompletate.fxml"));
                     Parent root = null;
                     try {
                         root = loader.load();
