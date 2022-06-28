@@ -1,6 +1,7 @@
-package com.fids.Farmacia;
+package com.fids.Login;
 
 import DBMSB.DBMSBoundary;
+import Entity.GlobalData;
 import Entity.Utente;
 import com.fids.PopUp.PopUpControl;
 import javafx.event.ActionEvent;
@@ -22,7 +23,7 @@ import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class ModificaPasswordControl {
+public class ModificaPasswordControl extends GlobalData {
 
     @FXML
     public PasswordField vecchiaPasswordField;
@@ -39,35 +40,34 @@ public class ModificaPasswordControl {
 
     private Utente user;
 
-
-    public String setDatiPassword(Utente user) {
-        String passwd = "";
-
-        passwd = user.getPassword();
-
-        return passwd;
-    }
-
     public void aggiornaCredenziali(ActionEvent event) {
-        String passwd = "c4ca4238a0b923820dcc509a6f75849b";
         String vecchiaPassword = vecchiaPasswordField.getText();
         String nuovaPassword = nuovaPasswordField.getText();
         String confermaPassword = confermaPasswordField.getText();
+        MessageDigest md5 = null;
 
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+
+        md5.update(StandardCharsets.UTF_8.encode(vecchiaPassword));
+        vecchiaPassword = String.format("%032x", new BigInteger(1, md5.digest()));
+
+        md5.update(StandardCharsets.UTF_8.encode(nuovaPassword));
+        nuovaPassword = String.format("%032x", new BigInteger(1, md5.digest()));
+
+        md5.update(StandardCharsets.UTF_8.encode(confermaPassword));
+        confermaPassword = String.format("%032x", new BigInteger(1, md5.digest()));
+
+        System.out.println("DB: " + PASSWORD + "\nNW: " + vecchiaPassword);
         if (vecchiaPassword.trim().isEmpty() || nuovaPassword.trim().isEmpty() || confermaPassword.trim().isEmpty()) {
             erroreLabel.setText("Tutti i campi sono obbligatori!");
             erroreLabel.setTextFill(Color.color(1, 0, 0));
         } else {
-            if (vecchiaPassword.equalsIgnoreCase(passwd)) {
+            if (vecchiaPassword.equalsIgnoreCase(PASSWORD)) {
                 if (nuovaPassword.equalsIgnoreCase(confermaPassword)) {
-                    MessageDigest md5 = null;
-                    try {
-                        md5 = MessageDigest.getInstance("MD5");
-                    } catch (NoSuchAlgorithmException e) {
-                        throw new RuntimeException(e);
-                    }
-                    md5.update(StandardCharsets.UTF_8.encode(confermaPassword));
-                    confermaPassword = String.format("%032x", new BigInteger(1, md5.digest()));
                     if (dbms.modificaCredenziali(confermaPassword)) {
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
@@ -105,23 +105,26 @@ public class ModificaPasswordControl {
                     Stage stage = (Stage) credenzialiButton.getScene().getWindow();
                     stage.close();
                 } else {
-                    erroreLabel.setText("Le due password non coincidono!");
-                    erroreLabel.setTextFill(Color.color(1, 0, 0));
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+                    Parent root = null;
+                    try {
+                        root = loader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    PopUpControl popControl = loader.getController();
+                    popControl.setPopUp("La nuova non corrisponde!");
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setTitle("Avviso");
+                    stage.setScene(scene);
+                    stage.show();
                 }
             } else {
-                erroreLabel.setText("Password vecchia errata!");
+                erroreLabel.setText("La vecchia password è errata!");
                 erroreLabel.setTextFill(Color.color(1, 0, 0));
             }
         }
-
-        /*byte[] bytesOfMessage = confermaPassword.getBytes("UTF-8"); //sostituire password con la stringa da criptare
-        MessageDigest md = null;
-        try {
-            md = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        byte[] passwMD5 = md.digest(bytesOfMessage); //passwMD5 è la nuova password criptata
-        System.out.println(passwMD5);*/
     }
 }

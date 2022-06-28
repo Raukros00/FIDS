@@ -64,6 +64,7 @@ public class HomeFarmaciaControl extends GlobalData{
 
         NOMINATIVO = user.getNome() + " " + user.getCognome();
         ID_UTENTE = user.getIDUtente();
+        PASSWORD = user.getPassword();
         NUM_CONSEGNE = farmacia.getNumConsegne();
         NOME_FARMACIA = farmacia.getNomeSede();
         INDIRIZZO_FARMACIA = farmacia.getIndirizzoSede();

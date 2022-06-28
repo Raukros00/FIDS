@@ -74,7 +74,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button fx:id="modificaPasswordButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="181.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Modifica &#10;Credenziali" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1">
+                  <Button fx:id="modificaPasswordButton" mnemonicParsing="false" onAction="#modificaCredenziali" prefHeight="48.0" prefWidth="181.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Modifica &#10;Credenziali" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
