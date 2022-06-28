@@ -173,7 +173,7 @@ public class CaricaConsegnaControl extends GlobalData {
             throw new RuntimeException(e);
         }
         PopUpControl popControl = loader.getController();
-        popControl.setPopUp("Caricamento avvenuto!!");
+        popControl.setPopUp("Caricamento avvenuto!");
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setTitle("Avviso");
