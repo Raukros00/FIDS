@@ -3,6 +3,9 @@ package com.fids.Login;
 import DBMSB.DBMSBoundary;
 import Entity.GlobalData;
 import Entity.Utente;
+import com.fids.Centrale.HomePageCentraleControl;
+import com.fids.Corriere.HomePageCorriereControl;
+import com.fids.Farmacia.HomeFarmaciaControl;
 import com.fids.PopUp.PopUpControl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -70,7 +73,7 @@ public class ModificaPasswordControl extends GlobalData {
                 if (nuovaPassword.equalsIgnoreCase(confermaPassword)) {
                     if (dbms.aggiornaPassword(confermaPassword, EMAIL)) {
                         FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(getClass().getResource("successful.fxml"));
+                        loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
                         Parent root = null;
                         try {
                             root = loader.load();
@@ -78,15 +81,68 @@ public class ModificaPasswordControl extends GlobalData {
                             throw new RuntimeException(e);
                         }
                         PopUpControl popControl = loader.getController();
-                        popControl.setPopUp("Password correttamente\nmodificata");
+                        popControl.setPopUp("Password correttamente\naggiornata!");
                         Scene scene = new Scene(root);
                         Stage stage = new Stage();
                         stage.setTitle("Avviso");
                         stage.setScene(scene);
                         stage.show();
+
+                        switch(RUOLO) {
+
+                            case 1:
+                                loader = new FXMLLoader();
+                                loader.setLocation(HomeFarmaciaControl.class.getResource("HomeFarmacia.fxml"));
+                                try {
+                                    root = loader.load();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                HomeFarmaciaControl homeFControl = loader.getController();
+                                homeFControl.setUser(user);
+                                stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                                stage.setTitle("Home Farmacia");
+                                stage.setScene(new Scene(root));
+                                stage.show();
+                                break;
+
+                            case 2:
+                                loader = new FXMLLoader();
+                                loader.setLocation(HomePageCentraleControl.class.getResource("HomePageCentrale.fxml"));
+                                try {
+                                    root = loader.load();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                HomePageCentraleControl homeCControl = loader.getController();
+                                homeCControl.setUser(user);
+                                stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                                stage.setTitle("HomePage Centrale");
+                                stage.setScene(new Scene(root));
+                                stage.show();
+                                break;
+
+                            case 3:
+                                loader = new FXMLLoader();
+                                loader.setLocation(HomePageCorriereControl.class.getResource("HomePageCorriere.fxml"));
+                                try {
+                                    root = loader.load();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                HomePageCorriereControl homeCoControl = loader.getController();
+                                homeCoControl.setUser(user);
+                                stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                                stage.setTitle("HomePage Corriere");
+                                stage.setScene(new Scene(root));
+                                stage.show();
+
+                                break;
+                        }
+
                     } else {
                         FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(getClass().getResource("error.fxml"));
+                        loader.setLocation(PopUpControl.class.getResource("error.fxml"));
                         Parent root = null;
                         try {
                             root = loader.load();
@@ -94,13 +150,15 @@ public class ModificaPasswordControl extends GlobalData {
                             throw new RuntimeException(e);
                         }
                         PopUpControl popControl = loader.getController();
-                        popControl.setPopUp("Qualcosa è andato\nstorto");
+                        popControl.setPopUp("Qualcosa è\nandato storto!");
                         Scene scene = new Scene(root);
                         Stage stage = new Stage();
                         stage.setTitle("Avviso");
                         stage.setScene(scene);
                         stage.show();
+
                     }
+
                 } else {
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(PopUpControl.class.getResource("error.fxml"));

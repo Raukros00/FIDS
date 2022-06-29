@@ -12,15 +12,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.InventarioFarmaciaControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.InventarioFarmaciaControl">
    <center>
       <TreeTableView fx:id="listaFarmaciTable" prefHeight="476.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
         <columns>
           <TreeTableColumn fx:id="nomeCol" prefWidth="290.0" text="Nome del Farmaco" />
           <TreeTableColumn fx:id="principioCol" prefWidth="175.0" text="Principio Attivo" />
-            <TreeTableColumn fx:id="quantitaCol" prefWidth="102.0" text="Quantità" />
-            <TreeTableColumn fx:id="lottoCol" prefWidth="147.0" text="Lotto" />
-            <TreeTableColumn fx:id="scadenzaCol" minWidth="0.0" prefWidth="335.0" text="Data di Scadenza" />
+            <TreeTableColumn fx:id="tipologiaCol" prefWidth="130.0" text="Tipologia" />
+            <TreeTableColumn fx:id="quantitaCol" prefWidth="113.0" text="Quantità" />
+            <TreeTableColumn fx:id="lottoCol" prefWidth="158.0" text="Lotto" />
+            <TreeTableColumn fx:id="scadenzaCol" minWidth="0.0" prefWidth="183.0" text="Data di Scadenza" />
         </columns>
       </TreeTableView>
    </center>
