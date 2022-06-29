@@ -734,6 +734,72 @@ public class DBMSBoundary extends GlobalData{
         return listaFarmaci;
     }
 
+    public LinkedList<Farmaco> getFarmaciDaBanco() {
+
+        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        LinkedList<Farmaco> listaFarmaci = new LinkedList<Farmaco>();
+        Farmaco f = new Farmaco();
+        Lotto l = new Lotto();
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "SELECT * FROM Farmaco LEFT JOIN Lotto ON Farmaco.IDFarmaco = Lotto.FKFarmaco WHERE tipologia='OTC' ORDER BY nomeFarmaco;";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int IDFarmaco = -1;
+
+            while (resultSet.next()) {
+
+                if(resultSet.getInt("IDFarmaco") != IDFarmaco && IDFarmaco != -1) {
+                    listaFarmaci.add(f);
+                    f = new Farmaco();
+                }
+
+                if(resultSet.getInt("IDFarmaco") != IDFarmaco) {
+
+                    f.setIDFarmaco(resultSet.getInt("IDFarmaco"));
+                    f.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
+                    f.setPrincipioAttivo(resultSet.getString("principioAttivo"));
+                    f.setTipologia(resultSet.getString("tipologia"));
+                    f.setPeriodicitaProduzione(resultSet.getInt("periodicitaProduzione"));
+                    f.setQuantitaProduzione(resultSet.getInt("quantitaProduzione"));
+
+                    IDFarmaco = resultSet.getInt("IDFarmaco");
+                    l = new Lotto();
+                    l.setCodiceLotto(resultSet.getString("codiceLotto"));
+                    l.setDataScadenza(resultSet.getString("dataScadenza"));
+                    l.setDataProduzione(resultSet.getString("dataProduzione"));
+                    l.setQuantitaLotto(resultSet.getInt("quantitaLotto"));
+                    l.setDataProduzione(resultSet.getString("dataProduzione"));
+                    l.setDataScadenza(resultSet.getString("dataScadenza"));
+                    l.setFKFarmaco(resultSet.getInt("IDFarmaco"));
+                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(f.getQuantitaFarmaco())));
+                    f.inserisciLotto(l);
+
+                } else {
+                    l = new Lotto();
+                    l.setCodiceLotto(resultSet.getString("codiceLotto"));
+                    l.setDataScadenza(resultSet.getString("dataScadenza"));
+                    l.setDataProduzione(resultSet.getString("dataProduzione"));
+                    l.setQuantitaLotto(resultSet.getInt("quantitaLotto"));
+                    l.setDataProduzione(resultSet.getString("dataProduzione"));
+                    l.setDataScadenza(resultSet.getString("dataScadenza"));
+                    l.setFKFarmaco(resultSet.getInt("IDFarmaco"));
+                    f.setQuantitaFarmaco(String.valueOf(Integer.valueOf(resultSet.getInt("quantitaLotto")) + Integer.valueOf(f.getQuantitaFarmaco())));
+                    f.inserisciLotto(l);
+
+                }
+            }
+            listaFarmaci.add(f);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+
+        return listaFarmaci;
+    }
+
     public ResultSet getSedi(){
         DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try {

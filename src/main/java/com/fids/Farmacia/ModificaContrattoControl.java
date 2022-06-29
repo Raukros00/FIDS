@@ -41,7 +41,7 @@ public class ModificaContrattoControl {
     public void setDatiContratto(int ID_FARMACIA) {
 
         periodoConsegnaField.setValueFactory(valoriQuantita);
-        farmaciDisponibili = dbms.getInventarioCentrale();
+        farmaciDisponibili = dbms.getFarmaciDaBanco();
         contratto = dbms.getContratto(ID_FARMACIA);
         periodoConsegnaField.getValueFactory().setValue(contratto.getPerioditicita());
         farmaciContratto = contratto.getListaFarmaciContratto();
