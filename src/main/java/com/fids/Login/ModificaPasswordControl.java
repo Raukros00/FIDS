@@ -13,7 +13,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -22,9 +24,6 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.*;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
 
 public class ModificaPasswordControl extends GlobalData {
 
@@ -114,8 +113,8 @@ public class ModificaPasswordControl extends GlobalData {
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
-                                HomePageCentraleControl homeCControl = loader.getController();
-                                homeCControl.setUser(user);
+                                homeFControl = loader.getController();
+                                homeFControl.setUser(new Utente(NOME, COGNOME, ID_UTENTE, EMAIL, PASSWORD, RUOLO, ID_FARMACIA));
                                 stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                                 stage.setTitle("HomePage Centrale");
                                 stage.setScene(new Scene(root));
@@ -180,6 +179,64 @@ public class ModificaPasswordControl extends GlobalData {
                 erroreLabel.setText("La vecchia password è errata!");
                 erroreLabel.setTextFill(Color.color(1, 0, 0));
             }
+        }
+    }
+
+    public void backHome(ActionEvent event){
+        FXMLLoader loader;
+        Parent root;
+        Stage stage;
+        System.out.println("RUOLO: " + RUOLO);
+        switch(RUOLO) {
+
+            case 1:
+                loader = new FXMLLoader();
+                loader.setLocation(HomeFarmaciaControl.class.getResource("HomeFarmacia.fxml"));
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                HomeFarmaciaControl homeFControl = loader.getController();
+                homeFControl.setUser(new Utente(NOME, COGNOME, ID_UTENTE, EMAIL, PASSWORD, RUOLO, ID_FARMACIA));
+                stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                stage.setTitle("Home Farmacia");
+                stage.setScene(new Scene(root));
+                stage.show();
+                break;
+
+            case 2:
+                loader = new FXMLLoader();
+                loader.setLocation(HomePageCentraleControl.class.getResource("HomePageCentrale.fxml"));
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                HomePageCentraleControl homeCControl = loader.getController();
+                homeCControl.setUser(user);
+                stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                stage.setTitle("HomePage Centrale");
+                stage.setScene(new Scene(root));
+                stage.show();
+                break;
+
+            case 3:
+                loader = new FXMLLoader();
+                loader.setLocation(HomePageCorriereControl.class.getResource("HomePageCorriere.fxml"));
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                HomePageCorriereControl homeCoControl = loader.getController();
+                homeCoControl.setUser(user);
+                stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                stage.setTitle("HomePage Corriere");
+                stage.setScene(new Scene(root));
+                stage.show();
+
+                break;
         }
     }
 }

@@ -5,6 +5,7 @@ import Entity.Farmacia;
 import Entity.GlobalData;
 import Entity.Utente;
 import com.fids.AccessApplication;
+import com.fids.Login.ModificaPasswordControl;
 import com.fids.PopUp.PopUpControl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -63,9 +64,12 @@ public class HomeFarmaciaControl extends GlobalData{
         farmacia = dbms.richiediInfoHome(user.getIDSede());
 
         NOMINATIVO = user.getNome() + " " + user.getCognome();
+        NOME = user.getNome();
+        COGNOME = user.getCognome();
         ID_UTENTE = user.getIDUtente();
         EMAIL = user.getEmail();
         PASSWORD = user.getPassword();
+        RUOLO = user.getRuolo();
         NUM_CONSEGNE = farmacia.getNumConsegne();
         NOME_FARMACIA = farmacia.getNomeSede();
         INDIRIZZO_FARMACIA = farmacia.getIndirizzoSede();
@@ -182,14 +186,12 @@ public class HomeFarmaciaControl extends GlobalData{
     }
 
     public void modificaCredenziali(ActionEvent event) throws IOException {
-
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ModificaCredenziali.fxml"));
+        loader.setLocation(ModificaPasswordControl.class.getResource("ModificaCredenziali.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Modifica Password");
-        stage.setScene(scene);
+        stage.setScene(new Scene(root));
         stage.show();
     }
 
