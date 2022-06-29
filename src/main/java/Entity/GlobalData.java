@@ -22,6 +22,8 @@ public class GlobalData {
     /*FARMACIA*/
 
     public static String NOMINATIVO;
+    public static String NOME;
+    public static String COGNOME;
     public static int NUM_CONSEGNE;
     public static String NOME_FARMACIA;
     public static String INDIRIZZO_FARMACIA;

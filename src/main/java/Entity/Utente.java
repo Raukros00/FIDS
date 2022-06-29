@@ -33,6 +33,17 @@ public class Utente {
         setRuolo(ruolo);
     }
 
+    public Utente(String nome, String cognome, int IDUtente, String email, String password, int ruolo, int IDSede){
+        setNome(nome);
+        setCognome(cognome);
+        setIDUtente(IDUtente);
+        setEmail(email);
+        setPassword(password);
+        setRuolo(ruolo);
+        setIDSede(IDSede);
+    }
+
+
     public Utente() {}
     public void setIDUtente(int IDUtente) { this.IDUtente = IDUtente; }
     public int getIDUtente() { return IDUtente; }

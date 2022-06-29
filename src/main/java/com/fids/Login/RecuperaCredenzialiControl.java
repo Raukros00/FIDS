@@ -1,8 +1,6 @@
 package com.fids.Login;
 
 import DBMSB.DBMSBoundary;
-import Entity.GlobalData;
-import Entity.Utente;
 import com.fids.PopUp.PopUpControl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,19 +8,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.paint.Color;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 
 public class RecuperaCredenzialiControl{
@@ -36,7 +34,7 @@ public class RecuperaCredenzialiControl{
 
     private DBMSBoundary dbms = new DBMSBoundary();
 
-    public void richiediPassword(){
+    public void richiediPassword(ActionEvent event){
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 4; i++) {
@@ -92,9 +90,7 @@ public class RecuperaCredenzialiControl{
 
                 dbms.aggiornaPassword(password_toSend, email);
 
-                System.out.println("Sto mandando l'email");
                 Transport.send(message);
-                System.out.println("Email mandata con successo, verificate la vostra INBOX");
 
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
@@ -110,7 +106,21 @@ public class RecuperaCredenzialiControl{
                 Stage stage = new Stage();
                 stage.setTitle("Email mandata");
                 stage.setScene(scene);
+                stage.showAndWait();
+
+                loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("login.fxml"));
+                root = null;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setTitle("Login");
+                stage.setScene(new Scene(root));
                 stage.show();
+
 
             }catch (MessagingException mex){
 
@@ -128,7 +138,7 @@ public class RecuperaCredenzialiControl{
                 throw new RuntimeException(e);
             }
             PopUpControl popControl = loader.getController();
-            popControl.setPopUp("Qualcosa è\nandato storto!");
+            popControl.setPopUp("Email errata!");
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setTitle("Avviso");
@@ -153,6 +163,8 @@ public class RecuperaCredenzialiControl{
         stage.setTitle("Login");
         stage.setScene(new Scene(root));
         stage.show();
+
+
     }
 
 }
