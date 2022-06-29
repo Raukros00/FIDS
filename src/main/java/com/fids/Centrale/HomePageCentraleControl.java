@@ -48,6 +48,8 @@ public class HomePageCentraleControl extends GlobalData {
     @FXML
     public Button spedizioniButton;
     @FXML
+    public Button sediEContrattiButton;
+    @FXML
     private VBox VBoxOffset;
     private Utente user;
     private Calendar cal;
@@ -114,6 +116,18 @@ public class HomePageCentraleControl extends GlobalData {
         Parent root = loader.load();
         ListaSediSpedizioniControl listaSediSpedizioniControl= loader.getController();
         listaSediSpedizioniControl.setDatiSediSpedizioni();
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Lista delle farmacie");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public void gestioneSedieContratti(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("SedieContratti.fxml"));
+        Parent root = loader.load();
+        SedieContrattiControl sedieContrattiControl= loader.getController();
+        sedieContrattiControl.setDatiFarmacia();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Lista delle farmacie");
         stage.setScene(new Scene(root));

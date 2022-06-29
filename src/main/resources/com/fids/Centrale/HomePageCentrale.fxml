@@ -32,7 +32,7 @@
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
-                <Button fx:id="sediEContrattiButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Gestione Sedi &#10;e Contratti" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="2">
+                <Button fx:id="sediEContrattiButton" mnemonicParsing="false" onAction="#gestioneSedieContratti" prefHeight="70.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Gestione Sedi &#10;e Contratti" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="2">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>

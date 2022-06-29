@@ -983,29 +983,30 @@ public class DBMSBoundary extends GlobalData{
                     f.setNomeSede(resultSet.getString("nomeSede"));
                     f.setIndirizzoSede(resultSet.getString("indirizzoSede"));
                     f.setCitta(resultSet.getString("citta"));
+                    if(resultSet.getInt("IDSpedizione")!=0) {
+                        s = new Spedizione();
+                        s.setIDSpedizione(resultSet.getInt("IDSpedizione"));
+                        s.setDataConsegna(resultSet.getString("dataConsegna"));
+                        s.setStatoConsegna(resultSet.getInt("statoSpedizione"));
+                        s.setNomeFarmacia(resultSet.getString("nomeSede"));
 
-                    s=new Spedizione();
-                    s.setIDSpedizione(resultSet.getInt("IDSpedizione"));
-                    s.setDataConsegna(resultSet.getString("dataConsegna"));
-                    s.setStatoConsegna(resultSet.getInt("statoSpedizione"));
-                    s.setNomeFarmacia(resultSet.getString("nomeSede"));
-
-                    l= new LottoSpedizione();
-                    l.setCodiceLotto(resultSet.getString("FKLotto"));
-                    l.setIDFarmaco(resultSet.getInt("FKFarmaco"));
-                    l.setQuantita(resultSet.getInt("quantita"));
-                    l.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
-                    s.addLotto(l);
-                    f.addSpedizione(s);
+                        l = new LottoSpedizione();
+                        l.setCodiceLotto(resultSet.getString("FKLotto"));
+                        l.setIDFarmaco(resultSet.getInt("FKFarmaco"));
+                        l.setQuantita(resultSet.getInt("quantita"));
+                        l.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
+                        s.addLotto(l);
+                        f.addSpedizione(s);
+                        IDSpedizione = resultSet.getInt("IDSpedizione");
+                    }
+                    IDSede = resultSet.getInt("IDSede");
                     farmacie.add(f);
-                    IDSede=resultSet.getInt("IDSede");
-                    IDSpedizione=resultSet.getInt("IDSpedizione");
-
                 } else if (resultSet.getInt("IDSpedizione")!=IDSpedizione) {
                     s=new Spedizione();
                     s.setIDSpedizione(resultSet.getInt("IDSpedizione"));
                     s.setDataConsegna(resultSet.getString("dataConsegna"));
                     s.setStatoConsegna(resultSet.getInt("statoSpedizione"));
+                    s.setNomeFarmacia(resultSet.getString("nomeSede"));
 
                     l= new LottoSpedizione();
                     l.setCodiceLotto(resultSet.getString("FKLotto"));
@@ -1031,6 +1032,30 @@ public class DBMSBoundary extends GlobalData{
         return farmacie;
     }
 
+
+    public LinkedList<Farmacia> getFarmacie(){
+
+        LinkedList<Farmacia> listaFarmacie=new LinkedList<>();
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "SELECT IDSede, nomeSede, citta, indirizzoSede FROM Sede;";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Farmacia f=new Farmacia();
+                f.setIDFarmacia(resultSet.getInt("IDSede"));
+                f.setNomeSede(resultSet.getString("nomeSede"));
+                f.setCitta(resultSet.getString("citta"));
+                f.setIndirizzoSede(resultSet.getString("indirizzoSede"));
+                listaFarmacie.add(f);
+                }
+        }catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+        return listaFarmacie;
+    }
     public ResultSet getPassword(){
         DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try{
