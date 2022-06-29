@@ -2,6 +2,8 @@ module com.fids.fids {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires java.mail;
+    requires java.desktop;
 
     opens com.fids.Login to javafx.fxml;
     opens com.fids.Farmacia to javafx.fxml;

@@ -11,8 +11,11 @@ public class GlobalData {
     public static int ID_FARMACIA;
 
     public static int ID_UTENTE;
+    public static String EMAIL;
 
     public static String PASSWORD;
+
+    public static int RUOLO;
     public static String DAY;
     public static String ORARIO;
 

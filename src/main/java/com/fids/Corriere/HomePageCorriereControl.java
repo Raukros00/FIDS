@@ -57,5 +57,16 @@ public class HomePageCorriereControl {
         stage.show();
     }
 
+    public void modificaCredenziali(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ModificaCredenziali.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Modifica Password");
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
 }

@@ -1,5 +1,7 @@
 package Entity;
 
+import java.util.LinkedList;
+
 public class Farmacia {
 
     private int IDFarmacia;
@@ -10,8 +12,15 @@ public class Farmacia {
     private String CAP;
     private int numConsegne;
     private Double distanza;
+    private LinkedList<Spedizione> listaSpedizioni= new LinkedList<>();
 
     public Farmacia() {}
+    public Farmacia(int IDFarmacia, String nomeSede, String indirizzoSede, String citta) {
+        setIDFarmacia(IDFarmacia);
+        setNomeSede(nomeSede);
+        setIndirizzoSede(indirizzoSede);
+        setCitta(citta);
+    }
     public Farmacia(int IDFarmacia, String nomeSede, String indirizzoSede, String citta, String provincia, String CAP, Double distanza) {
         setIDFarmacia(IDFarmacia);
         setNomeSede(nomeSede);
@@ -40,7 +49,9 @@ public class Farmacia {
     public void setDistanza(Double distanza) { this.distanza = distanza; }
     public Double getDistanza() { return distanza; }
 
+    public void addSpedizione(Spedizione s){ listaSpedizioni.add(s);}
 
-
-
+    public LinkedList<Spedizione> getListaSpedizioni() {
+        return listaSpedizioni;
+    }
 }
