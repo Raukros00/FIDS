@@ -91,6 +91,7 @@ public class HomeFarmaciaControl extends GlobalData{
         nomeFarmaciaLabel.setText(NOME_FARMACIA);
         indirizzoLabel.setText(INDIRIZZO_FARMACIA);
         cittaLabel.setText(CITTA_FARMACIA);
+        startClock();
     }
 
 
@@ -207,6 +208,25 @@ public class HomeFarmaciaControl extends GlobalData{
                 if(am_pm=="PM")
                     hour=hour+12;
                 time.setText(String.format("%02d : %02d", hour, minute));
+
+                if(hour >= 20 && NUM_CONSEGNE > 0 && !CHECKHOURS){
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+                    Parent root = null;
+                    try {
+                        root = loader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    PopUpControl popControl = loader.getController();
+                    popControl.setPopUp("Ci sono " + NUM_CONSEGNE + " consegne da caricare!");
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setTitle("Avviso");
+                    stage.setScene(scene);
+                    stage.show();
+                    CHECKHOURS = true;
+                }
 
             }
         }), new KeyFrame(Duration.seconds(60)));

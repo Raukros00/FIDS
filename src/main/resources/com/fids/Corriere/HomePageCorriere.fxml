@@ -12,9 +12,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Corriere.HomePageCorriereControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Corriere.HomePageCorriereControl">
    <right>
-      <GridPane prefHeight="622.0" prefWidth="336.0" BorderPane.alignment="CENTER">
+      <GridPane prefHeight="609.0" prefWidth="488.0" BorderPane.alignment="CENTER">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
@@ -26,9 +26,22 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="listaSpedizioniButton" mnemonicParsing="false" onAction="#listaSpedizioni" prefHeight="48.0" prefWidth="259.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Lista Spedizioni" textFill="WHITE">
+            <Button fx:id="listaSpedizioniButton" mnemonicParsing="false" onAction="#listaSpedizioni" prefHeight="48.0" prefWidth="471.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Lista Spedizioni" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Button>
+            <Button fx:id="modificaPasswordButton" mnemonicParsing="false" onAction="#modificaCredenziali" prefHeight="80.0" prefWidth="471.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Modifica &#10;Credenziali" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="2.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="48.0" prefWidth="471.0" style="-fx-background-radius: 16; -fx-background-color: #206777; -fx-cursor: hand;" text="Esci&#10;" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="23.0" />
                </font>
             </Button>
          </children>
@@ -48,12 +61,12 @@
                   <RowConstraints maxHeight="531.0" minHeight="10.0" prefHeight="191.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="138.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="250.0" fitWidth="264.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Login/logo.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="30.0" />
+                        <Insets left="80.0" top="140.0" />
                      </GridPane.margin>
                   </ImageView>
                </children>
@@ -62,49 +75,18 @@
                </BorderPane.margin>
             </GridPane>
          </top>
-         <bottom>
-            <GridPane prefHeight="136.0" prefWidth="422.0" BorderPane.alignment="CENTER">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="183.0" minWidth="10.0" prefWidth="35.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="202.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="10.0" prefWidth="166.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="2.0" prefWidth="13.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Button fx:id="modificaPasswordButton" mnemonicParsing="false" onAction="#modificaCredenziali" prefHeight="48.0" prefWidth="181.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Modifica &#10;Credenziali" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets top="2.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="48.0" prefWidth="181.0" style="-fx-background-radius: 16; -fx-background-color: #206777; -fx-cursor: hand;" text="Esci&#10;" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="2">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Button>
-               </children>
-               <BorderPane.margin>
-                  <Insets top="40.0" />
-               </BorderPane.margin>
-            </GridPane>
-         </bottom>
          <center>
-            <GridPane prefHeight="275.0" prefWidth="367.0" BorderPane.alignment="CENTER">
+            <GridPane prefHeight="151.0" prefWidth="417.0" BorderPane.alignment="CENTER">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="38.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="0.0" prefWidth="30.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.0" minWidth="10.0" prefWidth="332.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="0.0" prefWidth="48.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.0" minWidth="10.0" prefWidth="274.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints maxHeight="252.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="208.0" minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="286.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="286.0" minHeight="10.0" prefHeight="137.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="252.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="208.0" minHeight="0.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="286.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="286.0" minHeight="0.0" prefHeight="184.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
                   <Label fx:id="numSpedizioniLabel" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
@@ -127,13 +109,16 @@
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
                   </Label>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ci sono" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="spedizioni in attesa" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="consegne da fare" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="40.0" />
                      </GridPane.margin>
@@ -146,7 +131,7 @@
                   <Insets />
                </opaqueInsets>
                <BorderPane.margin>
-                  <Insets top="20.0" />
+                  <Insets left="80.0" top="190.0" />
                </BorderPane.margin>
             </GridPane>
          </center>
