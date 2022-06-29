@@ -2,6 +2,7 @@ package com.fids.Centrale;
 
 import DBMSB.DBMSBoundary;
 import Entity.Farmacia;
+import Entity.Farmaco;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -58,27 +59,23 @@ public class SedieContrattiControl {
 
                 setGraphic(modificaButton);
 
-                /*modificaButton.setOnAction(event -> {
-                    Farmacia fa = getTableRow().getItem();
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(SpedizioniFarmaciaControl.class.getResource("SpedizioniCompletate.fxml"));
-                    Parent root = null;
+                modificaButton.setOnAction(event -> {
                     try {
-                        root = loader.load();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        Farmacia fs = getTableRow().getItem();
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(getClass().getResource("ModificaContrattoCentrale.fxml"));
+                        Parent root = loader.load();
+                        //ModificaContrattoCentraleControl modificaContrattoCentraleControl = loader.getController();
+                        //modificaContrattoCentraleControl.setDatiContrattoCentrale(fs);
+                        Scene scene = new Scene(root);
+                        Stage stage = new Stage();
+                        stage.setTitle("Modifica Contratto");
+                        stage.setScene(scene);
+                        stage.show();
+                    }catch(Exception e) {
+                        e.printStackTrace();
                     }
-                    SpedizioniFarmaciaControl spedizioniFarmaciaControl = loader.getController();
-                    spedizioniFarmaciaControl.setDatiOrdini();
-                    Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-                    stage.setTitle("Lista Spedizioni");
-                    stage.setScene(new Scene(root));
-                    stage.show();
                 });
-            }
-        });*/
-
-
             }
         });
         listaSediTable.setItems(FXCollections.observableArrayList(listaFarmacia));

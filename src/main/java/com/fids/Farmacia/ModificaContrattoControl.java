@@ -13,10 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
@@ -32,12 +29,14 @@ public class ModificaContrattoControl {
     @FXML TableColumn<Farmaco, Integer> quantitaPeriodicaCol;
 
     @FXML private Spinner<Integer> periodoConsegnaField;
+    @FXML private Button aggiornaButton;
     SpinnerValueFactory<Integer> valoriQuantita = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,100);
 
     DBMSBoundary dbms = new DBMSBoundary();
     Contratto contratto;
     LinkedList<Farmaco> farmaciDisponibili;
     LinkedList<FarmacoContratto> farmaciContratto;
+
     public void setDatiContratto(int ID_FARMACIA) {
 
         periodoConsegnaField.setValueFactory(valoriQuantita);
