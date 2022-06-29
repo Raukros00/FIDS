@@ -72,26 +72,25 @@ public class SpedizioniFarmaciaControl extends ListaSediSpedizioniControl{
 
                 setGraphic(visualizzaButton);
 
-                /*visualizzaButton.setOnAction(event -> {
+                visualizzaButton.setOnAction(event -> {
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(VisualizzaOrdineControl.class.getResource("visualizzaSpedizione.fxml"));
+                    loader.setLocation(DettagliControl.class.getResource("Dettagli.fxml"));
                     Parent root = null;
                     try {
                         root = loader.load();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    VisualizzaOrdineControl visualizzaOrdineFControl = loader.getController();
+                    DettagliControl dettagliControl = loader.getController();
 
                     LinkedList<LottoSpedizione> fs = s.getListaLottiSpedizione();
-                    System.err.println("Size: " + fs.size());
-                    visualizzaOrdineFControl.setDatiSpedizione(fs);
+                    dettagliControl.setDatiSpedizione(fs);
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
                     stage.setTitle("Visualizza Spedizione");
                     stage.setScene(scene);
                     stage.show();
-                });*/
+                });
             }
         });
 
@@ -120,26 +119,26 @@ public class SpedizioniFarmaciaControl extends ListaSediSpedizioniControl{
 
                 setGraphic(visualizzaButton1);
 
-                /*visualizzaButton.setOnAction(event -> {
+                visualizzaButton1.setOnAction(event -> {
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(VisualizzaOrdineControl.class.getResource("visualizzaSpedizione.fxml"));
+                    loader.setLocation(DettagliControl.class.getResource("Dettagli.fxml"));
                     Parent root = null;
                     try {
                         root = loader.load();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    VisualizzaOrdineControl visualizzaOrdineFControl = loader.getController();
+                    DettagliControl dettagliControl = loader.getController();
 
                     LinkedList<LottoSpedizione> fs = s.getListaLottiSpedizione();
                     System.err.println("Size: " + fs.size());
-                    visualizzaOrdineFControl.setDatiSpedizione(fs);
+                    dettagliControl.setDatiSpedizione(fs);
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
                     stage.setTitle("Visualizza Spedizione");
                     stage.setScene(scene);
                     stage.show();
-                });*/
+                });
             }
         });
 
