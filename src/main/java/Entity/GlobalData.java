@@ -18,7 +18,7 @@ public class GlobalData {
     public static int RUOLO;
     public static String DAY;
     public static String ORARIO;
-
+    public static boolean CHECKHOURS = false;
     /*FARMACIA*/
 
     public static String NOMINATIVO;

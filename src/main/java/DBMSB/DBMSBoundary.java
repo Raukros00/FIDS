@@ -89,7 +89,7 @@ public class DBMSBoundary extends GlobalData{
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "SELECT IDSede, nomeSede, indirizzoSede, citta, IDSpedizione, distanza, COUNT(*) AS 'NUM_CONSEGNE' FROM Sede, Spedizione WHERE Sede.IDSede = Spedizione.FKFarmacia AND Sede.IDSede = ? AND Spedizione.dataConsegna=? AND Spedizione.statoSpedizione=1;";
+            String sql = "SELECT IDSede, nomeSede, indirizzoSede, citta, IDSpedizione, distanza, COUNT(*) AS 'NUM_CONSEGNE' FROM Sede, Spedizione WHERE Sede.IDSede = Spedizione.FKFarmacia AND Sede.IDSede = ? AND Spedizione.dataConsegna<=? AND Spedizione.statoSpedizione=1;";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, idFarmacia);
             preparedStatement.setString(2, String.valueOf(data));
@@ -364,10 +364,8 @@ public class DBMSBoundary extends GlobalData{
                 preparedStatement.setInt(1, o.getQuantita());
                 preparedStatement.setString(2, o.getCodiceLotto());
                 row = preparedStatement.executeUpdate();
-                System.out.println("ESISTO!!!! " + resultSet.getString("codiceLotto") );
 
             } else {
-                System.out.println("NON ESISTO: " + resultSet.getString("codiceLotto"));
                 sql = "INSERT INTO Lotto(codiceLotto, dataScadenza, dataProduzione, quantitaLotto, FKFarmaco) VALUES(?,?,?,?,?)";
                 preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, o.getCodiceLotto());
@@ -396,7 +394,7 @@ public class DBMSBoundary extends GlobalData{
 
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
-            String sql = "SELECT IDSpedizione, dataConsegna ,Lotto.dataScadenza, Lotto.dataProduzione, Farmaco.nomeFarmaco, principioAttivo, FKLotto, quantita FROM Lotto_Spedizione, Lotto, Farmaco, Spedizione WHERE Spedizione.IDSpedizione = Lotto_Spedizione.FKSpedizione AND Lotto_Spedizione.FKLotto = Lotto.codiceLotto AND Lotto.FKFarmaco = Farmaco.IDFarmaco AND FKFarmacia =? AND dataConsegna=? AND Spedizione.statoSpedizione=1";
+            String sql = "SELECT IDSpedizione, dataConsegna ,Lotto.dataScadenza, Lotto.dataProduzione, Farmaco.nomeFarmaco, principioAttivo, FKLotto, quantita, Lotto_Spedizione.FKFarmaco FROM Lotto_Spedizione, Lotto, Farmaco, Spedizione WHERE Spedizione.IDSpedizione = Lotto_Spedizione.FKSpedizione AND Lotto_Spedizione.FKLotto = Lotto.codiceLotto AND Lotto.FKFarmaco = Farmaco.IDFarmaco AND FKFarmacia =? AND dataConsegna<=? AND Spedizione.statoSpedizione=1";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, ID_FARMACIA);
             preparedStatement.setString(2, currentDate);
@@ -425,6 +423,7 @@ public class DBMSBoundary extends GlobalData{
                     ls = new LottoSpedizione();
                     ls.setIDSpedizione(IDSpedizione);
                     ls.setCodiceLotto(resultSet.getString("FKLotto"));
+                    ls.setIDFarmaco(resultSet.getInt("FKFarmaco"));
                     ls.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
                     ls.setPrincipioAttivo(resultSet.getString("principioAttivo"));
                     ls.setQuantita(resultSet.getInt("quantita"));
@@ -516,31 +515,43 @@ public class DBMSBoundary extends GlobalData{
                     conn = DriverManager.getConnection(DB_URL_F);
                     stat = conn.createStatement();
 
-                    sql = "INSERT INTO Farmaco (nomeFarmaco, principioAttivo, tipologia) VALUES (?,?,?)";
+                    sql = "INSERT INTO Farmaco (IDFarmaco, nomeFarmaco, principioAttivo, tipologia) VALUES (?,?,?,?)";
                     preparedStatement = conn.prepareStatement(sql);
-                    preparedStatement.setString(1, ls.getNomeFarmaco());
-                    preparedStatement.setString(2, ls.getPrincipioAttivo());
-                    preparedStatement.setString(3, tipologia);
+                    preparedStatement.setInt(1, ls.getIDFarmaco());
+                    preparedStatement.setString(2, ls.getNomeFarmaco());
+                    preparedStatement.setString(3, ls.getPrincipioAttivo());
+                    preparedStatement.setString(4, tipologia);
                     row = preparedStatement.executeUpdate();
 
                 }
 
-                sql = "SELECT IDFarmaco FROM Farmaco WHERE nomeFarmaco=?";
+                sql = "SELECT FKFarmaco FROM Lotto WHERE FKFarmaco=?";
                 preparedStatement = conn.prepareStatement(sql);
-                preparedStatement.setString(1, ls.getNomeFarmaco());
+                preparedStatement.setInt(1, ls.getIDFarmaco());
                 resultSet = preparedStatement.executeQuery();
 
-                while (resultSet.next())
-                    FKFarmaco = resultSet.getInt("IDFarmaco");
+                if (resultSet.next()) {
 
-                sql = "INSERT INTO Lotto (codiceLotto, dataScadenza, dataProduzione, quantitaLotto, FKFarmaco) VALUES (?, ?, ?, ?, ?)";
-                preparedStatement = conn.prepareStatement(sql);
-                preparedStatement.setString(1, ls.getCodiceLotto());
-                preparedStatement.setString(2, ls.getDataScadenza());
-                preparedStatement.setString(3, ls.getDataProduzione());
-                preparedStatement.setInt(4, ls.getQuantita());
-                preparedStatement.setInt(5, FKFarmaco);
-                row = preparedStatement.executeUpdate();
+
+                    sql = "UPDATE Lotto SET quantitaLotto = quantitaLotto + ? WHERE FKFarmaco=?";
+                    preparedStatement = conn.prepareStatement(sql);
+                    preparedStatement.setInt(1, ls.getQuantita());
+                    preparedStatement.setInt(2,ls.getIDFarmaco());
+                    row = preparedStatement.executeUpdate();
+
+
+                }
+
+                else {
+                    sql = "INSERT INTO Lotto (codiceLotto, dataScadenza, dataProduzione, quantitaLotto, FKFarmaco) VALUES (?, ?, ?, ?, ?)";
+                    preparedStatement = conn.prepareStatement(sql);
+                    preparedStatement.setString(1, ls.getCodiceLotto());
+                    preparedStatement.setString(2, ls.getDataScadenza());
+                    preparedStatement.setString(3, ls.getDataProduzione());
+                    preparedStatement.setInt(4, ls.getQuantita());
+                    preparedStatement.setInt(5, ls.getIDFarmaco());
+                    row = preparedStatement.executeUpdate();
+                }
 
             }
 

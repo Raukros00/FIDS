@@ -98,7 +98,8 @@ public class ModificaPasswordControl extends GlobalData {
                                     throw new RuntimeException(e);
                                 }
                                 HomeFarmaciaControl homeFControl = loader.getController();
-                                homeFControl.setUser(user);
+                                //homeFControl.setUser(user);
+                                homeFControl.setLabels();
                                 stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                                 stage.setTitle("Home Farmacia");
                                 stage.setScene(new Scene(root));
@@ -198,7 +199,8 @@ public class ModificaPasswordControl extends GlobalData {
                     throw new RuntimeException(e);
                 }
                 HomeFarmaciaControl homeFControl = loader.getController();
-                homeFControl.setUser(new Utente(NOME, COGNOME, ID_UTENTE, EMAIL, PASSWORD, RUOLO, ID_FARMACIA));
+                //homeFControl.setUser(new Utente(NOME, COGNOME, ID_UTENTE, EMAIL, PASSWORD, RUOLO, ID_FARMACIA));
+                homeFControl.setLabels();
                 stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                 stage.setTitle("Home Farmacia");
                 stage.setScene(new Scene(root));
