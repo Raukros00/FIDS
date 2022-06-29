@@ -61,7 +61,7 @@ public class InventarioCentraleControl {
     }
 
     public void stampaTabella(LinkedList<Farmaco> listaFarmaci) {
-        TreeItem root = new TreeItem(new Farmaco(" ", " ", " ", "", " "));
+        TreeItem root = new TreeItem(new Farmaco(" ", " ", " ", " ", "", " "));
         TreeItem farmaco;
 
         principioAttivoField.getItems().add("");
@@ -117,10 +117,10 @@ public class InventarioCentraleControl {
             modificaCol.setCellFactory(cellFactory);
 
             for (Lotto l : f.getListaLotti()) {
-                farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", String.valueOf(l.getQuantitaLotto()), l.getCodiceLotto(), l.getDataScadenza())));
+                farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", " ", String.valueOf(l.getQuantitaLotto()), l.getCodiceLotto(), l.getDataScadenza())));
             }
         }
-        TreeItem last = new TreeItem(new Farmaco(" ", "", "", "", ""));
+        TreeItem last = new TreeItem(new Farmaco(" ", "", " ", "", "", ""));
         root.getChildren().add(last);
 
 
@@ -171,10 +171,10 @@ public class InventarioCentraleControl {
 
         System.err.println(dataDiScadenza);
 
-        TreeItem root = new TreeItem(new Farmaco(" ", " ","",""," "));
+        TreeItem root = new TreeItem(new Farmaco(" ", " "," ","",""," "));
         TreeItem farmaco;
         for(Farmaco f: listaFarmaci) {
-            farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " "));
+            farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getTipologia(), f.getQuantitaFarmaco(), " ", " "));
 
             System.err.println(f.getNomeFarmaco().toLowerCase() + " " + nomeFarmaco.toLowerCase() + " " + f.getNomeFarmaco().toLowerCase().contains(nomeFarmaco.toLowerCase()));
             //if(((!nomeFarmaco.isEmpty() || !nomeFarmaco.trim().equals("")) && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase())) && ((f.getPrincipioAttivo().equals(principioAttivo))))
@@ -190,7 +190,7 @@ public class InventarioCentraleControl {
 
             for (Lotto l : f.getListaLotti()) {
                 if ((dataDiScadenza != null && dataDiScadenza.equalsIgnoreCase(l.getDataScadenza()) || dataDiScadenza == null))
-                    farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", String.valueOf(l.getQuantitaLotto()), l.getCodiceLotto(), l.getDataScadenza())));
+                    farmaco.getChildren().add(new TreeItem<>(new Farmaco(" ", " ", "", String.valueOf(l.getQuantitaLotto()), l.getCodiceLotto(), l.getDataScadenza())));
             }
             if (farmaco.getChildren().isEmpty()) {
                 root.getChildren().remove(farmaco);

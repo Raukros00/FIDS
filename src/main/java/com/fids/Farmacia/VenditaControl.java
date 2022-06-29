@@ -118,8 +118,27 @@ public class VenditaControl extends GlobalData {
                 if(l.getCodiceLotto().equalsIgnoreCase(codLotto)){
                     findLotto = true;
 
+                    if(!f.getTipologia().equalsIgnoreCase("SOP") &&! f.getTipologia().equalsIgnoreCase("OTC")){
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+                        Parent root = null;
+                        try {
+                            root = loader.load();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        PopUpControl popControl = loader.getController();
+                        popControl.setPopUp("Farmaco con RICETTA!");
+                        Scene scene = new Scene(root);
+                        Stage stage = new Stage();
+                        stage.setTitle("Avviso");
+                        stage.setScene(scene);
+                        stage.show();
+                    }
+
                     for(Farmaco vf : venditaFarmaci) {
                         if (vf.getLottoS().equalsIgnoreCase(codLotto)) {
+
                             errorLabel.setText("Il lotto è già presente, se necessario modifica la quantità!");
                             return;
                         }

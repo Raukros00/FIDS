@@ -9,6 +9,7 @@ public class Farmaco {
     private String lottoS;
     private String dataScadenza;
     private String quantitaFarmaco="0";
+    private String tipologia;
     private int quantitaFarmacoInt;
     private int periodicitaProduzione;
     private int quantitaProduzione;
@@ -34,9 +35,10 @@ public class Farmaco {
         setQuantitaFarmaco(quantitaFarmaco);
     }
 
-    public Farmaco(String nomeFarmaco, String principioAttivo, String quantitaFarmaco ,String lottoS, String dataScadenza) {
+    public Farmaco(String nomeFarmaco, String principioAttivo, String tipologia, String quantitaFarmaco ,String lottoS, String dataScadenza) {
         setNomeFarmaco(nomeFarmaco);
         setPrincipioAttivo(principioAttivo);
+        setTipologia(tipologia);
         setLottoS(lottoS);
         setQuantitaFarmaco(quantitaFarmaco);
         setDataScadenza(dataScadenza);
@@ -65,6 +67,9 @@ public class Farmaco {
 
     public void setLottoS(String lottoS) { this.lottoS = lottoS; }
     public String getLottoS() { return lottoS;}
+
+    public void setTipologia(String tipologia) { this.tipologia = tipologia; }
+    public String getTipologia() { return tipologia; }
 
     public void setDataScadenza(String dataScadenza) { this.dataScadenza = dataScadenza; }
     public String getDataScadenza() { return dataScadenza; }

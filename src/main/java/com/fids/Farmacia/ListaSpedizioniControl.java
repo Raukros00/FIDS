@@ -212,7 +212,7 @@ public class ListaSpedizioniControl {
         for(Spedizione ls : listaSpedizioni){
             if(ls.getStatoConsegna() == 0)
                 inAttesa.add(ls);
-            else if(ls.getStatoConsegna() == 1)
+            else if(ls.getStatoConsegna() != 0)
                 listaArchiviati.add(ls);
         }
 

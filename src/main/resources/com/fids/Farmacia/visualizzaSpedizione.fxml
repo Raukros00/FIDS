@@ -19,7 +19,7 @@
    <bottom>
       <BorderPane prefHeight="68.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <center>
-            <Button fx:id="okayButton" mnemonicParsing="false" onAction="#closePopUp" style="-fx-background-color: #206777; -fx-background-radius: 8;" text="Chiudi" textFill="WHITE" BorderPane.alignment="CENTER">
+            <Button fx:id="okButton" mnemonicParsing="false" onAction="#closePopUp" style="-fx-background-color: #206777; -fx-background-radius: 8;" text="Chiudi" textFill="WHITE" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
