@@ -61,7 +61,8 @@ public class HomePageCentraleControl extends GlobalData {
         this.user = user;
         DBMSBoundary dbms = new DBMSBoundary();
         nomeCognomeLabel.setText( user.getNome() + " " + user.getCognome());
-        numSegnalazioniLabel.setText(dbms.richiediNumSegnalazioni());
+        NUM_SEGNALAZIONI=dbms.richiediNumSegnalazioni();
+        numSegnalazioniLabel.setText(String.valueOf(NUM_SEGNALAZIONI));
         startClock();
         AggiornaInventarioControl aggiorna= new AggiornaInventarioControl();
         aggiorna.aggiornaInventario();

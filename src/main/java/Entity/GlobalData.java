@@ -30,4 +30,6 @@ public class GlobalData {
     public static String CITTA_FARMACIA;
     public static Double DISTANZA;
 
+    public static int NUM_SEGNALAZIONI;
+
 }
