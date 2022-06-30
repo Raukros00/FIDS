@@ -675,7 +675,7 @@ public class DBMSBoundary extends GlobalData{
     |                                                     |
     -------------------------------------------------------
     */
-    public String richiediNumSegnalazioni() {
+    public int richiediNumSegnalazioni() {
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
@@ -684,14 +684,14 @@ public class DBMSBoundary extends GlobalData{
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return resultSet.getString("NUM_SEGNALAZIONI");
+                return resultSet.getInt("NUM_SEGNALAZIONI");
             }
         } catch (Exception e) {
             e.printStackTrace();
             cadutaConnessione();
         }
 
-        return null;
+        return 0;
     }
 
     public LinkedList<Farmaco> getInventarioCentrale() {
@@ -1212,6 +1212,24 @@ public class DBMSBoundary extends GlobalData{
         return listaSegnalazioni;
     }
 
+    public int deleteSegnalazione(int IDSpedizione){
+        int row=0;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement;
+            Statement stat = conn.createStatement();
+            String sql = "DELETE FROM Segnalazione WHERE FKSpedizione=?;";
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, IDSpedizione);
+            row = preparedStatement.executeUpdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+        return row;
+
+
+    }
 
 
     /*
