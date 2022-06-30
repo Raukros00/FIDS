@@ -394,7 +394,7 @@ public class DBMSBoundary extends GlobalData{
 
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
-            String sql = "SELECT IDSpedizione, dataConsegna ,Lotto.dataScadenza, Lotto.dataProduzione, Farmaco.nomeFarmaco, principioAttivo, FKLotto, quantita, Lotto_Spedizione.FKFarmaco FROM Lotto_Spedizione, Lotto, Farmaco, Spedizione WHERE Spedizione.IDSpedizione = Lotto_Spedizione.FKSpedizione AND Lotto_Spedizione.FKLotto = Lotto.codiceLotto AND Lotto.FKFarmaco = Farmaco.IDFarmaco AND FKFarmacia =? AND dataConsegna<=? AND Spedizione.statoSpedizione=1";
+            String sql = "SELECT IDSpedizione, dataConsegna ,Lotto.dataScadenza, Lotto.dataProduzione, Farmaco.nomeFarmaco, principioAttivo, FKLotto, quantita, Farmaco.IDFarmaco FROM Lotto_Spedizione, Lotto, Farmaco, Spedizione WHERE Spedizione.IDSpedizione = Lotto_Spedizione.FKSpedizione AND Lotto_Spedizione.FKLotto = Lotto.codiceLotto AND Lotto.FKFarmaco = Farmaco.IDFarmaco AND FKFarmacia =? AND dataConsegna<=? AND Spedizione.statoSpedizione=1 ORDER BY IDSpedizione";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, ID_FARMACIA);
             preparedStatement.setString(2, currentDate);
@@ -411,6 +411,7 @@ public class DBMSBoundary extends GlobalData{
                 if(resultSet.getInt("IDSpedizione") != IDSpedizione && IDSpedizione != -1){
                     listaSpedizioni.add(s);
                     s = new Spedizione();
+                    ls = new LottoSpedizione();
                 }
 
                 if(resultSet.getInt("IDSpedizione") != IDSpedizione){
@@ -423,13 +424,16 @@ public class DBMSBoundary extends GlobalData{
                     ls = new LottoSpedizione();
                     ls.setIDSpedizione(IDSpedizione);
                     ls.setCodiceLotto(resultSet.getString("FKLotto"));
-                    ls.setIDFarmaco(resultSet.getInt("FKFarmaco"));
+                    ls.setIDFarmaco(resultSet.getInt("IDFarmaco"));
+                    System.out.println("GET NEW CONSEGNA" + ls.getIDFarmaco());
                     ls.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
                     ls.setPrincipioAttivo(resultSet.getString("principioAttivo"));
                     ls.setQuantita(resultSet.getInt("quantita"));
                     ls.setDataProduzione(resultSet.getString("dataProduzione"));
                     ls.setDataScadenza(resultSet.getString("dataScadenza"));
                     s.addLotto(ls);
+
+
 
                 }
 
@@ -440,10 +444,12 @@ public class DBMSBoundary extends GlobalData{
                     ls.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
                     ls.setPrincipioAttivo(resultSet.getString("principioAttivo"));
                     ls.setCodiceLotto(resultSet.getString("FKLotto"));
+                    ls.setIDFarmaco(resultSet.getInt("IDFarmaco"));
                     ls.setQuantita(resultSet.getInt("quantita"));
                     ls.setDataProduzione(resultSet.getString("dataProduzione"));
                     ls.setDataScadenza(resultSet.getString("dataScadenza"));
                     s.addLotto(ls);
+                    System.out.println("GET " + ls.getIDFarmaco());
 
                 }
             }
@@ -454,6 +460,7 @@ public class DBMSBoundary extends GlobalData{
             e.printStackTrace();
             cadutaConnessione();
         }
+
 
         return listaSpedizioni;
     }
@@ -486,35 +493,34 @@ public class DBMSBoundary extends GlobalData{
         try {
             Connection conn = DriverManager.getConnection(DB_URL_F);
             Statement stat = conn.createStatement();
+            PreparedStatement preparedStatement;
+            ResultSet resultSet;
             String sql;
             int row;
             int FKFarmaco = -1;
 
-            for(LottoSpedizione ls : listaCarico) {
+            for(LottoSpedizione ls : listaCarico){
 
-                sql = "SELECT nomeFarmaco FROM Farmaco WHERE nomeFarmaco=?";
-                PreparedStatement preparedStatement = conn.prepareStatement(sql);
-                preparedStatement.setString(1, ls.getNomeFarmaco());
-                ResultSet resultSet = preparedStatement.executeQuery();
+                sql = "SELECT * FROM Farmaco WHERE IDFarmaco = ?";
+                preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setInt(1, ls.getIDFarmaco());
+                resultSet = preparedStatement.executeQuery();
 
-                if (resultSet.next()) System.err.println("Exist");
-
-                else{
+                if(!resultSet.next()){
+                    System.out.println("Il Farmaco " + ls.getIDFarmaco() + " non è presente in farmacia. ");
                     conn.close();
                     conn = DriverManager.getConnection(DB_URL);
                     stat = conn.createStatement();
-                    sql = "SELECT tipologia FROM Farmaco WHERE nomeFarmaco=?";
+                    sql = "SELECT tipologia FROM Farmaco WHERE IDFarmaco = ?";
                     preparedStatement = conn.prepareStatement(sql);
-                    preparedStatement.setString(1, ls.getNomeFarmaco());
-                    System.out.println("Cerco la tipologia di: " + ls.getNomeFarmaco());
+                    preparedStatement.setInt(1, ls.getIDFarmaco());
                     resultSet = preparedStatement.executeQuery();
-                    if(resultSet.next())
-                        tipologia = resultSet.getString("tipologia");
+
+                    if(resultSet.next()) tipologia = resultSet.getString("tipologia");
 
                     conn.close();
                     conn = DriverManager.getConnection(DB_URL_F);
                     stat = conn.createStatement();
-
                     sql = "INSERT INTO Farmaco (IDFarmaco, nomeFarmaco, principioAttivo, tipologia) VALUES (?,?,?,?)";
                     preparedStatement = conn.prepareStatement(sql);
                     preparedStatement.setInt(1, ls.getIDFarmaco());
@@ -523,27 +529,7 @@ public class DBMSBoundary extends GlobalData{
                     preparedStatement.setString(4, tipologia);
                     row = preparedStatement.executeUpdate();
 
-                }
-
-                sql = "SELECT FKFarmaco FROM Lotto WHERE FKFarmaco=?";
-                preparedStatement = conn.prepareStatement(sql);
-                preparedStatement.setInt(1, ls.getIDFarmaco());
-                resultSet = preparedStatement.executeQuery();
-
-                if (resultSet.next()) {
-
-
-                    sql = "UPDATE Lotto SET quantitaLotto = quantitaLotto + ? WHERE FKFarmaco=?";
-                    preparedStatement = conn.prepareStatement(sql);
-                    preparedStatement.setInt(1, ls.getQuantita());
-                    preparedStatement.setInt(2,ls.getIDFarmaco());
-                    row = preparedStatement.executeUpdate();
-
-
-                }
-
-                else {
-                    sql = "INSERT INTO Lotto (codiceLotto, dataScadenza, dataProduzione, quantitaLotto, FKFarmaco) VALUES (?, ?, ?, ?, ?)";
+                    sql = "INSERT INTO Lotto (codiceLotto, dataScadenza, dataProduzione, quantitaLotto, FKFarmaco) VALUES(?,?,?,?,?)";
                     preparedStatement = conn.prepareStatement(sql);
                     preparedStatement.setString(1, ls.getCodiceLotto());
                     preparedStatement.setString(2, ls.getDataScadenza());
@@ -551,16 +537,46 @@ public class DBMSBoundary extends GlobalData{
                     preparedStatement.setInt(4, ls.getQuantita());
                     preparedStatement.setInt(5, ls.getIDFarmaco());
                     row = preparedStatement.executeUpdate();
+
                 }
 
+                else {
+
+                    sql = "SELECT codiceLotto FROM Lotto WHERE codiceLotto=?";
+                    preparedStatement = conn.prepareStatement(sql);
+                    preparedStatement.setString(1, ls.getCodiceLotto());
+                    resultSet = preparedStatement.executeQuery();
+
+                    if(resultSet.next()){
+                        System.out.println("Il Farmaco " + ls.getIDFarmaco() + " è presente nella Farmacia ed esiste lo stesso lotto");
+                        sql = "UPDATE Lotto SET quantitaLotto = quantitaLotto + ? WHERE codiceLotto = ?";
+                        preparedStatement = conn.prepareStatement(sql);
+                        preparedStatement.setInt(1, ls.getQuantita());
+                        preparedStatement.setString(2, ls.getCodiceLotto());
+                        row = preparedStatement.executeUpdate();
+
+                    }
+
+                    else {
+                        System.out.println("Il Farmaco " + ls.getIDFarmaco() + " è presente nella Farmacia ma non il lotto");
+                        sql = "INSERT INTO Lotto (codiceLotto, dataScadenza, dataProduzione, quantitaLotto, FKFarmaco) VALUES(?,?,?,?,?)";
+                        preparedStatement = conn.prepareStatement(sql);
+                        preparedStatement.setString(1, ls.getCodiceLotto());
+                        preparedStatement.setString(2, ls.getDataScadenza());
+                        preparedStatement.setString(3, ls.getDataProduzione());
+                        preparedStatement.setInt(4, ls.getQuantita());
+                        preparedStatement.setInt(5, ls.getIDFarmaco());
+                        row = preparedStatement.executeUpdate();
+
+                    }
+                }
             }
 
-
-            DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+            conn.close();
             conn = DriverManager.getConnection(DB_URL);
             stat = conn.createStatement();
-            sql = "UPDATE Spedizione SET statoSpedizione=2 WHERE IDSpedizione=?";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            sql = "UPDATE Spedizione SET statoSpedizione = 2 WHERE IDSpedizione=?";
+            preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, IDSpedizione);
             row = preparedStatement.executeUpdate();
 
@@ -568,7 +584,6 @@ public class DBMSBoundary extends GlobalData{
             e.printStackTrace();
             cadutaConnessione();
         }
-
     }
 
     public Contratto getContratto(int ID_FARMACIA) {

@@ -28,7 +28,7 @@ public class LottoSpedizione implements Cloneable {
         setIDFarmaco(IDFarmaco);
     }
 
-    public LottoSpedizione(int IDSpedizione, String nomeFarmaco, String principioAttivo, String codiceLotto, String dataProduzione, String dataScadenza, int quantita){
+    public LottoSpedizione(int IDSpedizione, String nomeFarmaco, String principioAttivo, String codiceLotto, String dataProduzione, String dataScadenza, int quantita, int IDFarmaco){
 
         setIDSpedizione(IDSpedizione);
         setNomeFarmaco(nomeFarmaco);
@@ -37,6 +37,7 @@ public class LottoSpedizione implements Cloneable {
         setDataProduzione(dataProduzione);
         setDataScadenza(dataScadenza);
         setQuantita(quantita);
+        setIDFarmaco(IDFarmaco);
 
     }
 
