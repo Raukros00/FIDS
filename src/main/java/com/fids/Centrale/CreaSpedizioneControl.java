@@ -1,10 +1,7 @@
 package com.fids.Centrale;
 
 import DBMSB.DBMSBoundary;
-import Entity.Contratto;
-import Entity.Farmaco;
-import Entity.GlobalData;
-import Entity.Lotto;
+import Entity.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,12 +9,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class CreaSpedizioneControl extends GlobalData {
     private String filePath="./src/main/resources/com/fids/Centrale/CreaSpedizione.txt";
     private File file = new File(filePath);
+
+    LinkedList<Farmaco> farmaciDaBanco = new LinkedList<Farmaco>();
 
     public void creaSpedizione(){
         createFile();
@@ -32,24 +31,51 @@ public class CreaSpedizioneControl extends GlobalData {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-        if(DAY.equals(data)){
+        if(!DAY.equals(data)){
             DBMSBoundary dbms = new DBMSBoundary();
-            ArrayList<Contratto> listaContratti= dbms.getContrattiFarmacia();
+            LinkedList<Contratto> listaContratti= dbms.getContrattiFarmacia();
+
             String toCompare=LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            ArrayList<Contratto> daSpedire= new ArrayList<>();
+            LinkedList<Contratto> daSpedire= new LinkedList<>();
             for(Contratto c : listaContratti){
                 String toCompare2=String.valueOf(LocalDate.parse(c.getUltimaConsegna()).plusDays(c.getPerioditicita()));
                 if(toCompare.equals(toCompare2)){
                     daSpedire.add(c);
                 }
             }
-            for(Contratto c : daSpedire)
-                System.out.println(c.getIDContratto());
 
-            //daSpedire è un array con tutti i contratti che in giornata deve uscire, crea la spedizione tra questo commento
+            farmaciDaBanco = dbms.getFarmaciDaBanco();
+            LinkedList<LottoSpedizione> ordine = new LinkedList<>();
 
 
-            //e tra questo
+            for(Contratto c : daSpedire){
+                ordine.clear();
+
+                for(FarmacoContratto fc : c.getListaFarmaciContratto()){
+                    for(Farmaco fb : farmaciDaBanco){
+                        if(fc.getIDFarmaco() == fb.getIDFarmaco()) {
+                            for (Lotto l : fb.getListaLotti()) {
+
+                                if (l.getQuantitaLotto() <= fc.getQuantitaRichiesta()){
+                                    ordine.add(new LottoSpedizione(fb.getNomeFarmaco(), l.getCodiceLotto(), fc.getQuantitaRichiesta(), l.getDataScadenza(), l.getDataScadenza(), l.getFKFarmaco()));
+                                    break;
+                                }
+
+                                else if(l.getQuantitaLotto() > 0){
+                                    ordine.add(new LottoSpedizione(fb.getNomeFarmaco(), l.getCodiceLotto(), fc.getQuantitaRichiesta(), l.getDataScadenza(), l.getDataScadenza(), l.getFKFarmaco()));
+                                    break;
+                                }
+
+                            }
+                        }
+                    }
+                }
+                int idSpedizione = dbms.insertNewSpedizione(c.getIDSede());
+                dbms.inserisciLottiInSpedizione(idSpedizione, ordine);
+            }
+
+
+
             String currentDay = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             if(!currentDay.equals(data)){
                 try {

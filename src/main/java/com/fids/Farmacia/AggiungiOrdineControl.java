@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
@@ -78,7 +77,7 @@ public class AggiungiOrdineControl extends GlobalData {
         stage.show();
     }
 
-    public void creaOrdine(ActionEvent actionEvent) throws SQLException, IOException {
+    public void creaOrdine(ActionEvent actionEvent) throws IOException {
 
         LocalDate oggi = LocalDate.now();
         LocalDate scadenzaLotto;
@@ -116,7 +115,6 @@ public class AggiungiOrdineControl extends GlobalData {
 
                             mantieni = FSControl.returnMantieni();
                             if (mantieni) {
-
                                 if (l.getQuantitaLotto() >= f.getQuantitaFarmacoInt()) {
                                     ls = new LottoSpedizione(f.getNomeFarmaco(), l.getCodiceLotto(), f.getQuantitaFarmacoInt(), l.getDataScadenza(), l.getDataScadenza(), l.getFKFarmaco());
                                     ordine.add(ls);

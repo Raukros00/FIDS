@@ -308,84 +308,93 @@ public class DBMSBoundary extends GlobalData{
 
         } catch(Exception e){
             e.printStackTrace();
+            cadutaConnessione();
         }
 
         return -1;
     }
 
-    public void inserisciLottiInSpedizione(int idSpedizione, LinkedList<LottoSpedizione> ordine) throws SQLException {
+    public void inserisciLottiInSpedizione(int idSpedizione, LinkedList<LottoSpedizione> ordine) {
 
-        Connection conn = DriverManager.getConnection(DB_URL);
-        Statement stat = conn.createStatement();
-        String sql;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql;
 
-        for(LottoSpedizione o : ordine){
+            for (LottoSpedizione o : ordine) {
 
-            sql = "INSERT INTO Lotto_Spedizione (FKLotto, FKSpedizione, quantita, nomeFarmaco, dataProduzione, dataScadenza, FKFarmaco) VALUES(?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, o.getCodiceLotto());
-            preparedStatement.setInt(2, idSpedizione);
-            preparedStatement.setInt(3, o.getQuantita());
-            preparedStatement.setString(4, o.getNomeFarmaco());
-            preparedStatement.setString(5, o.getDataProduzione());
-            preparedStatement.setString(6, o.getDataScadenza());
-            preparedStatement.setInt(7, o.getIDFarmaco());
-            int row = preparedStatement.executeUpdate();
+                sql = "INSERT INTO Lotto_Spedizione (FKLotto, FKSpedizione, quantita, nomeFarmaco, dataProduzione, dataScadenza, FKFarmaco) VALUES(?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setString(1, o.getCodiceLotto());
+                preparedStatement.setInt(2, idSpedizione);
+                preparedStatement.setInt(3, o.getQuantita());
+                preparedStatement.setString(4, o.getNomeFarmaco());
+                preparedStatement.setString(5, o.getDataProduzione());
+                preparedStatement.setString(6, o.getDataScadenza());
+                preparedStatement.setInt(7, o.getIDFarmaco());
+                int row = preparedStatement.executeUpdate();
 
-            sql = "UPDATE Lotto SET quantitaLotto = quantitaLotto - ? WHERE codiceLotto = ?";
-            preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, o.getQuantita());
-            preparedStatement.setString(2, o.getCodiceLotto());
-            row = preparedStatement.executeUpdate();
-        }
-
-    }
-
-    public void modificaSpedizione(int IDSpedizione, LinkedList<LottoSpedizione> ordine ) throws  SQLException {
-
-        Connection conn = DriverManager.getConnection(DB_URL);
-        Statement stat = conn.createStatement();
-        PreparedStatement preparedStatement;
-        String sql;
-        int row;
-        int quantita;
-        boolean exist = false;
-
-        for(LottoSpedizione o : ordine) {
-
-            sql = "SELECT codiceLotto FROM Lotto WHERE codiceLotto=? ORDER BY codiceLotto";
-            preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, o.getCodiceLotto());
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                sql = "UPDATE Lotto SET quantitaLotto = quantitaLotto + ? WHERE codiceLotto=?";
+                sql = "UPDATE Lotto SET quantitaLotto = quantitaLotto - ? WHERE codiceLotto = ?";
                 preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setInt(1, o.getQuantita());
                 preparedStatement.setString(2, o.getCodiceLotto());
                 row = preparedStatement.executeUpdate();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+    }
 
-            } else {
-                sql = "INSERT INTO Lotto(codiceLotto, dataScadenza, dataProduzione, quantitaLotto, FKFarmaco) VALUES(?,?,?,?,?)";
+    public void modificaSpedizione(int IDSpedizione, LinkedList<LottoSpedizione> ordine ) {
+
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            PreparedStatement preparedStatement;
+            String sql;
+            int row;
+            int quantita;
+            boolean exist = false;
+
+            for (LottoSpedizione o : ordine) {
+
+                sql = "SELECT codiceLotto FROM Lotto WHERE codiceLotto=? ORDER BY codiceLotto";
                 preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, o.getCodiceLotto());
-                preparedStatement.setString(2, o.getDataScadenza());
-                preparedStatement.setString(3, o.getDataProduzione());
-                preparedStatement.setInt(4, o.getQuantita());
-                preparedStatement.setInt(5, o.getIDFarmaco());
-                row = preparedStatement.executeUpdate();
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    sql = "UPDATE Lotto SET quantitaLotto = quantitaLotto + ? WHERE codiceLotto=?";
+                    preparedStatement = conn.prepareStatement(sql);
+                    preparedStatement.setInt(1, o.getQuantita());
+                    preparedStatement.setString(2, o.getCodiceLotto());
+                    row = preparedStatement.executeUpdate();
+
+                } else {
+                    sql = "INSERT INTO Lotto(codiceLotto, dataScadenza, dataProduzione, quantitaLotto, FKFarmaco) VALUES(?,?,?,?,?)";
+                    preparedStatement = conn.prepareStatement(sql);
+                    preparedStatement.setString(1, o.getCodiceLotto());
+                    preparedStatement.setString(2, o.getDataScadenza());
+                    preparedStatement.setString(3, o.getDataProduzione());
+                    preparedStatement.setInt(4, o.getQuantita());
+                    preparedStatement.setInt(5, o.getIDFarmaco());
+                    row = preparedStatement.executeUpdate();
+                }
+
+
             }
 
+            sql = "DELETE FROM Lotto_Spedizione WHERE FKSpedizione=?";
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, IDSpedizione);
+            row = preparedStatement.executeUpdate();
+            System.out.println("MI HANNO ELIMINATO!");
 
+        }catch(Exception e){
+            e.printStackTrace();
+            cadutaConnessione();
         }
-
-        sql = "DELETE FROM Lotto_Spedizione WHERE FKSpedizione=?";
-        preparedStatement = conn.prepareStatement(sql);
-        preparedStatement.setInt(1, IDSpedizione);
-        row = preparedStatement.executeUpdate();
-        System.out.println("MI HANNO ELIMINATO!");
-
-
     }
 
     public LinkedList<Spedizione> getConsegne(String currentDate, int ID_FARMACIA) {
@@ -465,18 +474,19 @@ public class DBMSBoundary extends GlobalData{
         return listaSpedizioni;
     }
 
-    public void inserisciSegnalazione(int IDUtente, String segnalazione) {
+    public void inserisciSegnalazione(int IDSpedizione, int IDUtente, String segnalazione) {
 
         try {
 
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
             String sql;
-            sql = "INSERT INTO Segnalazione (FKUtente, Descrizione) VALUES (?,?)";
+            sql = "INSERT INTO Segnalazione (FKSpedizione, FKUtente, Descrizione) VALUES (?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             System.out.println(IDUtente + " ha scritto " + segnalazione);
-            preparedStatement.setInt(1, IDUtente);
-            preparedStatement.setString(2, segnalazione);
+            preparedStatement.setInt(1, IDSpedizione);
+            preparedStatement.setInt(2, IDUtente);
+            preparedStatement.setString(3, segnalazione);
             int row = preparedStatement.executeUpdate();
 
         } catch (Exception e) {
@@ -548,7 +558,6 @@ public class DBMSBoundary extends GlobalData{
                     resultSet = preparedStatement.executeQuery();
 
                     if(resultSet.next()){
-                        System.out.println("Il Farmaco " + ls.getIDFarmaco() + " è presente nella Farmacia ed esiste lo stesso lotto");
                         sql = "UPDATE Lotto SET quantitaLotto = quantitaLotto + ? WHERE codiceLotto = ?";
                         preparedStatement = conn.prepareStatement(sql);
                         preparedStatement.setInt(1, ls.getQuantita());
@@ -558,7 +567,6 @@ public class DBMSBoundary extends GlobalData{
                     }
 
                     else {
-                        System.out.println("Il Farmaco " + ls.getIDFarmaco() + " è presente nella Farmacia ma non il lotto");
                         sql = "INSERT INTO Lotto (codiceLotto, dataScadenza, dataProduzione, quantitaLotto, FKFarmaco) VALUES(?,?,?,?,?)";
                         preparedStatement = conn.prepareStatement(sql);
                         preparedStatement.setString(1, ls.getCodiceLotto());
@@ -831,7 +839,7 @@ public class DBMSBoundary extends GlobalData{
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "select IDSede, nomeSede from Sede;";
+            String sql = "SELECT IDSede, nomeSede FROM Sede;";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -843,21 +851,53 @@ public class DBMSBoundary extends GlobalData{
         return null;
     }
 
-    public ArrayList<Contratto> getContrattiFarmacia(){
-        ArrayList<Contratto> listaContratti = new ArrayList<>();
+    public LinkedList<Contratto> getContrattiFarmacia(){
+        LinkedList<Contratto> listaContratti = new LinkedList<>();
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "SELECT * FROM Contratto";
+            String sql = "SELECT * FROM Contratto, Farmaco_Contratto WHERE Contratto.IDContratto = Farmaco_Contratto.FKContratto ORDER BY IDContratto";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                Contratto contratto = new Contratto();
-                contratto.setIDContratto(resultSet.getInt("IDContratto"));
-                contratto.setPerioditicita(resultSet.getInt("perioditicita"));
-                contratto.setUltimaConsegna(String.valueOf(resultSet.getDate("UltimaConsegna")));
-                listaContratti.add(contratto);
+            int IDContratto = -1;
+            Contratto c = new Contratto();
+            FarmacoContratto fc;
+
+            while(resultSet.next()) {
+
+                if (resultSet.getInt("IDContratto") != IDContratto && IDContratto != -1) {
+                    listaContratti.add(c);
+                    c = new Contratto();
+                }
+
+                if (resultSet.getInt("IDContratto") != IDContratto) {
+
+                    c.setIDContratto(resultSet.getInt("IDContratto"));
+                    c.setPerioditicita(resultSet.getInt("perioditicita"));
+                    c.setIDSede(resultSet.getInt("FKFarmacia"));
+                    c.setUltimaConsegna(String.valueOf(resultSet.getDate("UltimaConsegna")));
+
+                    IDContratto = resultSet.getInt("IDContratto");
+
+                    fc = new FarmacoContratto();
+
+                    fc.setIDFarmaco(resultSet.getInt("FKFarmaco"));
+                    fc.setIDContratto(resultSet.getInt("FKContratto"));
+                    fc.setQuantitaRichiesta(resultSet.getInt("quantitaRichiesta"));
+                    c.addListaFarmaciContratto(fc);
+
+                } else {
+
+                    fc = new FarmacoContratto();
+                    fc.setIDFarmaco(resultSet.getInt("FKFarmaco"));
+                    fc.setIDContratto(resultSet.getInt("FKContratto"));
+                    fc.setQuantitaRichiesta(resultSet.getInt("quantitaRichiesta"));
+                    c.addListaFarmaciContratto(fc);
+
+                }
             }
+            listaContratti.add(c);
+
         }catch (Exception e) {
             e.printStackTrace();
             cadutaConnessione();
@@ -1213,6 +1253,44 @@ public class DBMSBoundary extends GlobalData{
     }
 
 
+    public int insertNewSpedizione(int IDSede){
+
+        Double distanza = 0.0;
+        int id;
+
+        try{
+
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            PreparedStatement preparedStatement;
+            ResultSet resultSet;
+            String sql;
+
+            sql = "SELECT distanza FROM Sede WHERE IDSede=?";
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, IDSede);
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()) {
+                distanza = resultSet.getDouble("distanza");
+                id = creaSpedizione(IDSede, distanza);
+                System.out.println("ID SP:" + id);
+                return id;
+            }
+
+
+
+
+        }
+
+        catch (Exception e){
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+
+        return -1;
+
+    }
 
     /*
     -------------------------------------------------------

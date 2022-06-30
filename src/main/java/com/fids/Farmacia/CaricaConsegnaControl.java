@@ -144,7 +144,7 @@ public class CaricaConsegnaControl extends GlobalData {
                 }
                 segnalazione += "\n\nNOTE: " + note;
 
-                dbms.inserisciSegnalazione(ID_UTENTE, segnalazione);
+                dbms.inserisciSegnalazione(listaNuoviFarmaci.getFirst().getIDSpedizione(),ID_UTENTE, segnalazione);
 
             }
 
