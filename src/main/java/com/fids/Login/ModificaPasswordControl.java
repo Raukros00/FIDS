@@ -16,7 +16,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -46,28 +45,43 @@ public class ModificaPasswordControl extends GlobalData {
         String vecchiaPassword = vecchiaPasswordField.getText();
         String nuovaPassword = nuovaPasswordField.getText();
         String confermaPassword = confermaPasswordField.getText();
-        MessageDigest md5 = null;
 
-        try {
-            md5 = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-
-        md5.update(StandardCharsets.UTF_8.encode(vecchiaPassword));
-        vecchiaPassword = String.format("%032x", new BigInteger(1, md5.digest()));
-
-        md5.update(StandardCharsets.UTF_8.encode(nuovaPassword));
-        nuovaPassword = String.format("%032x", new BigInteger(1, md5.digest()));
-
-        md5.update(StandardCharsets.UTF_8.encode(confermaPassword));
-        confermaPassword = String.format("%032x", new BigInteger(1, md5.digest()));
-
-        System.out.println("DB: " + PASSWORD + "\nNW: " + vecchiaPassword);
-        if (vecchiaPassword.trim().isEmpty() || nuovaPassword.trim().isEmpty() || confermaPassword.trim().isEmpty()) {
-            erroreLabel.setText("Tutti i campi sono obbligatori!");
-            erroreLabel.setTextFill(Color.color(1, 0, 0));
+        if (vecchiaPassword.isEmpty() || nuovaPassword.isEmpty() || confermaPassword.isEmpty()) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            PopUpControl popControl = loader.getController();
+            popControl.setPopUp("Tutti i campi sono obbligatori!");
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Avviso");
+            stage.setScene(scene);
+            stage.showAndWait();
         } else {
+
+            MessageDigest md5 = null;
+
+            try {
+                md5 = MessageDigest.getInstance("MD5");
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+
+            md5.update(StandardCharsets.UTF_8.encode(vecchiaPassword));
+            vecchiaPassword = String.format("%032x", new BigInteger(1, md5.digest()));
+
+            md5.update(StandardCharsets.UTF_8.encode(nuovaPassword));
+            nuovaPassword = String.format("%032x", new BigInteger(1, md5.digest()));
+
+            md5.update(StandardCharsets.UTF_8.encode(confermaPassword));
+            confermaPassword = String.format("%032x", new BigInteger(1, md5.digest()));
+
+
             if (vecchiaPassword.equalsIgnoreCase(PASSWORD)) {
                 if (nuovaPassword.equalsIgnoreCase(confermaPassword)) {
                     if (dbms.aggiornaPassword(confermaPassword, EMAIL)) {
@@ -80,12 +94,12 @@ public class ModificaPasswordControl extends GlobalData {
                             throw new RuntimeException(e);
                         }
                         PopUpControl popControl = loader.getController();
-                        popControl.setPopUp("Password correttamente\naggiornata!");
+                        popControl.setPopUp("Password aggiornata correttamente!");
                         Scene scene = new Scene(root);
                         Stage stage = new Stage();
                         stage.setTitle("Avviso");
                         stage.setScene(scene);
-                        stage.show();
+                        stage.showAndWait();
 
                         switch(RUOLO) {
 
@@ -169,7 +183,7 @@ public class ModificaPasswordControl extends GlobalData {
                         throw new RuntimeException(e);
                     }
                     PopUpControl popControl = loader.getController();
-                    popControl.setPopUp("La nuova non corrisponde!");
+                    popControl.setPopUp("La nuova password non corrisponde!");
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
                     stage.setTitle("Avviso");
@@ -177,8 +191,21 @@ public class ModificaPasswordControl extends GlobalData {
                     stage.show();
                 }
             } else {
-                erroreLabel.setText("La vecchia password è errata!");
-                erroreLabel.setTextFill(Color.color(1, 0, 0));
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+                Parent root = null;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                PopUpControl popControl = loader.getController();
+                popControl.setPopUp("La nuova vecchia \npassword non corrisponde!");
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setTitle("Avviso");
+                stage.setScene(scene);
+                stage.show();
             }
         }
     }

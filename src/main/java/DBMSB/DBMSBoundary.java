@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 
 public class DBMSBoundary extends GlobalData{
-    private String DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+    private String DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
 
     private void cadutaConnessione(){
         try {
@@ -116,7 +116,7 @@ public class DBMSBoundary extends GlobalData{
 
     public LinkedList<Farmaco> getInventarioFarmacia(int idFarmacia) {
 
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Farmacia_" + idFarmacia + "?user=admin&password=Az-10694@";
+        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Farmacia_" + idFarmacia + "?user=admin&password=Az-10694@";
         LinkedList<Farmaco> listaFarmaci = new LinkedList<Farmaco>();
         Farmaco f = new Farmaco();
         Lotto l = new Lotto();
@@ -180,7 +180,7 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public void updateInventario(LinkedList<Farmaco> venditaFarmaci, LinkedList<Farmaco> listaFarmaci, int idFarmacia) {
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Farmacia_" + idFarmacia + "?user=admin&password=Az-10694@";
+        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Farmacia_" + idFarmacia + "?user=admin&password=Az-10694@";
 
         try {
 
@@ -480,7 +480,7 @@ public class DBMSBoundary extends GlobalData{
 
     public void aggiornaInventarioFarmacia(int ID_FARMACIA, int IDSpedizione,LinkedList<LottoSpedizione> listaCarico) {
 
-        String DB_URL_F = "jdbc:mysql://101.60.191.210:3306/FIDS_Farmacia_" + ID_FARMACIA + "?user=admin&password=Az-10694@";
+        String DB_URL_F = "jdbc:mysql://101.58.82.185:3306/FIDS_Farmacia_" + ID_FARMACIA + "?user=admin&password=Az-10694@";
         String tipologia = null;
         
         try {
@@ -556,7 +556,7 @@ public class DBMSBoundary extends GlobalData{
             }
 
 
-            DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+            DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
             conn = DriverManager.getConnection(DB_URL);
             stat = conn.createStatement();
             sql = "UPDATE Spedizione SET statoSpedizione=2 WHERE IDSpedizione=?";
@@ -681,7 +681,7 @@ public class DBMSBoundary extends GlobalData{
 
     public LinkedList<Farmaco> getInventarioCentrale() {
 
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         LinkedList<Farmaco> listaFarmaci = new LinkedList<Farmaco>();
         Farmaco f = new Farmaco();
         Lotto l = new Lotto();
@@ -747,7 +747,7 @@ public class DBMSBoundary extends GlobalData{
 
     public LinkedList<Farmaco> getFarmaciDaBanco() {
 
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         LinkedList<Farmaco> listaFarmaci = new LinkedList<Farmaco>();
         Farmaco f = new Farmaco();
         Lotto l = new Lotto();
@@ -812,7 +812,7 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public ResultSet getSedi(){
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
@@ -829,7 +829,7 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public boolean verificaEmail(String email){
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
@@ -849,7 +849,7 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public ArrayList<String> getUsernames(){
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         ArrayList<String> usernames = new ArrayList<String>();
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -867,7 +867,7 @@ public class DBMSBoundary extends GlobalData{
         return(usernames);
     }
     public void insertUtente(String nome, String cognome, String dataNascita, String email, String username, String ruolo, String IDsede){
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         int ruoloVero=0;
         if(ruolo=="Farmacista"){
             ruoloVero=1;
@@ -910,7 +910,7 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public boolean modificaProduzione(int periodo,int quantita, int id){
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         int row;
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -935,7 +935,7 @@ public class DBMSBoundary extends GlobalData{
 
     public boolean aggiornaPassword(String password, String email){
 
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         int row;
         try{
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -1007,7 +1007,7 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public void aggiungiLotto(ArrayList<Lotto> daInserire){
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         String sql="INSERT INTO Lotto(codiceLotto,dataScadenza,dataProduzione,quantitaLotto,FKFarmaco) VALUES";
         for(Lotto l : daInserire){
             sql=sql+"('"+l.getCodiceLotto()+"','"+l.getDataScadenza()+"','"+l.getDataProduzione()+"',"+l.getQuantitaLotto()+","+l.getFKFarmaco()+"),";
@@ -1134,7 +1134,7 @@ public class DBMSBoundary extends GlobalData{
         return listaFarmacie;
     }
     public ResultSet getPassword(){
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try{
 
             Connection conn = DriverManager.getConnection(DB_URL);
