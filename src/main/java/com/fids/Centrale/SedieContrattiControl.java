@@ -65,8 +65,8 @@ public class SedieContrattiControl {
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(getClass().getResource("ModificaContrattoCentrale.fxml"));
                         Parent root = loader.load();
-                        //ModificaContrattoCentraleControl modificaContrattoCentraleControl = loader.getController();
-                        //modificaContrattoCentraleControl.setDatiContrattoCentrale(fs);
+                        ModificaContrattoCentraleControl modificaContrattoCentraleControl = loader.getController();
+                        modificaContrattoCentraleControl.setDatiContrattoCentrale(fs);
                         Scene scene = new Scene(root);
                         Stage stage = new Stage();
                         stage.setTitle("Modifica Contratto");

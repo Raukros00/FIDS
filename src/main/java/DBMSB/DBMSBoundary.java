@@ -602,7 +602,7 @@ public class DBMSBoundary extends GlobalData{
         return contratto;
     }
 
-    public void updateContratto(LinkedList<FarmacoContratto> farmaciContratto, int periodo, int IDContratto, int IDFarmacia){
+    public void updateContratto(LinkedList<FarmacoContratto> farmaciContratto, int periodo, int IDContratto){
 
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -614,11 +614,10 @@ public class DBMSBoundary extends GlobalData{
 
             if(periodo != 0){
 
-                sql = "UPDATE Contratto SET perioditicita=? WHERE IDContratto=? OR FKFarmacia=?";
+                sql = "UPDATE Contratto SET perioditicita=? WHERE IDContratto=?";
                 preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setInt(1, periodo);
                 preparedStatement.setInt(2, IDContratto);
-                preparedStatement.setInt(3, IDFarmacia);
                 row = preparedStatement.executeUpdate();
             }
 
@@ -665,7 +664,7 @@ public class DBMSBoundary extends GlobalData{
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "SELECT COUNT(IDSegnalazione) AS 'NUM_SEGNALAZIONI' FROM Segnalazione;";
+            String sql = "SELECT COUNT(FKSpedizione) AS 'NUM_SEGNALAZIONI' FROM Segnalazione;";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -831,7 +830,6 @@ public class DBMSBoundary extends GlobalData{
 
     public ArrayList<Contratto> getContrattiFarmacia(){
         ArrayList<Contratto> listaContratti = new ArrayList<>();
-        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
