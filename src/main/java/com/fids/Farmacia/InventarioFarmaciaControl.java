@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class InventarioFarmaciaControl extends GlobalData {
@@ -53,11 +54,21 @@ public class InventarioFarmaciaControl extends GlobalData {
     public void setDatiInventario() {
 
         listaFarmaci = dbms.getInventarioFarmacia(ID_FARMACIA);
-        stampaTabella(listaFarmaci);
 
-        principioAttivoField.getItems().add("");
-        for(Farmaco f: listaFarmaci)
-            principioAttivoField.getItems().add(f.getPrincipioAttivo());
+        ArrayList<String> principiAttivi = new ArrayList<>();
+        principiAttivi.add("a");
+        for(Farmaco f : listaFarmaci){
+            boolean add=true;
+            for(String s : principiAttivi){
+                if(f.getPrincipioAttivo().equals(s))
+                    add=false;
+            }
+            if(add){
+                principiAttivi.add(f.getPrincipioAttivo());
+                principioAttivoField.getItems().add(f.getPrincipioAttivo());
+            }
+        }
+        stampaTabella(listaFarmaci);
     }
 
     public void stampaTabella(LinkedList<Farmaco> listaFarmaci) {

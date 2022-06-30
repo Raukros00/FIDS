@@ -17,6 +17,7 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class InventarioCentraleControl {
@@ -49,24 +50,30 @@ public class InventarioCentraleControl {
     private DBMSBoundary dbms = new DBMSBoundary();
     LinkedList<Farmaco> listaFarmaci = new LinkedList<>();
 
-    public void setField(){
+    public void setField() {
 
         listaFarmaci = dbms.getInventarioCentrale();
+
+        ArrayList<String> principiAttivi = new ArrayList<>();
+        principiAttivi.add("a");
+        for(Farmaco f : listaFarmaci){
+            boolean add=true;
+            for(String s : principiAttivi){
+                if(f.getPrincipioAttivo().equals(s))
+                    add=false;
+            }
+            if(add){
+                principiAttivi.add(f.getPrincipioAttivo());
+                principioAttivoField.getItems().add(f.getPrincipioAttivo());
+            }
+        }
         stampaTabella(listaFarmaci);
-
-        principioAttivoField.getItems().add("");
-        for(Farmaco f: listaFarmaci)
-            principioAttivoField.getItems().add(f.getPrincipioAttivo());
-
     }
 
     public void stampaTabella(LinkedList<Farmaco> listaFarmaci) {
         TreeItem root = new TreeItem(new Farmaco(" ", " ", " ", " ", "", " "));
         TreeItem farmaco;
 
-        principioAttivoField.getItems().add("");
-        for (Farmaco f : listaFarmaci)
-            principioAttivoField.getItems().add(f.getPrincipioAttivo());
         for (Farmaco f : listaFarmaci) {
 
             farmaco = new TreeItem(new Farmaco(f.getIDFarmaco(), f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getQuantitaFarmaco(), " ", " ", f.getPeriodicitaProduzione(),f.getQuantitaProduzione()));
@@ -177,7 +184,6 @@ public class InventarioCentraleControl {
             farmaco = new TreeItem(new Farmaco(f.getNomeFarmaco(), f.getPrincipioAttivo(), f.getTipologia(), f.getQuantitaFarmaco(), " ", " "));
 
             System.err.println(f.getNomeFarmaco().toLowerCase() + " " + nomeFarmaco.toLowerCase() + " " + f.getNomeFarmaco().toLowerCase().contains(nomeFarmaco.toLowerCase()));
-            //if(((!nomeFarmaco.isEmpty() || !nomeFarmaco.trim().equals("")) && f.getNomeFarmaco().toLowerCase().startsWith(nomeFarmaco.toLowerCase())) && ((f.getPrincipioAttivo().equals(principioAttivo))))
             if (nomeFarmaco.isEmpty() && principioAttivo == "") {
                 root.getChildren().add(farmaco);
             } else if (!nomeFarmaco.isEmpty() && f.getNomeFarmaco().toLowerCase().contains(nomeFarmaco.toLowerCase()) && principioAttivo == "") {
