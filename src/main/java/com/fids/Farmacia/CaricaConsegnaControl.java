@@ -39,16 +39,16 @@ public class CaricaConsegnaControl extends GlobalData {
 
     DBMSBoundary dbms = new DBMSBoundary();
 
-    LinkedList<Spedizione> listaSpdizioni = new LinkedList<>();
+    LinkedList<Spedizione> listaSpedizioni = new LinkedList<>();
     LinkedList<LottoSpedizione> listaNuoviFarmaci = new LinkedList<>();
+    LinkedList<LottoSpedizione> listaLottiSpedizione;
     public void setDatiConsegna(int ID_FARMACIA) {
-
         LocalDate oggi = LocalDate.now();
-        listaSpdizioni = dbms.getConsegne(String.valueOf(oggi), ID_FARMACIA);
+        listaSpedizioni = dbms.getConsegne(String.valueOf(oggi), ID_FARMACIA);
+        listaLottiSpedizione = listaSpedizioni.getFirst().getListaLottiSpedizione();
 
-        for(LottoSpedizione ls : listaSpdizioni.getFirst().getListaLottiSpedizione())
-            listaNuoviFarmaci.add(new LottoSpedizione(ls.getIDSpedizione(), ls.getNomeFarmaco(), ls.getPrincipioAttivo(), ls.getCodiceLotto(), ls.getDataProduzione(), ls.getDataScadenza(), ls.getQuantita()));
-
+        for(LottoSpedizione ls : listaLottiSpedizione)
+            System.out.println("CIAO " + ls.getIDFarmaco());
 
         nomeCol.setCellValueFactory(new PropertyValueFactory<LottoSpedizione, String>("nomeFarmaco"));
         codLottoCol.setCellValueFactory(new PropertyValueFactory<LottoSpedizione, String>("codiceLotto"));
@@ -58,15 +58,14 @@ public class CaricaConsegnaControl extends GlobalData {
         quantitaArrCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<LottoSpedizione, Integer>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<LottoSpedizione, Integer> event) {
-                for(LottoSpedizione ls : listaNuoviFarmaci){
-                    if(ls.getNomeFarmaco().equalsIgnoreCase(event.getRowValue().getNomeFarmaco()))
-                        ls.setQuantita(event.getNewValue());
-                }
+                LottoSpedizione newLS = event.getRowValue();
+                newLS.setQuantita(event.getNewValue());
+                listaNuoviFarmaci.add(new LottoSpedizione(newLS.getIDSpedizione(), newLS.getNomeFarmaco(), newLS.getPrincipioAttivo(), newLS.getCodiceLotto(), newLS.getDataProduzione(), newLS.getDataScadenza(), newLS.getQuantita(), newLS.getIDFarmaco()));
             }
         });
 
-        if(listaSpdizioni.size() > 0) {
-            stampaSpedizione(listaSpdizioni.getFirst().getListaLottiSpedizione());
+        if(listaSpedizioni.size() > 0) {
+            stampaSpedizione(listaSpedizioni.getFirst().getListaLottiSpedizione());
         }
 
     }
@@ -96,15 +95,14 @@ public class CaricaConsegnaControl extends GlobalData {
         boolean segnala = false;
         if(!noteField.getText().isEmpty()) note = noteField.getText();
 
-
-        LinkedList<LottoSpedizione> listaLottiSpedizione = listaSpdizioni.getFirst().getListaLottiSpedizione();
         LinkedList<LottoSpedizione> listaFarmaciRimanenti = new LinkedList<>();
         Iterator<LottoSpedizione> lottiSIterator = listaLottiSpedizione.iterator();
 
         for(LottoSpedizione newLS : listaNuoviFarmaci){
+
             while (lottiSIterator.hasNext()){
-                LottoSpedizione ls = lottiSIterator.next();
-                if(newLS.getNomeFarmaco().equalsIgnoreCase(ls.getNomeFarmaco())){
+                LottoSpedizione ls = lottiSIterator.next();if(newLS.getNomeFarmaco().equalsIgnoreCase(ls.getNomeFarmaco())){
+                    System.out.println("Carico farmaco ID: " + newLS.getIDFarmaco() + " Q: " + newLS.getQuantita() + " QR: " + ls.getQuantita());
 
                     if(newLS.getQuantita() == ls.getQuantita()){
                         lottiSIterator.remove();
@@ -162,7 +160,7 @@ public class CaricaConsegnaControl extends GlobalData {
            }
         }
 
-        dbms.aggiornaInventarioFarmacia(ID_FARMACIA, listaNuoviFarmaci.getFirst().getIDSpedizione(),listaNuoviFarmaci);
+        dbms.aggiornaInventarioFarmacia(ID_FARMACIA, listaNuoviFarmaci.getFirst().getIDSpedizione(), listaNuoviFarmaci);
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
@@ -180,11 +178,12 @@ public class CaricaConsegnaControl extends GlobalData {
         stage.setScene(scene);
         stage.showAndWait();
 
-        listaSpdizioni.removeFirst();
         NUM_CONSEGNE--;
 
-        if(listaSpdizioni.size() > 0){
-            stampaSpedizione(listaSpdizioni.getFirst().getListaLottiSpedizione());
+        if(NUM_CONSEGNE > 0){
+            listaSpedizioni.removeFirst();
+            listaNuoviFarmaci.clear();
+            setDatiConsegna(ID_FARMACIA);
         }
         else{
             loader = new FXMLLoader();
