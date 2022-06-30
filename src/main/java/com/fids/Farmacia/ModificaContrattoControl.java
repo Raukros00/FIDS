@@ -103,7 +103,7 @@ public class ModificaContrattoControl {
         int periodo = periodoConsegnaField.getValue();
         if(periodo == contratto.getPerioditicita()) periodo = 0;
 
-        dbms.updateContratto(farmaciContratto, periodo, contratto.getIDContratto());
+        dbms.updateContratto(farmaciContratto, periodo, contratto.getIDContratto(), -1);
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));

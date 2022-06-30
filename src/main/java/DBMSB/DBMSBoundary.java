@@ -602,7 +602,7 @@ public class DBMSBoundary extends GlobalData{
         return contratto;
     }
 
-    public void updateContratto(LinkedList<FarmacoContratto> farmaciContratto, int periodo, int IDContratto){
+    public void updateContratto(LinkedList<FarmacoContratto> farmaciContratto, int periodo, int IDContratto, int IDFarmacia){
 
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -614,19 +614,18 @@ public class DBMSBoundary extends GlobalData{
 
             if(periodo != 0){
 
-                sql = "UPDATE Contratto SET perioditicita=? WHERE IDContratto=?";
+                sql = "UPDATE Contratto SET perioditicita=? WHERE IDContratto=? OR FKFarmacia=?";
                 preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setInt(1, periodo);
                 preparedStatement.setInt(2, IDContratto);
+                preparedStatement.setInt(3, IDFarmacia);
                 row = preparedStatement.executeUpdate();
-                System.out.println(row + " Aggiornamento periodo");
             }
 
             sql = "DELETE FROM Farmaco_Contratto WHERE FKContratto=?";
             preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, IDContratto);
             row = preparedStatement.executeUpdate();
-            System.out.println(row + " Elimino tutti i farmaci in contratto");
 
             sql = "INSERT INTO Farmaco_Contratto (FKFarmaco, FKContratto, quantitaRichiesta) VALUES ";
 
@@ -639,7 +638,6 @@ public class DBMSBoundary extends GlobalData{
             }
             if(flag){
                 sql=sql.substring(0,sql.length()-1);
-                System.out.println(sql);
                 preparedStatement = conn.prepareStatement(sql);
                 row = preparedStatement.executeUpdate();
                 System.out.println(row + "Aggiunto farmaco");
