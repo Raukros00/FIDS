@@ -58,6 +58,7 @@ public class ModificaContrattoControl {
         quantitaPeriodicaCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Farmaco, Integer>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Farmaco, Integer> event) {
+                boolean add=true;
                 if(event.getNewValue() < 0){
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(PopUpControl.class.getResource("error.fxml"));
@@ -77,8 +78,17 @@ public class ModificaContrattoControl {
                 }
                 else {
                     for (Farmaco f : farmaciDisponibili) {
-                        if (event.getRowValue().getIDFarmaco() == f.getIDFarmaco())
-                            farmaciContratto.add(new FarmacoContratto(f.getIDFarmaco(), event.getNewValue()));
+                        if (event.getRowValue().getIDFarmaco() == f.getIDFarmaco()) {
+                            for(FarmacoContratto fc : farmaciContratto){
+                                if(event.getRowValue().getIDFarmaco() == fc.getIDFarmaco()){
+                                    fc.setQuantitaRichiesta(event.getNewValue());
+                                    add=false;
+                                }
+                            }
+                        }
+                    }
+                    if(add){
+                        farmaciContratto.add(new FarmacoContratto(event.getRowValue().getIDFarmaco(), event.getNewValue()));
                     }
                 }
             }
@@ -93,7 +103,7 @@ public class ModificaContrattoControl {
         int periodo = periodoConsegnaField.getValue();
         if(periodo == contratto.getPerioditicita()) periodo = 0;
 
-        dbms.updateContratto(farmaciContratto, periodo, contratto.getIDContratto());
+        dbms.updateContratto(farmaciContratto, periodo, contratto.getIDContratto(), -1);
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
