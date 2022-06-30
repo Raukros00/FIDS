@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.ModificaContrattoCentraleControl">
+   <center>
+      <TableView fx:id="contrattoFarmaciTable" prefHeight="518.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
+         <columns>
+            <TableColumn fx:id="nomeCol" prefWidth="815.0" text="Nome Farmaco" />
+            <TableColumn fx:id="quantitaPeriodicaCol" prefWidth="234.0" text="Quantità periodica" />
+         </columns>
+      </TableView>
+   </center>
+   <bottom>
+      <BorderPane prefHeight="89.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
+         <right>
+            <Button fx:id="aggiornaButton" mnemonicParsing="false" onAction="#updateFarmaciContratto" prefHeight="64.0" prefWidth="527.0" style="-fx-background-color: #2BEA97; -fx-background-radius: 8;" text="Aggiorna Contratto" textFill="WHITE" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets right="20.0" />
+               </BorderPane.margin>
+            </Button>
+         </right>
+         <left>
+            <Pane prefHeight="103.0" prefWidth="370.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Spinner fx:id="periodoConsegnaField" layoutX="26.0" layoutY="35.0" prefHeight="31.0" prefWidth="243.0" style="-fx-background-radius: 8;" />
+                  <Label layoutX="26.0" layoutY="12.0" text="Periodicità contratto  (giorni)" />
+               </children>
+            </Pane>
+         </left>
+      </BorderPane>
+   </bottom>
+</BorderPane>

@@ -65,6 +65,8 @@ public class HomePageCentraleControl extends GlobalData {
         startClock();
         AggiornaInventarioControl aggiorna= new AggiornaInventarioControl();
         aggiorna.aggiornaInventario();
+        CreaSpedizioneControl crea = new CreaSpedizioneControl();
+        crea.creaSpedizione();
     }
 
 

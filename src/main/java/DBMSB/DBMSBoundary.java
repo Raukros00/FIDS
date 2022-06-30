@@ -828,6 +828,29 @@ public class DBMSBoundary extends GlobalData{
         return null;
     }
 
+    public ArrayList<Contratto> getContrattiFarmacia(){
+        ArrayList<Contratto> listaContratti = new ArrayList<>();
+        DB_URL = "jdbc:mysql://101.60.191.210:3306/FIDS_Centrale?user=admin&password=Az-10694@";
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "SELECT * FROM Contratto";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Contratto contratto = new Contratto();
+                contratto.setIDContratto(resultSet.getInt("IDContratto"));
+                contratto.setPerioditicita(resultSet.getInt("perioditicita"));
+                contratto.setUltimaConsegna(String.valueOf(resultSet.getDate("UltimaConsegna")));
+                listaContratti.add(contratto);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+        return listaContratti;
+    }
+
     public boolean verificaEmail(String email){
         DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try {
