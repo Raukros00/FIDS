@@ -106,6 +106,8 @@ public class HomePageCentraleControl extends GlobalData {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("Segnalazioni.fxml"));
         Parent root = loader.load();
+        SegnalazioniControl segnalazioniControl=loader.getController();
+        segnalazioniControl.setSegnalazioni();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Segnalazioni");
         stage.setScene(new Scene(root));

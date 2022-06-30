@@ -1189,6 +1189,31 @@ public class DBMSBoundary extends GlobalData{
         return null;
     }
 
+    public ArrayList<Segnalazione> getSegnalazioni(){
+
+        ArrayList<Segnalazione> listaSegnalazioni=new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stat = conn.createStatement();
+            String sql = "SELECT * FROM Segnalazione;";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Segnalazione s=new Segnalazione();
+                s.setFKSpedizione(resultSet.getInt("FKSpedizione"));
+                s.setDescrizione(resultSet.getString("descrizione"));
+                s.setFKUtente(resultSet.getInt("FKUtente"));
+                listaSegnalazioni.add(s);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            cadutaConnessione();
+        }
+        return listaSegnalazioni;
+    }
+
+
+
     /*
     -------------------------------------------------------
     |                                                     |

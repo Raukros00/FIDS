@@ -15,6 +15,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class FirmaControl {
     @FXML
@@ -40,6 +44,9 @@ public class FirmaControl {
     Spedizione sp;
 
     private DBMSBoundary dbms = new DBMSBoundary();
+
+
+
 
     public void setPresets(Spedizione s){
         this.sp=s;
@@ -83,6 +90,14 @@ public class FirmaControl {
             } else {
 
                 System.out.println("USERNAME: " + username + "\nPASSWORD: " + password);
+                MessageDigest md5 = null;
+                try {
+                    md5 = MessageDigest.getInstance("MD5");
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
+                }
+                md5.update(StandardCharsets.UTF_8.encode(password));
+                password = String.format("%032x", new BigInteger(1, md5.digest()));
                 int flag = dbms.verificaFirma(username, password, sp.getIDSede(), sp.getIDSpedizione());
                 if (flag == -1) {
                     FXMLLoader loader = new FXMLLoader();
