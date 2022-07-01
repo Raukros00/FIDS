@@ -35,11 +35,11 @@ public class CreaSpedizioneControl extends GlobalData {
             DBMSBoundary dbms = new DBMSBoundary();
             LinkedList<Contratto> listaContratti= dbms.getContrattiFarmacia();
 
-            String toCompare=LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDate toCompare=LocalDate.parse(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             LinkedList<Contratto> daSpedire= new LinkedList<>();
             for(Contratto c : listaContratti){
-                String toCompare2=String.valueOf(LocalDate.parse(c.getUltimaConsegna()).plusDays(c.getPerioditicita()));
-                if(toCompare.equals(toCompare2)){
+                LocalDate toCompare2=LocalDate.parse(c.getUltimaConsegna()).plusDays(c.getPerioditicita());
+                if(toCompare.isAfter(toCompare2) || toCompare.isEqual(toCompare2)){
                     daSpedire.add(c);
                 }
             }
@@ -51,27 +51,27 @@ public class CreaSpedizioneControl extends GlobalData {
             for(Contratto c : daSpedire){
                 ordine.clear();
 
-                for(FarmacoContratto fc : c.getListaFarmaciContratto()){
-                    for(Farmaco fb : farmaciDaBanco){
-                        if(fc.getIDFarmaco() == fb.getIDFarmaco()) {
-                            for (Lotto l : fb.getListaLotti()) {
+                for(FarmacoContratto fc : c.getListaFarmaciContratto()) {
+                    if (c.getListaFarmaciContratto().size() > 0) {
+                        for (Farmaco fb : farmaciDaBanco) {
+                            if (fc.getIDFarmaco() == fb.getIDFarmaco()) {
+                                for (Lotto l : fb.getListaLotti()) {
 
-                                if (l.getQuantitaLotto() <= fc.getQuantitaRichiesta()){
-                                    ordine.add(new LottoSpedizione(fb.getNomeFarmaco(), l.getCodiceLotto(), fc.getQuantitaRichiesta(), l.getDataScadenza(), l.getDataScadenza(), l.getFKFarmaco()));
-                                    break;
+                                    if (l.getQuantitaLotto() <= fc.getQuantitaRichiesta()) {
+                                        ordine.add(new LottoSpedizione(fb.getNomeFarmaco(), l.getCodiceLotto(), fc.getQuantitaRichiesta(), l.getDataScadenza(), l.getDataScadenza(), l.getFKFarmaco()));
+                                        break;
+                                    } else if (l.getQuantitaLotto() > 0) {
+                                        ordine.add(new LottoSpedizione(fb.getNomeFarmaco(), l.getCodiceLotto(), fc.getQuantitaRichiesta(), l.getDataScadenza(), l.getDataScadenza(), l.getFKFarmaco()));
+                                        break;
+                                    }
+
                                 }
-
-                                else if(l.getQuantitaLotto() > 0){
-                                    ordine.add(new LottoSpedizione(fb.getNomeFarmaco(), l.getCodiceLotto(), fc.getQuantitaRichiesta(), l.getDataScadenza(), l.getDataScadenza(), l.getFKFarmaco()));
-                                    break;
-                                }
-
                             }
                         }
+                        int idSpedizione = dbms.insertNewSpedizione(c.getIDSede());
+                        dbms.inserisciLottiInSpedizione(idSpedizione, ordine);
                     }
                 }
-                int idSpedizione = dbms.insertNewSpedizione(c.getIDSede());
-                dbms.inserisciLottiInSpedizione(idSpedizione, ordine);
             }
 
 

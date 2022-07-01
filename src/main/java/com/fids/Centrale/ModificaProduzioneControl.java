@@ -45,6 +45,7 @@ public class ModificaProduzioneControl {
         }
         periodicitaProduzioneField.setValueFactory(periodValues);
         quantitaProduzioneField.setValueFactory(quantitValues);
+        idFarmaco=farmaco.getIDFarmaco();
     }
 
     public void modificaProduzione(ActionEvent event) throws IOException {

@@ -703,8 +703,6 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public LinkedList<Farmaco> getInventarioCentrale() {
-
-        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         LinkedList<Farmaco> listaFarmaci = new LinkedList<Farmaco>();
         Farmaco f = new Farmaco();
         Lotto l = new Lotto();
@@ -769,8 +767,6 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public LinkedList<Farmaco> getFarmaciDaBanco() {
-
-        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         LinkedList<Farmaco> listaFarmaci = new LinkedList<Farmaco>();
         Farmaco f = new Farmaco();
         Lotto l = new Lotto();
@@ -834,8 +830,6 @@ public class DBMSBoundary extends GlobalData{
         return listaFarmaci;
     }
     public LinkedList<Farmaco> getFarmaciNonDaBanco() {
-
-        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         LinkedList<Farmaco> listaFarmaci = new LinkedList<Farmaco>();
         Farmaco f = new Farmaco();
         Lotto l = new Lotto();
@@ -900,7 +894,6 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public ResultSet getSedi(){
-        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
@@ -971,7 +964,6 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public boolean verificaEmail(String email){
-        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
@@ -991,7 +983,6 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public ArrayList<String> getUsernames(){
-        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         ArrayList<String> usernames = new ArrayList<String>();
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -1009,7 +1000,6 @@ public class DBMSBoundary extends GlobalData{
         return(usernames);
     }
     public void insertUtente(String nome, String cognome, String dataNascita, String email, String username, String ruolo, String IDsede){
-        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         int ruoloVero=0;
         if(ruolo=="Farmacista"){
             ruoloVero=1;
@@ -1052,7 +1042,6 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public boolean modificaProduzione(int periodo,int quantita, int id){
-        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         int row;
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -1063,21 +1052,16 @@ public class DBMSBoundary extends GlobalData{
             preparedStatement.setInt   (2, quantita);
             preparedStatement.setInt   (3, id);
             row =preparedStatement.executeUpdate();
+            if(row==1)
+                return true;
         }catch (Exception e) {
             e.printStackTrace();
             cadutaConnessione();
-            return false;
         }
-        if(row==1){
-            return true;
-        }else{
-            return false;
-        }
+        return false;
     }
 
     public boolean aggiornaPassword(String password, String email){
-
-        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         int row;
         try{
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -1149,7 +1133,6 @@ public class DBMSBoundary extends GlobalData{
     }
 
     public void aggiungiLotto(ArrayList<Lotto> daInserire){
-        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         String sql="INSERT INTO Lotto(codiceLotto,dataScadenza,dataProduzione,quantitaLotto,FKFarmaco) VALUES";
         for(Lotto l : daInserire){
             sql=sql+"('"+l.getCodiceLotto()+"','"+l.getDataScadenza()+"','"+l.getDataProduzione()+"',"+l.getQuantitaLotto()+","+l.getFKFarmaco()+"),";
@@ -1276,7 +1259,6 @@ public class DBMSBoundary extends GlobalData{
         return listaFarmacie;
     }
     public ResultSet getPassword(){
-        DB_URL = "jdbc:mysql://101.58.82.185:3306/FIDS_Centrale?user=admin&password=Az-10694@";
         try{
 
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -1340,19 +1322,25 @@ public class DBMSBoundary extends GlobalData{
 
         Double distanza = 0.0;
         int id;
-
+        int row=0;
         try{
-
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
             PreparedStatement preparedStatement;
             ResultSet resultSet;
             String sql;
-
             sql = "SELECT distanza FROM Sede WHERE IDSede=?";
             preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, IDSede);
             resultSet = preparedStatement.executeQuery();
+
+            String oggi = String.valueOf(LocalDate.now());
+            sql="UPDATE Contratto SET ultimaConsegna=? WHERE FKFarmacia=?";
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, oggi);
+            preparedStatement.setInt(2, IDSede);
+            row = preparedStatement.executeUpdate();
+            System.out.println("Ho creato una spedizione per la farmacia con ID: "+ IDSede);
 
             if(resultSet.next()) {
                 distanza = resultSet.getDouble("distanza");
@@ -1360,10 +1348,6 @@ public class DBMSBoundary extends GlobalData{
                 System.out.println("ID SP:" + id);
                 return id;
             }
-
-
-
-
         }
 
         catch (Exception e){
@@ -1476,9 +1460,4 @@ public class DBMSBoundary extends GlobalData{
         }
         return -1;
     }
-
-
-
-
-
 }

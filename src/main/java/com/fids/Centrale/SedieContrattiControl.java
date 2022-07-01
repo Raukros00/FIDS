@@ -11,14 +11,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class SedieContrattiControl {
@@ -35,9 +33,31 @@ public class SedieContrattiControl {
     private TableColumn<Farmacia, String> indirizzoCol;
     @FXML
     private TableColumn<Farmacia, Farmacia> modificaCol;
+    @FXML
+    private TextField nomeField;
+    @FXML
+    private ChoiceBox cittaBox;
+    @FXML
+    private TextField indirizzoField;
+    @FXML
+    public Button filtraButton;
+
+    private LinkedList<Farmacia> listaFarmacia=dbms.getFarmacie();
 
     public void setDatiFarmacia(){
-        LinkedList<Farmacia> listaFarmacia = dbms.getFarmacie();
+        ArrayList<String> citta = new ArrayList<>();
+        citta.add("a");
+        for(Farmacia f : listaFarmacia){
+            boolean add=true;
+            for(String s : citta){
+                if(f.getCitta().equals(s))
+                    add=false;
+            }
+            if(add){
+                citta.add(f.getCitta());
+                cittaBox.getItems().add(f.getCitta());
+            }
+        }
         stampaFarmacia(listaFarmacia);
     }
 
@@ -81,6 +101,19 @@ public class SedieContrattiControl {
         listaSediTable.setItems(FXCollections.observableArrayList(listaFarmacia));
     }
 
+    @FXML
+    private void applicaFiltro(ActionEvent event) throws IOException{
+        LinkedList<Farmacia> filteredList=new LinkedList<>();
+        String nome=nomeField.getText().toLowerCase();
+        String citta=String.valueOf(cittaBox.getValue());
+        if(citta==null) citta="";
+        String indirizzo=indirizzoField.getText().toLowerCase();
+        for(Farmacia f: listaFarmacia){
+            if(f.getNomeSede().toLowerCase().contains(nome) && f.getCitta().toLowerCase().contains(citta) && f.getIndirizzoSede().toLowerCase().contains(indirizzo))
+                filteredList.add(f);
+        }
+        stampaFarmacia(filteredList);
+    }
     public void homePageCentrale(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("HomePageCentrale.fxml"));

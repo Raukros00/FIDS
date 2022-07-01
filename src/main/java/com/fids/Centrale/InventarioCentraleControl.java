@@ -46,7 +46,7 @@ public class InventarioCentraleControl {
     @FXML
     private DatePicker dataDiScadenzaField;
     @FXML
-    private Button filtraButton;
+    public Button filtraButton;
     private DBMSBoundary dbms = new DBMSBoundary();
     LinkedList<Farmaco> listaFarmaci = new LinkedList<>();
 

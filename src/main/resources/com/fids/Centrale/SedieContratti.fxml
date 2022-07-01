@@ -26,7 +26,7 @@
             <TextField fx:id="nomeField" layoutX="65.0" layoutY="55.0" />
             <ChoiceBox fx:id="cittaBox" layoutX="356.0" layoutY="55.0" prefWidth="150.0" />
             <TextField fx:id="indirizzoField" layoutX="619.0" layoutY="55.0" />
-            <Button fx:id="filtraButton" layoutX="890.0" layoutY="55.0" mnemonicParsing="false" text="Filtra" />
+            <Button fx:id="filtraButton" layoutX="890.0" layoutY="55.0" mnemonicParsing="false" onAction="#applicaFiltro" text="Filtra" />
          </children>
       </Pane>
    </top>
