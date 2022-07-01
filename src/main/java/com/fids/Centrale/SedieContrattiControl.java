@@ -47,6 +47,7 @@ public class SedieContrattiControl {
     public void setDatiFarmacia(){
         ArrayList<String> citta = new ArrayList<>();
         citta.add("a");
+        cittaBox.getItems().add("");
         for(Farmacia f : listaFarmacia){
             boolean add=true;
             for(String s : citta){
@@ -105,15 +106,25 @@ public class SedieContrattiControl {
     private void applicaFiltro(ActionEvent event) throws IOException{
         LinkedList<Farmacia> filteredList=new LinkedList<>();
         String nome=nomeField.getText().toLowerCase();
-        String citta=String.valueOf(cittaBox.getValue());
-        if(citta==null) citta="";
+        String citta;
+        if(cittaBox.getValue()==null){
+            citta="";
+        } else{
+            citta=String.valueOf(cittaBox.getValue());
+        }
         String indirizzo=indirizzoField.getText().toLowerCase();
+        System.out.println("nome "+nome+" citta "+citta+" indirizzo "+ indirizzo);
+
         for(Farmacia f: listaFarmacia){
-            if(f.getNomeSede().toLowerCase().contains(nome) && f.getCitta().toLowerCase().contains(citta) && f.getIndirizzoSede().toLowerCase().contains(indirizzo))
+            System.out.println(nome + f.getNomeSede() + f.getNomeSede().toLowerCase().contains(nome));
+            if(f.getNomeSede().toLowerCase().contains(nome) && f.getCitta().contains(citta) && f.getIndirizzoSede().toLowerCase().contains(indirizzo)){
                 filteredList.add(f);
+
+            }
         }
         stampaFarmacia(filteredList);
     }
+
     public void homePageCentrale(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("HomePageCentrale.fxml"));

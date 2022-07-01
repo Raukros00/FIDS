@@ -5,6 +5,7 @@ import Entity.Utente;
 import com.fids.Centrale.HomePageCentraleControl;
 import com.fids.Corriere.HomePageCorriereControl;
 import com.fids.Farmacia.HomeFarmaciaControl;
+import com.fids.SystemControl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -106,6 +107,9 @@ public class AccessControl {
                             stage.setTitle("HomePage Centrale");
                             stage.setScene(new Scene(root));
                             stage.show();
+                            SystemControl systemControl=new SystemControl();
+                            systemControl.aggiornaInventario();
+                            systemControl.creaSpedizione();
                         break;
 
                         case 3:

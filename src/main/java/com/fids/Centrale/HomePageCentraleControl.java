@@ -64,10 +64,10 @@ public class HomePageCentraleControl extends GlobalData {
         NUM_SEGNALAZIONI=dbms.richiediNumSegnalazioni();
         numSegnalazioniLabel.setText(String.valueOf(NUM_SEGNALAZIONI));
         startClock();
-        AggiornaInventarioControl aggiorna= new AggiornaInventarioControl();
-        aggiorna.aggiornaInventario();
-        CreaSpedizioneControl crea = new CreaSpedizioneControl();
-        crea.creaSpedizione();
+        //AggiornaInventarioControl aggiorna= new AggiornaInventarioControl();
+        //aggiorna.aggiornaInventario();
+        //CreaSpedizioneControl crea = new CreaSpedizioneControl();
+        //crea.creaSpedizione();
     }
 
 
