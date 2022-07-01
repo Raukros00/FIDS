@@ -45,7 +45,7 @@ public class AggiungiOrdineControl extends GlobalData {
 
     public void setDatiOrdine() {
 
-        listaFarmaciInVendita = dbms.getInventarioCentrale();
+        listaFarmaciInVendita = dbms.getFarmaciNonDaBanco();
         listaFarmaci = listaFarmaciInVendita;
         nomeCol.setCellValueFactory(new PropertyValueFactory<Farmaco, String>("nomeFarmaco"));
         quantitaCol.setCellValueFactory(new PropertyValueFactory<Farmaco, Integer>("quantitaFarmacoInt"));
@@ -197,6 +197,20 @@ public class AggiungiOrdineControl extends GlobalData {
             stage.setTitle("Avviso");
             stage.setScene(scene);
             stage.show();
+/*
+            KINGGGGGGGGGGGGGGGGGGGGG
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(ListaSpedizioniControl.class.getResource("ListaSpedizioniFarmacia.fxml"));
+            Parent root = loader.load();
+            ListaSpedizioniControl homeFControl = loader.getController();
+            homeFControl.setDatiOrdini(ID_FARMACIA);
+            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("Lista Ordini");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+ */
 
 
         }

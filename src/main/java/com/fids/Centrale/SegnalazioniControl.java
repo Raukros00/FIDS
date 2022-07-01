@@ -3,6 +3,9 @@ package com.fids.Centrale;
 import Entity.GlobalData;
 import Entity.Segnalazione;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -30,6 +33,8 @@ public class SegnalazioniControl extends GlobalData {
     @FXML
     private Button avantiButton;
     @FXML
+    private Button indietroButton;
+    @FXML
     private Button segnaComeLettoButton;
     @FXML
     private TextFlow segnalazioniField;
@@ -50,22 +55,37 @@ public class SegnalazioniControl extends GlobalData {
         }
 
     }
-    public void segnalazioneLetta(ActionEvent event)throws IOException{
-        int row= dbms.deleteSegnalazione(listaSegnalazioni.get(i).getFKSpedizione());
-        if(row==1) {
-            NUM_SEGNALAZIONI--;
-            listaSegnalazioni.remove(i);
-            i=(i+1)%listaSegnalazioni.size();
+    public void segnalazioneLetta(ActionEvent event)throws IOException {
+        if(NUM_SEGNALAZIONI != 0) {
+            int row = dbms.deleteSegnalazione(listaSegnalazioni.get(i).getFKSpedizione());
+            if (row == 1) {
+                NUM_SEGNALAZIONI--;
+                listaSegnalazioni.remove(i);
+                if(!listaSegnalazioni.isEmpty())
+                    i = (i + 1) % listaSegnalazioni.size();
+                setSegnalazioni();
+            }
+        }
+    }
+    public void segnalazioneSuccessiva(ActionEvent event)throws IOException {
+        if (NUM_SEGNALAZIONI != 0) {
+            i = (i + 1) % listaSegnalazioni.size();
             setSegnalazioni();
         }
     }
-
-    public void segnalazioneSuccessiva(ActionEvent event)throws IOException{
-        i=(i+1)%listaSegnalazioni.size();
-        setSegnalazioni();
+    public void homePageCentrale(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("HomePageCentrale.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("HomePage Centrale");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
-
 }
+
+
+
 
 
 
