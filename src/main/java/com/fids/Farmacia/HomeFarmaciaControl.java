@@ -6,6 +6,7 @@ import Entity.GlobalData;
 import Entity.Utente;
 import com.fids.AccessApplication;
 import com.fids.Login.ModificaPasswordControl;
+import com.fids.PopUp.OffsetControl;
 import com.fids.PopUp.PopUpControl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -19,10 +20,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 
 public class HomeFarmaciaControl extends GlobalData{
@@ -49,6 +53,7 @@ public class HomeFarmaciaControl extends GlobalData{
     @FXML
     private Label cittaLabel;
     @FXML Label time;
+    @FXML Label dateLabel;
     private Utente user;
     private Farmacia farmacia;
     private Calendar cal;
@@ -203,13 +208,20 @@ public class HomeFarmaciaControl extends GlobalData{
 
                 cal = Calendar.getInstance();
                 minute = cal.get(Calendar.MINUTE);
-                hour = cal.get(Calendar.HOUR);
-                am_pm = (cal.get(Calendar.AM_PM) == 0) ? "AM" : "PM";
-                if(am_pm=="PM")
-                    hour=hour+12;
-                time.setText(String.format("%02d : %02d", hour, minute));
+                if(cal.get(Calendar.HOUR_OF_DAY)+OFFSETHOUR>=24){
+                    OFFSETDAY+=(cal.get(Calendar.HOUR_OF_DAY)+OFFSETHOUR)/24;
+                }
+                HOUR = (cal.get(Calendar.HOUR_OF_DAY)+OFFSETHOUR)%24;
+                time.setText(String.format("%02d : %02d", HOUR, minute));
 
-                if(hour >= 20 && NUM_CONSEGNE > 0 && !CHECKHOURS){
+                String dt = LocalDate.now().toString();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Calendar c = Calendar.getInstance();
+                c.add(Calendar.DATE, OFFSETDAY);
+                dt = sdf.format(c.getTime());
+                DAY=dt;
+                dateLabel.setText(dt);
+                if(HOUR >= 20 && NUM_CONSEGNE > 0 && !CHECKHOURS){
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(PopUpControl.class.getResource("error.fxml"));
                     Parent root = null;
@@ -229,9 +241,22 @@ public class HomeFarmaciaControl extends GlobalData{
                 }
 
             }
-        }), new KeyFrame(Duration.seconds(60)));
+        }), new KeyFrame(Duration.seconds(3)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+    }
+
+    public void offset(MouseEvent mouseEvent) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(OffsetControl.class.getResource("Offset.fxml"));
+        Parent root = loader.load();
+        OffsetControl offsetControl = loader.getController();
+        offsetControl.setPresets();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Offset");
+        stage.setScene(scene);
+        stage.show();
     }
 }
 

@@ -5,6 +5,7 @@ import Entity.GlobalData;
 import Entity.Utente;
 import com.fids.AccessApplication;
 import com.fids.Farmacia.InventarioFarmaciaControl;
+import com.fids.PopUp.OffsetControl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -127,6 +129,19 @@ public class HomePageCorriereControl extends GlobalData {
         }), new KeyFrame(Duration.seconds(3)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+    }
+
+    public void offset(MouseEvent mouseEvent) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(OffsetControl.class.getResource("Offset.fxml"));
+        Parent root = loader.load();
+        OffsetControl offsetControl = loader.getController();
+        offsetControl.setPresets();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Offset");
+        stage.setScene(scene);
+        stage.show();
     }
 
 }
