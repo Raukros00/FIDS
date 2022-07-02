@@ -79,7 +79,7 @@
                         <Font size="17.0" />
                      </font>
                   </Label>
-                  <Button fx:id="credenzialiButton" mnemonicParsing="false" onAction="#aggiornaCredenziali" prefHeight="31.0" prefWidth="404.0" style="-fx-background-color: #2BEA97; -fx-background-radius: 8;" text="Modifica" textFill="WHITE" GridPane.rowIndex="4">
+                  <Button fx:id="credenzialiButton" mnemonicParsing="false" onAction="#aggiornaCredenziali" prefHeight="31.0" prefWidth="404.0" style="-fx-background-color: #2BEA97; -fx-background-radius: 8; -fx-cursor: hand;" text="Modifica" textFill="WHITE" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="20.0" />
                      </GridPane.margin>
@@ -110,7 +110,7 @@
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-            <Button fx:id="backHome" mnemonicParsing="false" onAction="#backHome" style="-fx-background-color: #206777;" text="Indietro" textFill="WHITE">
+            <Button fx:id="backHome" mnemonicParsing="false" onAction="#backHome" style="-fx-background-color: #206777; -fx-cursor: hand;" text="Indietro" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.DettagliControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.DettagliControl">
    <center>
       <TableView fx:id="farmaciTable" prefHeight="277.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <columns>
@@ -19,7 +19,7 @@
    <bottom>
       <BorderPane prefHeight="68.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <center>
-            <Button fx:id="okButton" mnemonicParsing="false" onAction="#closePopUp" style="-fx-background-color: #206777; -fx-background-radius: 8;" text="Chiudi" textFill="WHITE" BorderPane.alignment="CENTER">
+            <Button fx:id="okButton" mnemonicParsing="false" onAction="#closePopUp" style="-fx-background-color: #206777; -fx-background-radius: 8; -fx-cursor: hand;" text="Chiudi" textFill="WHITE" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>

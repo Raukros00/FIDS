@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.ModificaContrattoCentraleControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.ModificaContrattoCentraleControl">
    <center>
       <TableView fx:id="contrattoFarmaciTable" prefHeight="518.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
          <columns>
@@ -22,7 +22,7 @@
    <bottom>
       <BorderPane prefHeight="89.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
          <right>
-            <Button fx:id="aggiornaButton" mnemonicParsing="false" onAction="#updateFarmaciContratto" prefHeight="64.0" prefWidth="527.0" style="-fx-background-color: #2BEA97; -fx-background-radius: 8;" text="Aggiorna Contratto" textFill="WHITE" BorderPane.alignment="CENTER">
+            <Button fx:id="aggiornaButton" mnemonicParsing="false" onAction="#updateFarmaciContratto" prefHeight="64.0" prefWidth="527.0" style="-fx-background-color: #2BEA97; -fx-background-radius: 8; -fx-cursor: hand;" text="Aggiorna Contratto" textFill="WHITE" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="26.0" />
                </font>

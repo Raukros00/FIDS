@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.ModificaProduzioneControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.ModificaProduzioneControl">
    <right>
       <BorderPane prefHeight="328.0" prefWidth="324.0" BorderPane.alignment="CENTER">
          <center>
@@ -91,7 +91,7 @@
    <bottom>
       <BorderPane prefHeight="105.0" prefWidth="675.0" BorderPane.alignment="CENTER">
          <center>
-            <Button fx:id="modificaButton" mnemonicParsing="false" onAction="#modificaProduzione" prefHeight="50.0" prefWidth="694.0" style="-fx-background-radius: 8; -fx-background-color: #2BEA97;" text="Modifica" textFill="WHITE" BorderPane.alignment="CENTER">
+            <Button fx:id="modificaButton" mnemonicParsing="false" onAction="#modificaProduzione" prefHeight="50.0" prefWidth="694.0" style="-fx-background-radius: 8; -fx-background-color: #2BEA97; -fx-cursor: hand;" text="Modifica" textFill="WHITE" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>

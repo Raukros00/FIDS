@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.SegnalazioniControl">
-   <children>
-      <TextFlow fx:id="segnalazioniField" layoutX="-1.0" layoutY="41.0" prefHeight="493.0" prefWidth="1050.0" />
-      <Button fx:id="avantiButton" layoutX="718.0" layoutY="567.0" mnemonicParsing="false" onAction="#segnalazioneSuccessiva" text="Avanti" />
-      <Button fx:id="segnaComeLettoButton" layoutX="189.0" layoutY="567.0" mnemonicParsing="false" onAction="#segnalazioneLetta" text="Segna come letto" />
-      <Button fx:id="indietroButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#homePageCentrale" text="Indietro" />
-   </children>
-</Pane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Centrale.SegnalazioniControl">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+            <Button fx:id="indietroButton" mnemonicParsing="false" onAction="#homePageCentrale" style="-fx-background-color: #206777; -fx-cursor: hand;" text="Indietro" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+        </items>
+      </ToolBar>
+   </top>
+   <center>
+      <TextFlow fx:id="segnalazioniField" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <BorderPane prefHeight="76.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
+         <left>
+            <Button fx:id="segnaComeLettoButton" mnemonicParsing="false" onAction="#segnalazioneLetta" prefHeight="31.0" prefWidth="180.0" style="-fx-background-color: #2BEA97; -fx-background-radius: 8;" text="Segna come letto" textFill="WHITE" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="60.0" />
+               </BorderPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </left>
+         <right>
+            <Button fx:id="avantiButton" mnemonicParsing="false" onAction="#segnalazioneSuccessiva" prefHeight="31.0" prefWidth="180.0" style="-fx-background-color: #2BEA97; -fx-background-radius: 8;" text="Avanti" textFill="WHITE" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets right="60.0" />
+               </BorderPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </right>
+      </BorderPane>
+   </bottom>
+</BorderPane>

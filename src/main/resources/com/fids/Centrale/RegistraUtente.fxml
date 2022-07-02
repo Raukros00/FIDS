@@ -35,7 +35,7 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <Button fx:id="confermaRegistraButton" alignment="CENTER" mnemonicParsing="false" onAction="#registraUtente" prefHeight="44.0" prefWidth="466.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D;" text="Registra Utente" textAlignment="CENTER" textFill="WHITE">
+                              <Button fx:id="confermaRegistraButton" alignment="CENTER" mnemonicParsing="false" onAction="#registraUtente" prefHeight="44.0" prefWidth="466.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Registra Utente" textAlignment="CENTER" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="20.0" />
                                  </font>
