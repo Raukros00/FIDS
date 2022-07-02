@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
@@ -15,14 +16,17 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.VenditaControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.VenditaControl">
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
             <Button fx:id="homeFarmaciaButton" mnemonicParsing="false" onAction="#homeFarmacia" style="-fx-background-color: #206777;" text="Indietro" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
-               </font></Button>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
         </items>
       </ToolBar>
    </top>
@@ -63,11 +67,17 @@
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <Button fx:id="venditaButton" layoutX="-4.0" layoutY="401.0" mnemonicParsing="false" onAction="#vendita" prefWidth="251.0" style="-fx-background-color: #21AD6D; -fx-background-radius: 8;" text="Vendi" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                      </children>
                   </Pane>

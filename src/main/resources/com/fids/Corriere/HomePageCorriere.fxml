@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -31,6 +32,9 @@
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button fx:id="modificaPasswordButton" mnemonicParsing="false" onAction="#modificaCredenziali" prefHeight="80.0" prefWidth="471.0" style="-fx-background-radius: 16; -fx-background-color: #21AD6D; -fx-cursor: hand;" text="Modifica &#10;Credenziali" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="2">
                <font>
@@ -39,11 +43,17 @@
                <GridPane.margin>
                   <Insets top="2.0" />
                </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="48.0" prefWidth="471.0" style="-fx-background-radius: 16; -fx-background-color: #206777; -fx-cursor: hand;" text="Esci&#10;" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
          <BorderPane.margin>
