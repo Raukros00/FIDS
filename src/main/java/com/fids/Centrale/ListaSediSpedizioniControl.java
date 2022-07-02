@@ -3,9 +3,6 @@ package com.fids.Centrale;
 import DBMSB.DBMSBoundary;
 import Entity.Farmacia;
 import Entity.GlobalData;
-import Entity.Spedizione;
-import com.fids.Corriere.FirmaControl;
-import com.fids.Corriere.ListaSpedizioniControl;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -14,12 +11,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class ListaSediSpedizioniControl extends GlobalData {
@@ -63,7 +62,6 @@ public class ListaSediSpedizioniControl extends GlobalData {
                 setGraphic(visualizzaButton);
 
                 visualizzaButton.setOnAction(event -> {
-                    System.out.println(listaSpedizioniSedi.size());
                     Farmacia fa = getTableRow().getItem();
                     ID_FARMACIA=fa.getIDFarmacia();
                     FXMLLoader loader = new FXMLLoader();

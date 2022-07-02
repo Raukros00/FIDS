@@ -389,7 +389,6 @@ public class DBMSBoundary extends GlobalData{
             preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, IDSpedizione);
             row = preparedStatement.executeUpdate();
-            System.out.println("MI HANNO ELIMINATO!");
 
         }catch(Exception e){
             e.printStackTrace();
@@ -434,7 +433,6 @@ public class DBMSBoundary extends GlobalData{
                     ls.setIDSpedizione(IDSpedizione);
                     ls.setCodiceLotto(resultSet.getString("FKLotto"));
                     ls.setIDFarmaco(resultSet.getInt("IDFarmaco"));
-                    System.out.println("GET NEW CONSEGNA" + ls.getIDFarmaco());
                     ls.setNomeFarmaco(resultSet.getString("nomeFarmaco"));
                     ls.setPrincipioAttivo(resultSet.getString("principioAttivo"));
                     ls.setQuantita(resultSet.getInt("quantita"));
@@ -458,7 +456,6 @@ public class DBMSBoundary extends GlobalData{
                     ls.setDataProduzione(resultSet.getString("dataProduzione"));
                     ls.setDataScadenza(resultSet.getString("dataScadenza"));
                     s.addLotto(ls);
-                    System.out.println("GET " + ls.getIDFarmaco());
 
                 }
             }
@@ -483,7 +480,6 @@ public class DBMSBoundary extends GlobalData{
             String sql;
             sql = "INSERT INTO Segnalazione (FKSpedizione, FKUtente, Descrizione) VALUES (?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            System.out.println(IDUtente + " ha scritto " + segnalazione);
             preparedStatement.setInt(1, IDSpedizione);
             preparedStatement.setInt(2, IDUtente);
             preparedStatement.setString(3, segnalazione);
@@ -517,7 +513,6 @@ public class DBMSBoundary extends GlobalData{
                 resultSet = preparedStatement.executeQuery();
 
                 if(!resultSet.next()){
-                    System.out.println("Il Farmaco " + ls.getIDFarmaco() + " non è presente in farmacia. ");
                     conn.close();
                     conn = DriverManager.getConnection(DB_URL);
                     stat = conn.createStatement();
@@ -662,7 +657,6 @@ public class DBMSBoundary extends GlobalData{
                 sql=sql.substring(0,sql.length()-1);
                 preparedStatement = conn.prepareStatement(sql);
                 row = preparedStatement.executeUpdate();
-                System.out.println(row + "Aggiunto farmaco");
             }
 
 
@@ -1114,7 +1108,6 @@ public class DBMSBoundary extends GlobalData{
                 DateTimeFormatter formatter= DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 LocalDate dataProduzione= LocalDate.parse(String.valueOf(LocalDate.parse(String.valueOf(resultSet.getDate("ultimaProduzione"))).plusDays(resultSet.getInt("periodicitaProduzione")).format(formatter)), formatter);
                 LocalDate oggiFinto=LocalDate.parse(day,formatter);
-                //System.out.println(oggiFinto+" è dopo "+ dataProduzione+"? "+(oggiFinto.isAfter(dataProduzione) || oggiFinto.isEqual(dataProduzione)));
                 if(oggiFinto.isAfter(dataProduzione) || oggiFinto.isEqual(dataProduzione)){
                     Farmaco f= new Farmaco();
                     f.setIDFarmaco(resultSet.getInt("IDFarmaco"));
@@ -1139,13 +1132,11 @@ public class DBMSBoundary extends GlobalData{
         }
         sql=sql.substring(0,sql.length()-1);
         sql=sql+";";
-        System.out.println(sql);
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             int row=preparedStatement.executeUpdate();
-            System.out.println("Sono stati inseriti "+row+" lotti");
             String currentData=LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             if(currentData.equals(DAY)) {
                 String ultimaProduzione=LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -1155,7 +1146,6 @@ public class DBMSBoundary extends GlobalData{
                 }
                 sql=sql.substring(0,sql.length()-1);
                 sql=sql+");";
-                System.out.println(sql);
                 preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.executeUpdate();
             }
@@ -1340,12 +1330,10 @@ public class DBMSBoundary extends GlobalData{
             preparedStatement.setString(1, oggi);
             preparedStatement.setInt(2, IDSede);
             row = preparedStatement.executeUpdate();
-            System.out.println("Ho creato una spedizione per la farmacia con ID: "+ IDSede);
 
             if(resultSet.next()) {
                 distanza = resultSet.getDouble("distanza");
                 id = creaSpedizione(IDSede, distanza);
-                System.out.println("ID SP:" + id);
                 return id;
             }
         }
@@ -1445,7 +1433,6 @@ public class DBMSBoundary extends GlobalData{
                         preparedStatement = conn.prepareStatement(sql);
                         preparedStatement.setInt(1, IDSpedizione);
                         int row = preparedStatement.executeUpdate();
-                        System.out.println(row);
                         return 1;
                     }
                 }else{

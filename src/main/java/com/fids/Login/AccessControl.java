@@ -73,7 +73,6 @@ public class AccessControl {
                 md5.update(StandardCharsets.UTF_8.encode(password));
                 password = String.format("%032x", new BigInteger(1, md5.digest()));
 
-                System.out.println("USERNAME: " + username + "\nPASSWORD: " + password);
                 user = dbms.verificaCredenziali(username, password);
                 if(user.getIDUtente() == -1){
                     errorLabel.setText("Password Errata!");

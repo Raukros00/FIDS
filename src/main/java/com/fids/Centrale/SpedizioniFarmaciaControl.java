@@ -5,6 +5,7 @@ import Entity.LottoSpedizione;
 import Entity.Spedizione;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,13 +17,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
-import java.util.Locale;
 
 public class SpedizioniFarmaciaControl extends ListaSediSpedizioniControl{
     @FXML
@@ -43,7 +40,6 @@ public class SpedizioniFarmaciaControl extends ListaSediSpedizioniControl{
     LinkedList<Spedizione> listaSpedizioni = new LinkedList<>();
 
     public void setDatiOrdini(){
-        System.out.println(listaSpedizioniSedi.size());
         for(Farmacia f: listaSpedizioniSedi){
             if(f.getIDFarmacia()==ID_FARMACIA)
                 listaSpedizioni=f.getListaSpedizioni();

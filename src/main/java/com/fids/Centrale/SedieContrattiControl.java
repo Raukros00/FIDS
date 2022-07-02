@@ -2,7 +2,6 @@ package com.fids.Centrale;
 
 import DBMSB.DBMSBoundary;
 import Entity.Farmacia;
-import Entity.Farmaco;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -113,10 +112,8 @@ public class SedieContrattiControl {
             citta=String.valueOf(cittaBox.getValue());
         }
         String indirizzo=indirizzoField.getText().toLowerCase();
-        System.out.println("nome "+nome+" citta "+citta+" indirizzo "+ indirizzo);
 
         for(Farmacia f: listaFarmacia){
-            System.out.println(nome + f.getNomeSede() + f.getNomeSede().toLowerCase().contains(nome));
             if(f.getNomeSede().toLowerCase().contains(nome) && f.getCitta().contains(citta) && f.getIndirizzoSede().toLowerCase().contains(indirizzo)){
                 filteredList.add(f);
 

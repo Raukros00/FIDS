@@ -214,7 +214,6 @@ public class ModificaPasswordControl extends GlobalData {
         FXMLLoader loader;
         Parent root;
         Stage stage;
-        System.out.println("RUOLO: " + RUOLO);
         switch(RUOLO) {
 
             case 1:
