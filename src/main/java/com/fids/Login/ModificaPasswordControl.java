@@ -242,7 +242,7 @@ public class ModificaPasswordControl extends GlobalData {
                     throw new RuntimeException(e);
                 }
                 HomePageCentraleControl homeCControl = loader.getController();
-                homeCControl.setUser(user);
+                homeCControl.setLabels();
                 stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                 stage.setTitle("HomePage Centrale");
                 stage.setScene(new Scene(root));
@@ -258,7 +258,7 @@ public class ModificaPasswordControl extends GlobalData {
                     throw new RuntimeException(e);
                 }
                 HomePageCorriereControl homeCoControl = loader.getController();
-                homeCoControl.setUser(user);
+                homeCoControl.setLabels();
                 stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                 stage.setTitle("HomePage Corriere");
                 stage.setScene(new Scene(root));
