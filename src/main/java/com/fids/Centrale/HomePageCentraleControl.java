@@ -52,7 +52,6 @@ public class HomePageCentraleControl extends GlobalData {
     private Calendar cal;
     private int minute;
     private int hour;
-    private String am_pm;
     DBMSBoundary dbms = new DBMSBoundary();
 
     public void setLabels() {

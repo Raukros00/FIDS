@@ -46,9 +46,7 @@ public class ListaSpedizioniControl {
 
 
     public void setField() {
-
         listaSpedizioni = dbms.getListaSpedizioni();
-        System.out.println(listaSpedizioni.size());
         stampaTabella(listaSpedizioni);
     }
 
@@ -106,9 +104,8 @@ public class ListaSpedizioniControl {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("HomePageCorriere.fxml"));
         Parent root = loader.load();
-       /* HomeFarmaciaControl homeFControl = loader.getController();
-        homeFControl.setLabels();
-        */
+        HomePageCorriereControl homeCoControl = loader.getController();
+        homeCoControl.setLabels();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Home Corriere");
         stage.setScene(new Scene(root));

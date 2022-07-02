@@ -1366,23 +1366,23 @@ public class DBMSBoundary extends GlobalData{
     |                                                     |
     -------------------------------------------------------
     */
-    public String richiediNumSpedizioni() {
+    public int richiediNumSpedizioni() {
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
-            String sql = "SELECT COUNT(IDSpedizione) AS 'NUM_SPEDIZIONI' FROM Spedizione;";
+            String sql = "SELECT COUNT(IDSpedizione) AS 'NUM_SPEDIZIONI' FROM Spedizione WHERE statoSpedizione='0';";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
-                return resultSet.getString("NUM_SPEDIZIONI");
+                return resultSet.getInt("NUM_SPEDIZIONI");
             }
         } catch (Exception e) {
             e.printStackTrace();
             cadutaConnessione();
         }
 
-        return null;
+        return 0;
     }
 
     public ArrayList<Spedizione> getListaSpedizioni() {
