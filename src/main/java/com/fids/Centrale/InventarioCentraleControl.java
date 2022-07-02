@@ -3,6 +3,7 @@ package com.fids.Centrale;
 import DBMSB.DBMSBoundary;
 import Entity.Farmaco;
 import Entity.Lotto;
+import com.fids.Farmacia.HomeFarmaciaControl;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -146,6 +147,8 @@ public class InventarioCentraleControl {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("HomePageCentrale.fxml"));
         Parent root = loader.load();
+        HomePageCentraleControl homeCControl = loader.getController();
+        homeCControl.setLabels();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("HomePage Centrale");
         stage.setScene(new Scene(root));

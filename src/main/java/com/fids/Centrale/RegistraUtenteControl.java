@@ -119,6 +119,8 @@ public class RegistraUtenteControl {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("HomePageCentrale.fxml"));
         Parent root = loader.load();
+        HomePageCentraleControl homeCControl = loader.getController();
+        homeCControl.setLabels();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("HomePage Centrale");
         stage.setScene(new Scene(root));

@@ -18,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -49,25 +48,35 @@ public class HomePageCentraleControl extends GlobalData {
     public Button spedizioniButton;
     @FXML
     public Button sediEContrattiButton;
-    @FXML
-    private VBox VBoxOffset;
     private Utente user;
     private Calendar cal;
     private int minute;
     private int hour;
     private String am_pm;
+    DBMSBoundary dbms = new DBMSBoundary();
 
-    public void setUser(Utente user) {
-        this.user = user;
-        DBMSBoundary dbms = new DBMSBoundary();
-        nomeCognomeLabel.setText( user.getNome() + " " + user.getCognome());
+    public void setLabels() {
+        nomeCognomeLabel.setText(NOMINATIVO);
         NUM_SEGNALAZIONI=dbms.richiediNumSegnalazioni();
         numSegnalazioniLabel.setText(String.valueOf(NUM_SEGNALAZIONI));
         startClock();
-        //AggiornaInventarioControl aggiorna= new AggiornaInventarioControl();
-        //aggiorna.aggiornaInventario();
-        //CreaSpedizioneControl crea = new CreaSpedizioneControl();
-        //crea.creaSpedizione();
+    }
+
+    public void setUser(Utente user) {
+        startClock();
+        this.user = user;
+        NUM_SEGNALAZIONI=dbms.richiediNumSegnalazioni();
+
+        NOMINATIVO = user.getNome() + " " + user.getCognome();
+        NOME = user.getNome();
+        COGNOME = user.getCognome();
+        ID_UTENTE = user.getIDUtente();
+        EMAIL = user.getEmail();
+        PASSWORD = user.getPassword();
+        RUOLO = user.getRuolo();
+
+        nomeCognomeLabel.setText(NOMINATIVO);
+        numSegnalazioniLabel.setText(String.valueOf(NUM_SEGNALAZIONI));
     }
 
 
