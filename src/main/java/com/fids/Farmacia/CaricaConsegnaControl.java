@@ -22,11 +22,13 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.time.format.DateTimeFormatter;
 
 public class CaricaConsegnaControl extends GlobalData {
     @FXML private TextArea noteField;
@@ -48,7 +50,6 @@ public class CaricaConsegnaControl extends GlobalData {
         listaLottiSpedizione = listaSpedizioni.getFirst().getListaLottiSpedizione();
 
         for(LottoSpedizione ls : listaLottiSpedizione)
-            System.out.println("CIAO " + ls.getIDFarmaco());
 
         nomeCol.setCellValueFactory(new PropertyValueFactory<LottoSpedizione, String>("nomeFarmaco"));
         codLottoCol.setCellValueFactory(new PropertyValueFactory<LottoSpedizione, String>("codiceLotto"));
@@ -56,11 +57,41 @@ public class CaricaConsegnaControl extends GlobalData {
 
         quantitaArrCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         quantitaArrCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<LottoSpedizione, Integer>>() {
+            boolean exist = false;
+            int newQ = 0;
             @Override
             public void handle(TableColumn.CellEditEvent<LottoSpedizione, Integer> event) {
                 LottoSpedizione newLS = event.getRowValue();
-                newLS.setQuantita(event.getNewValue());
-                listaNuoviFarmaci.add(new LottoSpedizione(newLS.getIDSpedizione(), newLS.getNomeFarmaco(), newLS.getPrincipioAttivo(), newLS.getCodiceLotto(), newLS.getDataProduzione(), newLS.getDataScadenza(), newLS.getQuantita(), newLS.getIDFarmaco()));
+
+                if (event.getNewValue() > event.getRowValue().getQuantita()) {
+                    newQ = event.getRowValue().getQuantita();
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+                    Parent root = null;
+                    try {
+                        root = loader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    PopUpControl popControl = loader.getController();
+                    popControl.setPopUp("Ha inserito una quantità maggiore!");
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setTitle("Avviso");
+                    stage.setScene(scene);
+                    stage.show();
+
+                } else {
+                    newQ = event.getNewValue();
+
+                    for (LottoSpedizione ls : listaNuoviFarmaci) {
+                        if (ls.getCodiceLotto() == newLS.getCodiceLotto())
+                            exist = true;
+                    }
+                    if (!exist)
+                        listaNuoviFarmaci.add(new LottoSpedizione(newLS.getIDSpedizione(), newLS.getNomeFarmaco(), newLS.getPrincipioAttivo(), newLS.getCodiceLotto(), newLS.getDataProduzione(), newLS.getDataScadenza(), newQ, newLS.getIDFarmaco()));
+
+                }
             }
         });
 
@@ -89,7 +120,6 @@ public class CaricaConsegnaControl extends GlobalData {
     }
 
     public void caricaOrdine(ActionEvent event) {
-
         String note = "";
         boolean edit = false;
         boolean segnala = false;
@@ -101,17 +131,18 @@ public class CaricaConsegnaControl extends GlobalData {
         for(LottoSpedizione newLS : listaNuoviFarmaci){
 
             while (lottiSIterator.hasNext()){
-                LottoSpedizione ls = lottiSIterator.next();if(newLS.getNomeFarmaco().equalsIgnoreCase(ls.getNomeFarmaco())){
-                    System.out.println("Carico farmaco ID: " + newLS.getIDFarmaco() + " Q: " + newLS.getQuantita() + " QR: " + ls.getQuantita());
+                LottoSpedizione ls = lottiSIterator.next();
+                if(newLS.getNomeFarmaco().equalsIgnoreCase(ls.getNomeFarmaco())){
 
                     if(newLS.getQuantita() == ls.getQuantita()){
                         lottiSIterator.remove();
+                        break;
                     }
-                    else if(!edit){
-                        ls.setQuantita(ls.getQuantita() - newLS.getQuantita());
-                        listaFarmaciRimanenti.add(ls);
+                    else {
+                        newLS.setQuantita(ls.getQuantita() - newLS.getQuantita());
+                        listaFarmaciRimanenti.add(newLS);
                         lottiSIterator.remove();
-                        edit = true;
+                        break;
                     }
                 }
             }
@@ -138,9 +169,10 @@ public class CaricaConsegnaControl extends GlobalData {
 
             if(segnala) {
                 LocalDateTime now = LocalDateTime.now();
-                String segnalazione = "Segnalaziona da: " + NOME_FARMACIA + "\nFarmacista: " + NOMINATIVO + "\nData e ora: " + String.valueOf(now) + "\n\nLOTTI MANCANTI: ";
+
+                String segnalazione = "Segnalaziona da: " + NOME_FARMACIA + "\nFarmacista: " + NOMINATIVO + "\nData e ora: " + String.valueOf(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))) + "\n\nLOTTI MANCANTI: ";
                 for(LottoSpedizione ls : listaFarmaciRimanenti){
-                    segnalazione += "\n" + ls.getCodiceLotto() + " " + ls.getQuantita();
+                    segnalazione += "\n" + ls.getNomeFarmaco() + " " + ls.getCodiceLotto() + " x" + ls.getQuantita();
                 }
                 segnalazione += "\n\nNOTE: " + note;
 
@@ -157,7 +189,7 @@ public class CaricaConsegnaControl extends GlobalData {
             if(note.isEmpty()) {
                 LocalDateTime now = LocalDateTime.now();
                 String segnalazione = "Segnalaziona da: " + NOME_FARMACIA + "\nFarmacista: " + NOMINATIVO + "\nData e ora: " + String.valueOf(now) +  "\n\nNOTE: " + note;
-           }
+            }
         }
 
         dbms.aggiornaInventarioFarmacia(ID_FARMACIA, listaNuoviFarmaci.getFirst().getIDSpedizione(), listaNuoviFarmaci);
@@ -179,7 +211,6 @@ public class CaricaConsegnaControl extends GlobalData {
         stage.showAndWait();
 
         NUM_CONSEGNE--;
-
         if(NUM_CONSEGNE > 0){
             listaSpedizioni.removeFirst();
             listaNuoviFarmaci.clear();
