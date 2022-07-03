@@ -64,7 +64,7 @@ public class DBMSBoundary extends GlobalData{
                     user.setCognome(resultSet.getString("cognome"));
                     user.setEmail(resultSet.getString("email"));
                     user.setRuolo(Integer.parseInt(resultSet.getString("ruolo")));
-                    user.setIDSede(Integer.parseInt(resultSet.getString("FKSede")));
+                    user.setIDSede(resultSet.getInt("FKSede"));
                     return user;
 
                 } else {
@@ -1006,7 +1006,7 @@ public class DBMSBoundary extends GlobalData{
             Connection conn = DriverManager.getConnection(DB_URL);
             Statement stat = conn.createStatement();
             if(ruoloVero==1) {
-                String sql = "INSERT INTO Utente(nome, cognome, dataNascita, email, username, password, ruolo, FKSede) VALUES( ? , ? , ? , ? , ? ,\"0000\",\"1\", ? );";
+                String sql = "INSERT INTO Utente(nome, cognome, dataNascita, email, username, password, ruolo, FKSede) VALUES( ? , ? , ? , ? , ? ,\"4a7d1ed414474e4033ac29ccb8653d9b\",\"1\", ? );";
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, nome);
                 preparedStatement.setString(2, cognome);
