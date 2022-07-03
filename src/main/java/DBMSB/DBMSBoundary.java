@@ -63,7 +63,7 @@ public class DBMSBoundary extends GlobalData{
                     user.setNome(resultSet.getString("nome"));
                     user.setCognome(resultSet.getString("cognome"));
                     user.setEmail(resultSet.getString("email"));
-                    user.setRuolo(Integer.parseInt(resultSet.getString("ruolo")));
+                    user.setRuolo(resultSet.getInt("ruolo"));
                     user.setIDSede(resultSet.getInt("FKSede"));
                     return user;
 
