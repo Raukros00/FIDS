@@ -64,8 +64,8 @@ public class RegistraUtenteControl {
         }
     }
     public void registraUtente(ActionEvent event) throws IOException{
-        String nome = nomeField.getText().toLowerCase();
-        String cognome = cognomeField.getText().toLowerCase();
+        String nome = nomeField.getText();
+        String cognome = cognomeField.getText();
         String email = emailField.getText().toLowerCase();
         String dataNascita=null;
         if(dataNascitaField.getValue()!=null)
@@ -90,7 +90,7 @@ public class RegistraUtenteControl {
                 stage.show();
             }else{
                 ArrayList<String> usernames = dbms.getUsernames();
-                String username=nome+"."+cognome;
+                String username=nome.toLowerCase()+"."+cognome.toLowerCase();
                 int count=0;
                 for (String u : usernames) {
                     if (u.toLowerCase().startsWith(username)){
