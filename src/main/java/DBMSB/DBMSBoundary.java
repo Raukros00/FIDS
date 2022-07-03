@@ -1017,7 +1017,7 @@ public class DBMSBoundary extends GlobalData{
                 int row = preparedStatement.executeUpdate();
                 // rows affected
             }else{
-                String sql = "INSERT INTO Utente(nome, cognome, dataNascita, email, username, password, ruolo, FKSede) VALUES( ? , ? , ? , ? , ? , \"0000\", ? , null);";
+                String sql = "INSERT INTO Utente(nome, cognome, dataNascita, email, username, password, ruolo, FKSede) VALUES( ? , ? , ? , ? , ? , \"4a7d1ed414474e4033ac29ccb8653d9b\", ? , null);";
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, nome);
                 preparedStatement.setString(2, cognome);
