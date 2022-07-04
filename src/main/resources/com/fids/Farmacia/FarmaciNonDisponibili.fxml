@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.FarmaciNonDisponibiliControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fids.Farmacia.FarmaciNonDisponibiliControl">
    <center>
       <TableView fx:id="farmaciTable" prefHeight="277.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="nomeCol" prefWidth="378.4000244140625" text="Nome Farmaco" />
-            <TableColumn fx:id="quantitaCol" prefWidth="56.800048828125" text="Quantità" />
-            <TableColumn fx:id="dataCol" prefWidth="166.39990234375" text="Data prossima produzione" />
+          <TableColumn fx:id="nomeCol" prefWidth="330.0" text="Nome Farmaco" />
+            <TableColumn fx:id="quantitaCol" prefWidth="73.0" text="Quantità" />
+            <TableColumn fx:id="dataCol" prefWidth="200.0" text="Data prossima produzione" />
         </columns>
       </TableView>
    </center>

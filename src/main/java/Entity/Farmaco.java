@@ -13,7 +13,7 @@ public class Farmaco {
     private int quantitaFarmacoInt;
     private int periodicitaProduzione;
     private int quantitaProduzione;
-    private String dataUltimaProduzione;
+    private String dataProduzione;
     private int validita;
     private LinkedList<Lotto> listaLotti = new LinkedList<Lotto>();
 
@@ -88,5 +88,8 @@ public class Farmaco {
     public int getQuantitaFarmacoInt() { return quantitaFarmacoInt; }
     public void setValidita(int validita ){ this.validita=validita; }
     public int getValidita(){ return validita;}
+
+    public void setDataProduzione(String dataProduzione) { this.dataProduzione = dataProduzione; }
+    public String getDataProduzione() {  return dataProduzione; }
 
 }

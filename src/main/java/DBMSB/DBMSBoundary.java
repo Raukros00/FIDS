@@ -724,6 +724,9 @@ public class DBMSBoundary extends GlobalData{
                     f.setPeriodicitaProduzione(resultSet.getInt("periodicitaProduzione"));
                     f.setQuantitaProduzione(resultSet.getInt("quantitaProduzione"));
 
+                    LocalDate nuovaProduzione = LocalDate.parse(resultSet.getString("ultimaProduzione")).plusDays(f.getPeriodicitaProduzione());
+                    f.setDataProduzione(String.valueOf(nuovaProduzione));
+
                     IDFarmaco = resultSet.getInt("IDFarmaco");
                     l = new Lotto();
                     l.setCodiceLotto(resultSet.getString("codiceLotto"));
@@ -850,6 +853,9 @@ public class DBMSBoundary extends GlobalData{
                     f.setTipologia(resultSet.getString("tipologia"));
                     f.setPeriodicitaProduzione(resultSet.getInt("periodicitaProduzione"));
                     f.setQuantitaProduzione(resultSet.getInt("quantitaProduzione"));
+
+                    LocalDate nuovaProduzione = LocalDate.parse(resultSet.getString("ultimaProduzione")).plusDays(f.getPeriodicitaProduzione());
+                    f.setDataProduzione(String.valueOf(nuovaProduzione));
 
                     IDFarmaco = resultSet.getInt("IDFarmaco");
                     l = new Lotto();

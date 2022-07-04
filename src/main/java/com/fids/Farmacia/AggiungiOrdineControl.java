@@ -196,21 +196,17 @@ public class AggiungiOrdineControl extends GlobalData {
             Stage stage = new Stage();
             stage.setTitle("Avviso");
             stage.setScene(scene);
-            stage.show();
-/*
-            KINGGGGGGGGGGGGGGGGGGGGG
+            stage.showAndWait();
 
-            FXMLLoader loader = new FXMLLoader();
+            loader = new FXMLLoader();
             loader.setLocation(ListaSpedizioniControl.class.getResource("ListaSpedizioniFarmacia.fxml"));
-            Parent root = loader.load();
+            root = loader.load();
             ListaSpedizioniControl homeFControl = loader.getController();
             homeFControl.setDatiOrdini(ID_FARMACIA);
-            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setTitle("Lista Ordini");
             stage.setScene(new Scene(root));
             stage.show();
-
- */
 
 
         }

@@ -23,6 +23,7 @@ public class FarmaciNonDisponibiliControl {
 
         nomeCol.setCellValueFactory(new PropertyValueFactory<Farmaco, String>("nomeFarmaco"));
         quantitaCol.setCellValueFactory(new PropertyValueFactory<Farmaco, Integer>("quantitaFarmacoInt"));
+        dataCol.setCellValueFactory(new PropertyValueFactory<Farmaco, String>("dataProduzione"));
         farmaciTable.setItems(FXCollections.observableArrayList(listaFarmaci));
 
     }

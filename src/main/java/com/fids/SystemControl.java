@@ -12,9 +12,9 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 public class SystemControl extends GlobalData{
-    private String filePathInventario="./src/main/resources/com/fids/Centrale/AggiornaInventario.txt";
+    private String filePathInventario="./AggiornaInventario.txt";
     private File fileInventario = new File(filePathInventario);
-    private String filePathSpedizione="./src/main/resources/com/fids/Centrale/CreaSpedizione.txt";
+    private String filePathSpedizione="./CreaSpedizione.txt";
     private File fileSpedizione = new File(filePathSpedizione);
     LinkedList<Farmaco> farmaciDaBanco = new LinkedList<Farmaco>();
     public void aggiornaInventario() {

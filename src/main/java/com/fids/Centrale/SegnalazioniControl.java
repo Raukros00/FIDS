@@ -1,32 +1,23 @@
 package com.fids.Centrale;
 
+import DBMSB.DBMSBoundary;
 import Entity.GlobalData;
 import Entity.Segnalazione;
-import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.scene.paint.*;
-import javafx.scene.text.*;
 
-import javafx.scene.layout.*;
-import javafx.scene.shape.*;
-import DBMSB.DBMSBoundary;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.paint.Color;
-
-import javax.swing.*;
 import java.io.IOException;
-import java.sql.*;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
 
 public class SegnalazioniControl extends GlobalData {
 
@@ -41,17 +32,21 @@ public class SegnalazioniControl extends GlobalData {
     private Text text;
     private int i;
     DBMSBoundary dbms=new DBMSBoundary();
+
     private ArrayList<Segnalazione> listaSegnalazioni=dbms.getSegnalazioni();
 
     public void setSegnalazioni() {
+
+
         segnalazioniField.getChildren().clear();
         if(NUM_SEGNALAZIONI==0){
             text = new Text("Non ci sono segnalazioni");
             segnalazioniField.getChildren().add(text);
         } else {
             String segnalazione = listaSegnalazioni.get(i).getDescrizione();
-            text = new Text(segnalazione);
-            segnalazioniField.getChildren().add(text);
+            Text s = new Text(segnalazione);
+            s.setFont(Font.font("Helvetica", FontWeight.BOLD, 23));
+            segnalazioniField.getChildren().add(s);
         }
 
     }

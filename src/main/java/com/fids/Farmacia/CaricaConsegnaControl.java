@@ -63,33 +63,56 @@ public class CaricaConsegnaControl extends GlobalData {
             public void handle(TableColumn.CellEditEvent<LottoSpedizione, Integer> event) {
                 LottoSpedizione newLS = event.getRowValue();
 
-                if (event.getNewValue() > event.getRowValue().getQuantita()) {
-                    newQ = event.getRowValue().getQuantita();
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(PopUpControl.class.getResource("error.fxml"));
-                    Parent root = null;
-                    try {
-                        root = loader.load();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    PopUpControl popControl = loader.getController();
-                    popControl.setPopUp("Ha inserito una quantità maggiore!");
-                    Scene scene = new Scene(root);
-                    Stage stage = new Stage();
-                    stage.setTitle("Avviso");
-                    stage.setScene(scene);
-                    stage.show();
-
+                if (event.getNewValue() > event.getRowValue().getQuantita() || event.getNewValue() < 0) {
+                   if(event.getNewValue() > event.getRowValue().getQuantita()) {
+                       newQ = event.getRowValue().getQuantita();
+                       FXMLLoader loader = new FXMLLoader();
+                       loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+                       Parent root = null;
+                       try {
+                           root = loader.load();
+                       } catch (IOException e) {
+                           throw new RuntimeException(e);
+                       }
+                       PopUpControl popControl = loader.getController();
+                       popControl.setPopUp("Ha inserito una quantità maggiore!");
+                       Scene scene = new Scene(root);
+                       Stage stage = new Stage();
+                       stage.setTitle("Avviso");
+                       stage.setScene(scene);
+                       stage.show();
+                   }
+                   else if(event.getNewValue() < 0){
+                       newQ = event.getRowValue().getQuantita();
+                       FXMLLoader loader = new FXMLLoader();
+                       loader.setLocation(PopUpControl.class.getResource("error.fxml"));
+                       Parent root = null;
+                       try {
+                           root = loader.load();
+                       } catch (IOException e) {
+                           throw new RuntimeException(e);
+                       }
+                       PopUpControl popControl = loader.getController();
+                       popControl.setPopUp("Ha inserito una quantità negativa!");
+                       Scene scene = new Scene(root);
+                       Stage stage = new Stage();
+                       stage.setTitle("Avviso");
+                       stage.setScene(scene);
+                       stage.show();
+                   }
                 } else {
                     newQ = event.getNewValue();
 
                     for (LottoSpedizione ls : listaNuoviFarmaci) {
-                        if (ls.getCodiceLotto() == newLS.getCodiceLotto())
+                        if (ls.getCodiceLotto() == newLS.getCodiceLotto()){
                             exist = true;
+                            ls.setQuantita(newQ);
+                        }
+
                     }
                     if (!exist)
                         listaNuoviFarmaci.add(new LottoSpedizione(newLS.getIDSpedizione(), newLS.getNomeFarmaco(), newLS.getPrincipioAttivo(), newLS.getCodiceLotto(), newLS.getDataProduzione(), newLS.getDataScadenza(), newQ, newLS.getIDFarmaco()));
+
 
                 }
             }

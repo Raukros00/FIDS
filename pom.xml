@@ -58,6 +58,25 @@
             <version>8.0.29</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics </artifactId>
+            <version>18</version>
+            <classifier>win</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics </artifactId>
+            <version>18</version>
+            <classifier>linux</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics </artifactId>
+            <version>18</version>
+            <classifier>mac</classifier>
+        </dependency>
+
     </dependencies>
 
 
@@ -82,7 +101,8 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.fids.fids/com.fids.AccessApplication</mainClass>
+                            <mainClass>com.fids.fids/com.fids.GuiStarter</mainClass>
+                            <!-- <mainClass>com.fids.fids/com.fids.AccessApplication</mainClass> -->
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
