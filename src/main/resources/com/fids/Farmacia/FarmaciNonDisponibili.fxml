@@ -13,8 +13,9 @@
    <center>
       <TableView fx:id="farmaciTable" prefHeight="277.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="nomeCol" prefWidth="446.0" text="Nome Farmaco" />
-            <TableColumn fx:id="quantitaCol" prefWidth="153.0" text="Quantità" />
+          <TableColumn fx:id="nomeCol" prefWidth="378.4000244140625" text="Nome Farmaco" />
+            <TableColumn fx:id="quantitaCol" prefWidth="56.800048828125" text="Quantità" />
+            <TableColumn fx:id="dataCol" prefWidth="166.39990234375" text="Data prossima produzione" />
         </columns>
       </TableView>
    </center>

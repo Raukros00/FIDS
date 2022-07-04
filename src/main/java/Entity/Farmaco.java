@@ -13,6 +13,7 @@ public class Farmaco {
     private int quantitaFarmacoInt;
     private int periodicitaProduzione;
     private int quantitaProduzione;
+    private String dataUltimaProduzione;
     private int validita;
     private LinkedList<Lotto> listaLotti = new LinkedList<Lotto>();
 

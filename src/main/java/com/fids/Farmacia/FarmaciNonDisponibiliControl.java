@@ -16,6 +16,7 @@ public class FarmaciNonDisponibiliControl {
     @FXML private TableView<Farmaco> farmaciTable = new TableView<>();
     @FXML private TableColumn<Farmaco, String> nomeCol;
     @FXML private TableColumn<Farmaco, Integer> quantitaCol;
+    @FXML private TableColumn<Farmaco, String> dataCol;
     @FXML private Button okayButton;
 
     public void setFarmaciNonDisponibili(LinkedList<Farmaco> listaFarmaci){
