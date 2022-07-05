@@ -222,7 +222,7 @@ public class HomeFarmaciaControl extends GlobalData{
                 dt = sdf.format(c.getTime());
                 DAY=dt;
                 dateLabel.setText(dt);
-                if(HOUR >= 20 && NUM_CONSEGNE > 0 && !CHECKHOURS){
+                if(HOUR >= 20 && NUM_CONSEGNE > 0 && !CHECKHOURS && RUOLO==1){
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(PopUpControl.class.getResource("error.fxml"));
                     Parent root = null;

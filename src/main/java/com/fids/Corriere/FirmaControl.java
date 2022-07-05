@@ -134,10 +134,10 @@ public class FirmaControl {
                     stage.setScene(scene);
                     stage.show();
                 } else if(flag==1){
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(PopUpControl.class.getResource("succesful.fxml"));
-                    Parent root2 = loader.load();
-                    PopUpControl popControl = loader.getController();
+                    FXMLLoader loader1 = new FXMLLoader();
+                    loader1.setLocation(PopUpControl.class.getResource("succesful.fxml"));
+                    Parent root2 = loader1.load();
+                    PopUpControl popControl = loader1.getController();
                     popControl.setPopUp("Consegna firmata con successo!");
                     Scene scene = new Scene(root2);
                     Stage stage = new Stage();
@@ -145,9 +145,10 @@ public class FirmaControl {
                     stage.setScene(scene);
                     stage.showAndWait();
 
-                    loader.setLocation(ListaSpedizioniControl.class.getResource("ListaSpedizioni.fxml"));
-                    Parent root1 = loader.load();
-                    ListaSpedizioniControl listaSpedizioniControl= loader.getController();
+                    FXMLLoader loader2 = new FXMLLoader();
+                    loader2.setLocation(ListaSpedizioniControl.class.getResource("ListaSpedizioni.fxml"));
+                    Parent root1 = loader2.load();
+                    ListaSpedizioniControl listaSpedizioniControl= loader2.getController();
                     listaSpedizioniControl.setField();
                     stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                     stage.setTitle("Lista Spedizioni");
